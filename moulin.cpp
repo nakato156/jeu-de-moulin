@@ -12,14 +12,14 @@ void PantallaInicio(){
 
 void initGame(Jugador player1, Jugador player2){
     Tablero tablero = Tablero();
-    tablero.Show();
+    tablero.Show(1);
 
     Jugador player;
 
     for(int i=0; i<18; i++){ 
         player =  i%2==0 ? player1 : player2;
         tablero = ColocarFicha(tablero, player);
-        tablero.Show();
+        tablero.Show(1);
     }
 }
 

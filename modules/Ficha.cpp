@@ -12,7 +12,7 @@ struct Ficha {
     void imprimir(){
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         if(color == -1){
-            cout << "*";
+            cout << "O";
             return;
         }
         int color_letra =  !color ? FOREGROUND_RED : FOREGROUND_BLUE;

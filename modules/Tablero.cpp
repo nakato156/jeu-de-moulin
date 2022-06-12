@@ -1,6 +1,10 @@
 #include "Jugador.cpp"
 #include "Ficha.cpp"
 
+void printEsp(int cant, int code){
+    for(int i=0; i<cant; i++) cout << char(code);
+}
+
 struct Tablero {
     Ficha **tablero;
     public:
@@ -11,36 +15,42 @@ struct Tablero {
             for(int c=0; c<7; c++) tablero[i][c]=Ficha(-1, "O");
         }
     }
-    void Show(){
-        system("cls");
-        cout << "_________________________" << endl;
+    void Show(int clear=0){
+        if(clear) system("cls");
+        cout << char(201); printEsp(23, 205); cout << char(187) << endl;
         for(int i = 0; i<7; i++){
+            printf("%c  ", 186);
             if(i==0 || i==6){
-                cout << "|--"; tablero[i][0].imprimir();
-                cout << "--------"; tablero[i][3].imprimir();
-                cout << "--------"; tablero[i][6].imprimir();
-                cout << "--|" << endl;
+                tablero[i][0].imprimir();
+                printEsp(8, 205);
+                tablero[i][3].imprimir();
+                printEsp(8, 205);
+                tablero[i][6].imprimir();
             }else if(i==1 || i==5){
-                cout << "|--|--"; tablero[i][1].imprimir();
-                cout << "-----"; tablero[i][3].imprimir();
-                cout << "-----"; tablero[i][5].imprimir();
-                cout << "-----|" << endl;
+                printf("%c%c%c", 186, 205, 205); 
+                tablero[i][1].imprimir();
+                printEsp(5, 205);
+                tablero[i][3].imprimir();
+                printEsp(5, 205);
+                tablero[i][5].imprimir();
+                printf("%c%c%c", 205, 205, 186);
             }else if(i==2 || i==4){
-                cout << "|--|--|--"; tablero[i][2].imprimir();
-                cout << "--"; tablero[i][3].imprimir();
-                cout << "--"; tablero[i][4].imprimir();
-                cout << "--|--|--|" << endl;
+                printf("%c%c%c%c%c%c", 186, 205, 205, 206, 205, 205); tablero[i][2].imprimir();
+                printEsp(2, 205); tablero[i][3].imprimir();
+                printEsp(2, 205); tablero[i][4].imprimir();
+                printf("%c%c%c%c%c%c", 205, 205, 206, 205, 205, 186);
             }else if(i==3){
-                cout << "|--"; tablero[i][0].imprimir();
-                cout << "--"; tablero[i][1].imprimir(); 
-                cout << "--"; tablero[i][2].imprimir();
-                cout << "-- --"; tablero[i][4].imprimir();
-                cout << "--"; tablero[i][5].imprimir();
-                cout << "--"; tablero[i][6].imprimir();
-                cout << "--|" << endl;
+                tablero[i][0].imprimir();
+                printEsp(2, 205); tablero[i][1].imprimir();
+                printEsp(2, 205); tablero[i][2].imprimir();
+                printf("%c%c %c%c", 205, 205, 205, 205);
+                tablero[i][4].imprimir();
+                printEsp(2, 205); tablero[i][5].imprimir();
+                printEsp(2, 205); tablero[i][6].imprimir();
             }
+            printf("  %c\n", 186);
         }
-        cout << "-------------------------" << endl;
+        cout << char(200); printEsp(23, 205); cout << char(188) << endl;
     }
     void SetFicha(int x, int y, int color){
         tablero[x][y].color = color;
