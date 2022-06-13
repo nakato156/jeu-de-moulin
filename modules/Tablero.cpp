@@ -5,6 +5,16 @@ void printEsp(int cant, int code){
     for(int i=0; i<cant; i++) cout << char(code);
 }
 
+int isValidCell(int row, int col){
+    if(row < 0 && row > 7) return -1;
+    if(row == 1 || row == 7) col = (col-1)*3;
+    else if(row == 2 || row == 6) col = (col*2)-1;
+    else if(row == 3 || row == 5) col++;
+    else if(row == 4) col = col<4 ? col-1 : col;
+    else return -1;
+    return col;
+}
+
 struct Tablero {
     Ficha **tablero;
     public:
@@ -22,23 +32,19 @@ struct Tablero {
             printf("%c  ", 186);
             if(i==0 || i==6){
                 tablero[i][0].imprimir();
-                printEsp(8, 205);
-                tablero[i][3].imprimir();
-                printEsp(8, 205);
-                tablero[i][6].imprimir();
+                printEsp(8, 205); tablero[i][3].imprimir();
+                printEsp(8, 205); tablero[i][6].imprimir();
             }else if(i==1 || i==5){
-                printf("%c%c%c", 186, 205, 205); 
+                printf("%c  ", 186); 
                 tablero[i][1].imprimir();
-                printEsp(5, 205);
-                tablero[i][3].imprimir();
-                printEsp(5, 205);
-                tablero[i][5].imprimir();
-                printf("%c%c%c", 205, 205, 186);
+                printEsp(5, 205); tablero[i][3].imprimir();
+                printEsp(5, 205); tablero[i][5].imprimir();
+                printf("  %c", 186);
             }else if(i==2 || i==4){
-                printf("%c%c%c%c%c%c", 186, 205, 205, 206, 205, 205); tablero[i][2].imprimir();
+                printf("%c  %c  ", 186, 186); tablero[i][2].imprimir();
                 printEsp(2, 205); tablero[i][3].imprimir();
                 printEsp(2, 205); tablero[i][4].imprimir();
-                printf("%c%c%c%c%c%c", 205, 205, 206, 205, 205, 186);
+                printf("  %c  %c", 186, 186);
             }else if(i==3){
                 tablero[i][0].imprimir();
                 printEsp(2, 205); tablero[i][1].imprimir();
@@ -56,8 +62,11 @@ struct Tablero {
         tablero[x][y].color = color;
     }
     void eliminarFicha(int x, int y, Jugador player){
+        x = isValidCell(x, y);
+        if(x == -1) return;
+        y--;
         player.fichas--;
-        tablero[x][y] = Ficha(-1, "*");
+        tablero[x][y].color = -1;
     }
     bool isEmptyCell (int x, int y){
         return tablero[x][y].color==-1;
@@ -86,11 +95,7 @@ Tablero ColocarFicha(Tablero tablero, Jugador player){
         else if(col>0 && col<4) break;
         cout << "valores incorrectos" << endl;
     }
-
-    if(row == 1 || row == 7) col = (col-1)*3;
-    else if(row == 2 || row == 6) col = (col*2)-1;
-    else if(row == 3 || row == 5) col++;
-    else if(row == 4) col = col<4 ? col-1 : col;
+    col = isValidCell(row, col);
     row--;
 
     tablero.SetFicha(row, col, player.color);
