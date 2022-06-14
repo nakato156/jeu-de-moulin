@@ -30,4 +30,3 @@ int main(){
     initGame(player1, player2);
     return 0;
 }
-
