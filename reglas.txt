@@ -1,0 +1,29 @@
+    ============================================================================================================
+    -Este juego consiste en lograr hacer la mayor cantidad de 3 en raya que puedas con tus fichas.
+    -Las reglas son las siguientes:
+    -El juego tiene 3 fases.
+    -La primera fase es la colocacion: 
+    -Cada jugador empezara con 9 fichas respectivamente.
+    -Cada jugador se turnara para ir poniendo una pieza en cada punto del tablero.
+    -Si un jugador logra hacer 3 en raya, podra elegir que ficha del rival desea eliminar.
+    -Cuando todas las fichas disponibles esten colocadas, empieza la fase 2.
+    -Esta fase consiste en mover tus fichas.
+    -Podras moverlas a puntos adyacentes de tu ubicacion actual mientras no este ocupada por otra ficha.
+    -Cuando a un jugador solo le queden 3 fichas, podra moverlas tanto horizontal como verticalmente como desee.
+    -Es decir, puede ir de punta a punta mientras no haya una ficha en ese punto.
+    -El juego acaba en 2 oportunidades: 
+    -Si al rival solo le quedan dos fichas.
+    -Si el rival no puede hacer ningun movimiento al estar encerrado
+    ============================================================================================================
+
+¿Cómo jugar?
+Primero se deben colocar las 9 fichas iniciales. Recuerda colocar tu ficha en una posición vacía.
+Luego de colocar las 9 fichas vas a poder moverlas a donde quieras.
+La movida de fichas se realiza con las teclas:
+        w
+    a   s   d
+
+w: Mover hacia arriba.
+a: Mover hacia la izquierda
+s: mover hacia abajo.
+d: mover hace la derecha.

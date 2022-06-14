@@ -1,3 +1,6 @@
+#ifndef CODIGO_TABLERO
+#define CODIGO_TABLERO
+
 #include "Jugador.cpp"
 #include "Ficha.cpp"
 
@@ -5,7 +8,7 @@ void printEsp(int cant, int code){
     for(int i=0; i<cant; i++) cout << char(code);
 }
 
-int isValidCell(int row, int col){
+int userXYToTableroXY(int row, int col){
     if(row < 0 && row > 7) return -1;
     if(row == 1 || row == 7) col = (col-1)*3;
     else if(row == 2 || row == 6) col = (col*2)-1;
@@ -59,14 +62,17 @@ struct Tablero {
         cout << char(200); printEsp(23, 205); cout << char(188) << endl;
     }
     void SetFicha(int x, int y, int color){
+        x = userXYToTableroXY(x, y);
+        y--;
         tablero[x][y].color = color;
     }
-    void eliminarFicha(int x, int y, Jugador player){
-        x = isValidCell(x, y);
-        if(x == -1) return;
+    bool eliminarFicha(int x, int y, Jugador player){
+        x = userXYToTableroXY(x, y);
+        if(x == -1) return false;
         y--;
         player.fichas--;
         tablero[x][y].color = -1;
+        return true;
     }
     bool isEmptyCell (int x, int y){
         return tablero[x][y].color==-1;
@@ -95,9 +101,9 @@ Tablero ColocarFicha(Tablero tablero, Jugador player){
         else if(col>0 && col<4) break;
         cout << "valores incorrectos" << endl;
     }
-    col = isValidCell(row, col);
-    row--;
 
     tablero.SetFicha(row, col, player.color);
     return tablero;
 }
+
+#endif
