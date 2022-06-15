@@ -22,6 +22,7 @@ Jugador RegistrarJugador(int enable_color = 1, int ant_color = 0){
     if(enable_color){
         cout << "color de ficha (R/A): ";
         cin >> _color;
+        _color = toupper(_color);
         color = _color=='A';
     }else color = !ant_color;
 

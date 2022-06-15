@@ -61,10 +61,10 @@ struct Tablero {
         }
         cout << char(200); printEsp(23, 205); cout << char(188) << endl;
     }
-    void SetFicha(int x, int y, int color){
-        x = userXYToTableroXY(x, y);
-        y--;
-        tablero[x][y].color = color;
+    void SetFicha(int row, int col, int color){
+        col = userXYToTableroXY(row, col);
+        row--;
+        tablero[row][col].color = color;
     }
     bool eliminarFicha(int x, int y, Jugador player){
         x = userXYToTableroXY(x, y);
