@@ -1,15 +1,15 @@
+#include "Tablero.cpp"
 #include <iostream>
 
-template <typename T>
 struct CacheGame{ 
     int size = 0;
-    T *cache = nullptr;
+    Tablero *cache = nullptr;
     CacheGame() = default;
-    void add(T tablero){
+    void add(Tablero tablero){
         if(size==0){
-            cache = new T(tablero);
+            cache = new Tablero(tablero);
         }else{
-            T *new_cache = new T[size+1];
+            Tablero *new_cache = new Tablero[size+1];
             for(int i=0; i<size; i++){
                 new_cache[i] = cache[i];
             }

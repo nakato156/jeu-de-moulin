@@ -1,9 +1,16 @@
 #include "../modules/Tablero.cpp"
 #include "../modules/Cache.cpp"
+#include "../modules/Menu.cpp"
+
+void testMenu() {
+    mostrarReglas();
+}
 
 int main(){
+    testMenu();
+    return 0;
     Tablero tablero = Tablero();
-    CacheGame<Tablero> game;
+    CacheGame game;
 
     tablero.Show();
 
