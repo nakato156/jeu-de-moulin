@@ -66,12 +66,12 @@ struct Tablero {
         row--;
         tablero[row][col].color = color;
     }
-    bool eliminarFicha(int x, int y, Jugador player){
-        x = userXYToTableroXY(x, y);
-        if(x == -1) return false;
-        y--;
+    bool eliminarFicha(int row, int col, Jugador player){
+        col = userXYToTableroXY(row, col);
+        if(col == -1) return false;
+        row--;
         player.fichas--;
-        tablero[x][y].color = -1;
+        tablero[row][col].color = -1;
         return true;
     }
     bool isEmptyCell (int x, int y){
