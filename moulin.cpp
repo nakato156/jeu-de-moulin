@@ -19,9 +19,37 @@ void PlayOff2Players() {
 
     for(int i=0; i<18; i++){ 
         player =  i%2==0 ? player1 : player2;
+        cout << "Turno de " << player.nombre << endl;
         tablero = ColocarFicha(tablero, player);
         tablero.Show(1);
     }
+    cout << "movida de fichas" << endl;
+    int i = 0, isMove, row, col;
+    char direccion;
+    while(1){
+        if(player.fichas == 2) break;
+        player =  i%2==0 ? player1 : player2;
+        cout << "Turno de " << player.nombre << endl;
+        player.leerFicha(row, col, "Ingrese la fila de la ficha a mover: ", "ingrese la columna de la ficha a mover: ");
+        
+        if(tablero[row][col].color != player.color ){
+            cout << "esa ficha no le pertenece." << endl;
+            continue;
+        }
+        if(player.fichas == 3) tablero.SetFicha(row, col, player.color);
+        else {
+            do
+            {
+                cout << "A donde lo deseas mover? (w/a/s/d): ";
+                cin >> direccion;
+                direccion = tolower(direccion);
+                isMove = tablero.moveFicha(row, col, direccion, player.color);
+            } while (isMove!=1);
+        }
+        tablero.Show(1);
+        i++;
+    }
+    cout << "perdio: " << player.nombre << endl;
 }
 
 void PlayWithBot() {
