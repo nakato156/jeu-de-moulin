@@ -48,12 +48,21 @@ void PlayOff2Players() {
         }
         tablero.Show(1);
     }
+
     cout << "movida de fichas" << endl;
     int i = 0, isMove, row, col;
     char direccion;
+    puntos = nullptr;
     while(1){
+        if(i%2 == 0){
+            player = player1;
+            oponente = player2;
+        }else{
+            player = player2;
+            oponente = player1;
+        }
         if(player.fichas == 2) break;
-        player =  i%2==0 ? player1 : player2;
+        
         cout << "Turno de " << player.nombre << endl;
         player.leerFicha(row, col, "Ingrese la fila de la ficha a mover: ", "ingrese la columna de la ficha a mover: ");
         
@@ -71,6 +80,20 @@ void PlayOff2Players() {
                 isMove = tablero.moveFicha(row, col, direccion, player.color);
             } while (isMove!=1);
         }
+        
+        if(puntos != nullptr){
+            int *n_puntos = puntoenhori(tablero);
+            if(puntos[0] != n_puntos[0] || puntos[1] != n_puntos[1]){
+                pnt_para = puntos[0] != n_puntos[0] ? 1 : 0;
+                puntos = n_puntos;
+                cout << "molino para " << player.nombre << endl;
+                cout << "fila de la ficha a eliminar: ";
+                cin >> eliminar_fila;
+                cout << "columna de la ficha a eliminar: ";
+                cin >> eliminar_col;
+                tablero.eliminarFicha(eliminar_fila, eliminar_col, oponente);
+            }
+        }else puntos = puntoenhori(tablero);
         tablero.Show(1);
         i++;
     }

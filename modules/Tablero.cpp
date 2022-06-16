@@ -77,9 +77,6 @@ struct Tablero {
     bool isEmptyCell (int x, int y){
         return tablero[x][y].color==-1;
     }
-    int* IsValidDireccion(int row, int col, char dir){
-
-    }
     int moveFicha(int row, int col, char dir, int color){
         int act_col = userXYToTableroXY(row, col);
         int act_row = row-1;
