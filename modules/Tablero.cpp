@@ -70,6 +70,7 @@ struct Tablero {
         col = userXYToTableroXY(row, col);
         if (col == -1) return false;
         row--;
+        if (tablero[row][col].color != player.color) return false;
         player.fichas--;
         tablero[row][col].color = -1;
         return true;
@@ -105,6 +106,18 @@ struct Tablero {
         }
         // cout << "la casilla esta ocupada. Intente con otra posicion";
         return false;
+    }
+    void Molino (Jugador oponente){
+        while(1){
+            int eliminar_fila, eliminar_col;
+            cout << "fila de la ficha a eliminar: ";
+            cin >> eliminar_fila;
+            cout << "columna de la ficha a eliminar: ";
+            cin >> eliminar_col;
+            bool eliminado = this->eliminarFicha(eliminar_fila, eliminar_col, oponente);
+            if(eliminado) break;
+            cout << "Vuelva a intentarlo." << endl;
+        }
     }
     Ficha *operator [] (unsigned int index){ return tablero[index]; }
 };
