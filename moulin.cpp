@@ -15,12 +15,37 @@ void PlayOff2Players() {
     Tablero tablero = Tablero();
     tablero.Show(1);
 
-    Jugador player;
+    Jugador player, oponente;
+    int *puntos = nullptr;
+    int pnt_para, eliminar_fila, eliminar_col;
 
     for(int i=0; i<18; i++){ 
-        player =  i%2==0 ? player1 : player2;
+        if(i%2 == 0){
+            player = player1;
+            oponente = player2;
+        }else{
+            player = player2;
+            oponente = player1;
+        }
         cout << "Turno de " << player.nombre << endl;
         tablero = ColocarFicha(tablero, player);
+        if(i > 1) {
+            if(puntos != nullptr){
+                int *n_puntos = puntoenhori(tablero);
+                // cout << "anteriores puntos: " << puntos[0] << ", " << puntos[1] << endl;
+                // cout << "actuales puntos: " << n_puntos[0] << ", " << n_puntos[1] << endl;
+                if(puntos[0] != n_puntos[0] || puntos[1] != n_puntos[1]){
+                    pnt_para = puntos[0] != n_puntos[0] ? 1 : 0;
+                    puntos = n_puntos;
+                    cout << "molino para " << player.nombre << endl;
+                    cout << "fila de la ficha a eliminar: ";
+                    cin >> eliminar_fila;
+                    cout << "columna de la ficha a eliminar: ";
+                    cin >> eliminar_col;
+                    tablero.eliminarFicha(eliminar_fila, eliminar_col, oponente);
+                }
+            }else puntos = puntoenhori(tablero);
+        }
         tablero.Show(1);
     }
     cout << "movida de fichas" << endl;
