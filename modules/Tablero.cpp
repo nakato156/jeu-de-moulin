@@ -1,7 +1,5 @@
 #ifndef CODIGO_TABLERO
 #define CODIGO_TABLERO
-
-#include "Jugador.cpp"
 #include "Ficha.cpp"
 
 void printEsp(int cant, int code){
@@ -23,10 +21,15 @@ struct Tablero {
     public:
     Tablero(){
         tablero = new Ficha*[7];
-        for(int i =0; i<7; i++) {
+        for(int i = 0; i<7; i++) {
             tablero[i] = new Ficha[7];
             for(int c=0; c<7; c++) tablero[i][c]=Ficha(-1, "O");
         }
+    }
+    ~Tablero(){
+        for(int i = 0; i<7; i++) delete[] tablero[i];
+        delete[] tablero;
+        tablero = nullptr;
     }
     void Show(int clear=0){
         if (clear) system("cls");
@@ -62,26 +65,15 @@ struct Tablero {
         cout << char(200); printEsp(23, 205); cout << char(188) << endl;
     }
     void SetFicha(int row, int col, int color){
-        col = userXYToTableroXY(row, col);
-        row--;
         tablero[row][col].color = color;
     }
-    bool eliminarFicha(int row, int col, Jugador player){
-        col = userXYToTableroXY(row, col);
-        if (col == -1) return false;
-        row--;
-        if (tablero[row][col].color != player.color) return false;
-        player.fichas--;
-        tablero[row][col].color = -1;
-        return true;
+    bool Iam(int row, int col, int color){
+        return tablero[row][col].color == color;
     }
     bool isEmptyCell (int x, int y){
-        return tablero[x][y].color==-1;
+        return tablero[x][y].color == -1;
     }
-    int moveFicha(int row, int col, char dir, int color){
-        int act_col = userXYToTableroXY(row, col);
-        int act_row = row-1;
-
+    int moveFicha(int act_row, int act_col, int row, int col, char dir, int color){
         if (tablero[act_row][act_col].color != color) return 0;
 
         if (dir == 'a') col--;
@@ -107,55 +99,34 @@ struct Tablero {
         // cout << "la casilla esta ocupada. Intente con otra posicion";
         return false;
     }
-    void Molino (Jugador oponente){
-        while(1){
-            int eliminar_fila, eliminar_col;
-            cout << "fila de la ficha a eliminar: ";
-            cin >> eliminar_fila;
-            cout << "columna de la ficha a eliminar: ";
-            cin >> eliminar_col;
-            bool eliminado = this->eliminarFicha(eliminar_fila, eliminar_col, oponente);
-            if(eliminado) break;
-            cout << "Vuelva a intentarlo." << endl;
-        }
-    }
+
     Ficha *operator [] (unsigned int index){ return tablero[index]; }
 };
 
-Tablero ColocarFicha(Tablero tablero, Jugador player){
-    int row, col;
-    player.leerFicha(row, col, "ingrese la fila donde ira la ficha: ", "ingrese la columna donde ira la ficha: ");
-    tablero.SetFicha(row, col, player.color);
-    return tablero;
-}
-
-int* puntoenhori(Tablero tablero) {
+int* puntoenhori(Tablero *ptablero) {
     int cont_az = 0;
     int cont_rj = 0; 
+    Ficha **tablero = ptablero->tablero;
     //cuadrado grande
     //horizontales
     if (tablero[0][0].color == 1 || tablero[0][0].color == 0) { //un o es azul y el otro O es rojo
         if (tablero[0][0].color == tablero[0][3].color && tablero[0][0].color == tablero[0][6].color) {
-            if (tablero[0][0].color == 1) {//punto pal azul
+            if (tablero[0][0].color == 1) {
                 cont_az++;
-                //punto
             }
             else {
                 cont_rj++;
-            //punto pal rojo
             }
         }
 
     }
     if (tablero[6][0].color == 1 || tablero[6][0].color == 0) {//un o es azul y el otro O es rojo
         if (tablero[6][0].color == tablero[6][3].color && tablero[6][0].color == tablero[6][6].color) {
-            if (tablero[6][0].color == 1) {//punto pal azul
+            if (tablero[6][0].color == 1) {
                 cont_az++;
-                //punto
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
 
@@ -163,27 +134,21 @@ int* puntoenhori(Tablero tablero) {
     //verticales
     if (tablero[0][0].color == 1 || tablero[0][0].color == 0) {//un O azul y el otro O es rojo
         if (tablero[0][0].color == tablero[3][0].color && tablero[0][0].color == tablero[6][0].color) {
-            if (tablero[0][0].color == 1) {//punto pal azul
+            if (tablero[0][0].color == 1) {
                 cont_az++;
-
-                    //punto
-
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
     }
     if (tablero[0][6].color == 1 || tablero[0][6].color == 0) {//un O azul y el otro O es rojo
         if (tablero[0][6].color == tablero[3][6].color && tablero[0][6].color == tablero[6][6].color) {
-            if (tablero[0][6].color == 1) {//punto pal azul
+            if (tablero[0][6].color == 1) {
                 cont_az++;
-                    //punto
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
     }
@@ -192,27 +157,22 @@ int* puntoenhori(Tablero tablero) {
     //horizontales
     if (tablero[1][1].color == 1 || tablero[1][1].color == 0) {//un o es azul y el otro O es rojo
         if (tablero[1][1].color == tablero[1][3].color && tablero[1][1].color == tablero[1][5].color) {
-            if (tablero[1][1].color == 1) {//punto pal azul
+            if (tablero[1][1].color == 1) {
                 cont_az++;
-                    //punto
-
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
 
     }
     if (tablero[5][1].color == 1 || tablero[5][1].color == 0) {//un o es azul y el otro O es rojo
         if (tablero[5][1].color == tablero[5][3].color && tablero[5][1].color == tablero[5][5].color) {
-            if (tablero[5][1].color == 1) {//punto pal azul
+            if (tablero[5][1].color == 1) {
                 cont_az++;
-                    //punto
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
 
@@ -220,25 +180,21 @@ int* puntoenhori(Tablero tablero) {
     //verticales
     if (tablero[1][1].color == 1 || tablero[1][1].color == 0) {//un O azul y el otro O es rojo
         if (tablero[1][1].color == tablero[3][1].color && tablero[1][1].color == tablero[5][1].color) {
-            if (tablero[1][1].color == 1) {//punto pal azul
+            if (tablero[1][1].color == 1) {
                 cont_az++;
-                    //punto
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
     }
     if (tablero[1][5].color == 1 || tablero[1][5].color == 0) {//un O azul y el otro O es rojo
         if (tablero[1][5].color == tablero[3][5].color && tablero[1][5].color == tablero[5][5].color) {
-            if (tablero[1][5].color == 1) {//punto pal azul
+            if (tablero[1][5].color == 1) {
                 cont_az++;
-                //punto
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
     }
@@ -247,26 +203,22 @@ int* puntoenhori(Tablero tablero) {
     //horizontales
     if (tablero[2][2].color == 1 || tablero[2][2].color == 0) {//un o es azul y el otro O es rojo
         if (tablero[2][2].color == tablero[2][3].color && tablero[2][2].color == tablero[2][4].color) {
-            if (tablero[2][2].color == 1) {//punto pal azul
+            if (tablero[2][2].color == 1) {
                 cont_az++;
-                    //punto
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
 
     }
     if (tablero[4][2].color == 1 || tablero[4][2].color == 0) {//un o es azul y el otro O es rojo
         if (tablero[4][2].color == tablero[4][3].color && tablero[4][4].color) {
-            if (tablero[4][2].color == 1) {//punto pal azul
+            if (tablero[4][2].color == 1) {
                 cont_az++;
-//punto
             }
             else {
                 cont_rj++;
-//punto pal rojo
             }
         }
 
@@ -274,25 +226,21 @@ int* puntoenhori(Tablero tablero) {
     //verticales
     if (tablero[2][2].color == 1 || tablero[2][2].color == 0) {//un O azul y el otro O es rojo
         if (tablero[2][2].color == tablero[3][2].color && tablero[2][2].color == tablero[4][2].color) {
-            if (tablero[2][2].color == 1) {//punto pal azul
+            if (tablero[2][2].color == 1) {
                 cont_az++;
-                //punto
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
     }
     if (tablero[2][4].color == 1 || tablero[2][4].color == 0) {//un O azul y el otro O es rojo
         if (tablero[2][4].color == tablero[3][4].color && tablero[2][4].color == tablero[4][4].color) {
-            if (tablero[2][4].color == 1) {//punto pal azul
+            if (tablero[2][4].color == 1) {
                 cont_az++;
-                    //punto
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
     }
@@ -301,26 +249,22 @@ int* puntoenhori(Tablero tablero) {
     //horizontales
     if (tablero[3][0].color == 1 || tablero[3][0].color == 0) {//un o es azul y el otro O es rojo
         if (tablero[3][0].color == tablero[3][1].color && tablero[3][0].color == tablero[3][2].color) {
-            if (tablero[3][0].color == 1) {//punto pal azul
+            if (tablero[3][0].color == 1) {
                 cont_az++;
-                    //punto
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
 
     }
     if (tablero[3][4].color == 1 || tablero[3][4].color == 0) {//un o es azul y el otro O es rojo
         if (tablero[3][4].color == tablero[3][5].color && tablero[3][4].color==tablero[3][6].color) {
-            if (tablero[4][2].color == 1) {//punto pal azul
+            if (tablero[4][2].color == 1) {
                 cont_az++;
-                    //punto
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
 
@@ -328,25 +272,21 @@ int* puntoenhori(Tablero tablero) {
     //verticales
     if (tablero[0][3].color == 1 || tablero[0][3].color == 0) {//un O azul y el otro O es rojo
         if (tablero[0][3].color == tablero[1][3].color && tablero[0][3].color == tablero[2][3].color) {
-            if (tablero[0][3].color == 1) {//punto pal azul
+            if (tablero[0][3].color == 1) {
                 cont_az++;
-                    //punto
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
     }
     if (tablero[4][3].color == 1 || tablero[4][3].color == 0) {//un O azul y el otro O es rojo
         if (tablero[4][3].color == tablero[5][3].color && tablero[4][3].color == tablero[6][3].color) {
-            if (tablero[4][3].color == 1) {//punto pal azul
+            if (tablero[4][3].color == 1) {
                 cont_az++;
-                    //punto
             }
             else {
                 cont_rj++;
-                //punto pal rojo
             }
         }
     }
