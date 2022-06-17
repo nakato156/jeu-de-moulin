@@ -2,14 +2,8 @@
 #include "../modules/Cache.cpp"
 #include "../modules/Menu.cpp"
 
-void testMenu() {
-    mostrarReglas();
-}
-
-int main(){
-    testMenu();
-    return 0;
-    Tablero tablero = Tablero();
+void animationTablero(){
+    Tablero tablero;
     CacheGame game;
 
     tablero.Show();
@@ -23,4 +17,34 @@ int main(){
         game.cache[i].Show();
         cout << endl << endl;
     }
+}
+
+void testMenu() {
+    mostrarReglas();
+}
+
+void testMoveFicha(){
+    Tablero tablero;
+
+    Jugador player1, player2;
+
+    player1.color = 0;
+    player1.nombre = "c";
+    player2.color = 1;
+    player2.nombre = "x";
+
+    tablero.SetFicha(2, 1, 0);
+    tablero.Show(1);
+    
+    char direccion;
+    cout << "A donde lo desea mover?: ";
+    cin >> direccion;
+
+    tablero.moveFicha(2, 1, direccion, 0);
+    tablero.Show();
+}
+
+int main(){
+    testMoveFicha();
+    return 0;
 }

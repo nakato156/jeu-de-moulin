@@ -1,7 +1,5 @@
 #ifndef CODIGO_TABLERO
 #define CODIGO_TABLERO
-
-#include "Jugador.cpp"
 #include "Ficha.cpp"
 
 void printEsp(int cant, int code){
@@ -9,11 +7,11 @@ void printEsp(int cant, int code){
 }
 
 int userXYToTableroXY(int row, int col){
-    if(row < 0 && row > 7) return -1;
-    if(row == 1 || row == 7) col = (col-1)*3;
-    else if(row == 2 || row == 6) col = (col*2)-1;
-    else if(row == 3 || row == 5) col++;
-    else if(row == 4) col = col<4 ? col-1 : col;
+    if (row < 0 && row > 7) return -1;
+    if (row == 1 || row == 7) col = (col-1)*3;
+    else if (row == 2 || row == 6) col = (col*2)-1;
+    else if (row == 3 || row == 5) col++;
+    else if (row == 4) col = col<4 ? col-1 : col;
     else return -1;
     return col;
 }
@@ -23,32 +21,37 @@ struct Tablero {
     public:
     Tablero(){
         tablero = new Ficha*[7];
-        for(int i =0; i<7; i++) {
+        for(int i = 0; i<7; i++) {
             tablero[i] = new Ficha[7];
             for(int c=0; c<7; c++) tablero[i][c]=Ficha(-1, "O");
         }
     }
+    ~Tablero(){
+        for(int i = 0; i<7; i++) delete[] tablero[i];
+        delete[] tablero;
+        tablero = nullptr;
+    }
     void Show(int clear=0){
-        if(clear) system("cls");
+        if (clear) system("cls");
         cout << char(201); printEsp(23, 205); cout << char(187) << endl;
         for(int i = 0; i<7; i++){
             printf("%c  ", 186);
-            if(i==0 || i==6){
+            if (i==0 || i==6){
                 tablero[i][0].imprimir();
                 printEsp(8, 205); tablero[i][3].imprimir();
                 printEsp(8, 205); tablero[i][6].imprimir();
-            }else if(i==1 || i==5){
+            }else if (i==1 || i==5){
                 printf("%c  ", 186); 
                 tablero[i][1].imprimir();
                 printEsp(5, 205); tablero[i][3].imprimir();
                 printEsp(5, 205); tablero[i][5].imprimir();
                 printf("  %c", 186);
-            }else if(i==2 || i==4){
+            }else if (i==2 || i==4){
                 printf("%c  %c  ", 186, 186); tablero[i][2].imprimir();
                 printEsp(2, 205); tablero[i][3].imprimir();
                 printEsp(2, 205); tablero[i][4].imprimir();
                 printf("  %c  %c", 186, 186);
-            }else if(i==3){
+            }else if (i==3){
                 tablero[i][0].imprimir();
                 printEsp(2, 205); tablero[i][1].imprimir();
                 printEsp(2, 205); tablero[i][2].imprimir();
@@ -62,8 +65,6 @@ struct Tablero {
         cout << char(200); printEsp(23, 205); cout << char(188) << endl;
     }
     void SetFicha(int row, int col, int color){
-        col = userXYToTableroXY(row, col);
-        row--;
         tablero[row][col].color = color;
     }
     bool eliminarFicha(int row, int col, Jugador player){
@@ -74,36 +75,232 @@ struct Tablero {
         tablero[row][col].color = -1;
         return true;
     }
-    bool isEmptyCell (int x, int y){
-        return tablero[x][y].color==-1;
+    bool Iam(int row, int col, int color){
+        return tablero[row][col].color == color;
     }
-    bool moveFicha(int x_act, int y_act, int new_x, int new_y, int color){
-        if( isEmptyCell(new_x, new_y) ){
-            tablero[x_act][y_act].color = -1;
-            tablero[new_x][new_y].color = color;
+    bool isEmptyCell (int x, int y){
+        return tablero[x][y].color == -1;
+    }
+    int moveFicha(int act_row, int act_col, int row, int col, char dir, int color){
+        if (tablero[act_row][act_col].color != color) return 0;
+
+        if (dir == 'a') col--;
+        else if (dir == 'd') col++;
+        
+        col = userXYToTableroXY(row, col);
+        row --;
+
+        int ws = 3, _row = row;
+        if (dir == 'w' || dir == 's'){
+            if (col>2) _row = 6 - col;
+            _row = ws - col;
+            row += dir == 'w' ? -_row : _row;
+        }
+        
+        if (col < 0 || row < 0) return -1;
+
+        if ( isEmptyCell(row, col) ){
+            tablero[act_row][act_col].color = -1;
+            tablero[row][col].color = color;
             return true;
         }
-        cout << "la casilla esta ocupada. Intente con otra posicion";
+        // cout << "la casilla esta ocupada. Intente con otra posicion";
+        return false;
     }
+
     Ficha *operator [] (unsigned int index){ return tablero[index]; }
 };
 
-Tablero ColocarFicha(Tablero tablero, Jugador player){
-    int row, col;
-    while(1){
-        cout << "ingrese la fila donde ira la ficha: ";
-        cin >> row;
-        if(row>7 || row<0) continue;
+int* puntoenhori(Tablero *ptablero) {
+    int cont_az = 0;
+    int cont_rj = 0; 
+    Ficha **tablero = ptablero->tablero;
+    //cuadrado grande
+    //horizontales
+    if (tablero[0][0].color == 1 || tablero[0][0].color == 0) { //un o es azul y el otro O es rojo
+        if (tablero[0][0].color == tablero[0][3].color && tablero[0][0].color == tablero[0][6].color) {
+            if (tablero[0][0].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
 
-        cout << "ingrese la columna donde ira la ficha: ";
-        cin >> col;
-        if(row==4 && (col>0 && col<7)) break;
-        else if(col>0 && col<4) break;
-        cout << "valores incorrectos" << endl;
+    }
+    if (tablero[6][0].color == 1 || tablero[6][0].color == 0) {//un o es azul y el otro O es rojo
+        if (tablero[6][0].color == tablero[6][3].color && tablero[6][0].color == tablero[6][6].color) {
+            if (tablero[6][0].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+
+    }
+    //verticales
+    if (tablero[0][0].color == 1 || tablero[0][0].color == 0) {//un O azul y el otro O es rojo
+        if (tablero[0][0].color == tablero[3][0].color && tablero[0][0].color == tablero[6][0].color) {
+            if (tablero[0][0].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+    }
+    if (tablero[0][6].color == 1 || tablero[0][6].color == 0) {//un O azul y el otro O es rojo
+        if (tablero[0][6].color == tablero[3][6].color && tablero[0][6].color == tablero[6][6].color) {
+            if (tablero[0][6].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+    }
+ 
+    //cuadrado de en medio
+    //horizontales
+    if (tablero[1][1].color == 1 || tablero[1][1].color == 0) {//un o es azul y el otro O es rojo
+        if (tablero[1][1].color == tablero[1][3].color && tablero[1][1].color == tablero[1][5].color) {
+            if (tablero[1][1].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+
+    }
+    if (tablero[5][1].color == 1 || tablero[5][1].color == 0) {//un o es azul y el otro O es rojo
+        if (tablero[5][1].color == tablero[5][3].color && tablero[5][1].color == tablero[5][5].color) {
+            if (tablero[5][1].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+
+    }
+    //verticales
+    if (tablero[1][1].color == 1 || tablero[1][1].color == 0) {//un O azul y el otro O es rojo
+        if (tablero[1][1].color == tablero[3][1].color && tablero[1][1].color == tablero[5][1].color) {
+            if (tablero[1][1].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+    }
+    if (tablero[1][5].color == 1 || tablero[1][5].color == 0) {//un O azul y el otro O es rojo
+        if (tablero[1][5].color == tablero[3][5].color && tablero[1][5].color == tablero[5][5].color) {
+            if (tablero[1][5].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+    }
+ 
+    //cuadrado pequeño
+    //horizontales
+    if (tablero[2][2].color == 1 || tablero[2][2].color == 0) {//un o es azul y el otro O es rojo
+        if (tablero[2][2].color == tablero[2][3].color && tablero[2][2].color == tablero[2][4].color) {
+            if (tablero[2][2].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+
+    }
+    if (tablero[4][2].color == 1 || tablero[4][2].color == 0) {//un o es azul y el otro O es rojo
+        if (tablero[4][2].color == tablero[4][3].color && tablero[4][4].color) {
+            if (tablero[4][2].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+
+    }
+    //verticales
+    if (tablero[2][2].color == 1 || tablero[2][2].color == 0) {//un O azul y el otro O es rojo
+        if (tablero[2][2].color == tablero[3][2].color && tablero[2][2].color == tablero[4][2].color) {
+            if (tablero[2][2].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+    }
+    if (tablero[2][4].color == 1 || tablero[2][4].color == 0) {//un O azul y el otro O es rojo
+        if (tablero[2][4].color == tablero[3][4].color && tablero[2][4].color == tablero[4][4].color) {
+            if (tablero[2][4].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
     }
 
-    tablero.SetFicha(row, col, player.color);
-    return tablero;
-}
+    //extras del tablero
+    //horizontales
+    if (tablero[3][0].color == 1 || tablero[3][0].color == 0) {//un o es azul y el otro O es rojo
+        if (tablero[3][0].color == tablero[3][1].color && tablero[3][0].color == tablero[3][2].color) {
+            if (tablero[3][0].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
 
+    }
+    if (tablero[3][4].color == 1 || tablero[3][4].color == 0) {//un o es azul y el otro O es rojo
+        if (tablero[3][4].color == tablero[3][5].color && tablero[3][4].color==tablero[3][6].color) {
+            if (tablero[4][2].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+
+    }
+    //verticales
+    if (tablero[0][3].color == 1 || tablero[0][3].color == 0) {//un O azul y el otro O es rojo
+        if (tablero[0][3].color == tablero[1][3].color && tablero[0][3].color == tablero[2][3].color) {
+            if (tablero[0][3].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+    }
+    if (tablero[4][3].color == 1 || tablero[4][3].color == 0) {//un O azul y el otro O es rojo
+        if (tablero[4][3].color == tablero[5][3].color && tablero[4][3].color == tablero[6][3].color) {
+            if (tablero[4][3].color == 1) {
+                cont_az++;
+            }
+            else {
+                cont_rj++;
+            }
+        }
+    }
+ 
+    int *xaviersini = new int[2];
+    xaviersini[0] = cont_az; xaviersini[1] = cont_rj;
+    return xaviersini;
+}
 #endif
