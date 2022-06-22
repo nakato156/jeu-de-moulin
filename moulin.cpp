@@ -8,17 +8,17 @@
 */
 using namespace std;
 
-bool eliminarFicha(Tablero *tablero, int row, int col, Jugador player){
+bool eliminarFicha(Tablero &tablero, int row, int col, Jugador player){
     col = userXYToTableroXY(row, col);
     if (col == -1) return false;
     row--;
-    if ( !(tablero->Iam(row, col, player.color)) ) return false;
+    if ( !(tablero.Iam(row, col, player.color)) ) return false;
     player.fichas--;
-    tablero->SetFicha(row, col, -1);
+    tablero.SetFicha(row, col, -1);
     return true;
 }
 
-void WhenMolino (Tablero *tablero, Jugador oponente){
+void WhenMolino (Tablero &tablero, Jugador oponente){
     while(1){
         int eliminar_fila, eliminar_col;
         cout << "fila de la ficha a eliminar: ";
@@ -32,7 +32,7 @@ void WhenMolino (Tablero *tablero, Jugador oponente){
 }
 
 void Game(Jugador player1, Jugador player2){
-    Tablero *tablero = new Tablero;
+    Tablero tablero;
     Jugador player, oponente;
 
     int isMove, row, col, *puntos = nullptr;
@@ -66,22 +66,20 @@ void Game(Jugador player1, Jugador player2){
                 }
             }else puntos = puntoenhori(tablero);
         }
-        tablero->Show(1);
+        tablero.Show(1);
     }
-
-    delete[] tablero;
-    tablero = nullptr;
 }
 
 void PlayOff2Players() {
     Jugador player1 = RegistrarJugador();
     Jugador player2 = RegistrarJugador(0, player1.color);
-
     Game(player1, player2);
 }
 
 void PlayWithBot() {
-
+    Jugador player = RegistrarJugador();
+    Bot bot = Bot(player.color);
+    Game(bot, player);
 }
 
 int main(){

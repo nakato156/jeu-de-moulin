@@ -4,11 +4,15 @@
 using namespace std;
 
 struct Ficha {
-    Ficha() = default;
-    Ficha(int color, string repr): color(color), repr(repr) {}
-    int color;
-    string repr;
     public:
+    int color, x, y;
+    string repr;
+    Ficha() = default;
+    Ficha(int color, string repr) {
+        this->color = color;
+        this->repr = repr;
+    }
+    int getColor(){ return this->color; }
     void imprimir(){
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         if(color == -1){
@@ -20,4 +24,8 @@ struct Ficha {
         cout << repr;
         SetConsoleTextAttribute(hConsole, 7);
     }
+    void setCoordenate(int x, int y) {
+        this->x = x;
+        this->y = y;
+    }  
 };

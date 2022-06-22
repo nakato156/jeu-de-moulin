@@ -19,4 +19,8 @@ struct CacheGame{
         }
         size++;
     }
+    ~CacheGame(){
+        delete[] cache;
+        cache = nullptr;
+    }
 };

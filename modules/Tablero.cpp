@@ -67,14 +67,6 @@ struct Tablero {
     void SetFicha(int row, int col, int color){
         tablero[row][col].color = color;
     }
-    bool eliminarFicha(int row, int col, Jugador player){
-        col = userXYToTableroXY(row, col);
-        if(col == -1) return false;
-        row--;
-        player.fichas--;
-        tablero[row][col].color = -1;
-        return true;
-    }
     bool Iam(int row, int col, int color){
         return tablero[row][col].color == color;
     }
@@ -111,10 +103,9 @@ struct Tablero {
     Ficha *operator [] (unsigned int index){ return tablero[index]; }
 };
 
-int* puntoenhori(Tablero *ptablero) {
+int* puntoenhori(Tablero &tablero) {
     int cont_az = 0;
     int cont_rj = 0; 
-    Ficha **tablero = ptablero->tablero;
     //cuadrado grande
     //horizontales
     if (tablero[0][0].color == 1 || tablero[0][0].color == 0) { //un o es azul y el otro O es rojo
