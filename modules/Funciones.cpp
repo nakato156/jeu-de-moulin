@@ -89,3 +89,255 @@ void Game(Jugador player1, Jugador player2){
         tablero.Show(1);
     }
 }
+
+int piernitasCalientes(Tablero& tablero) {
+    //validaciones del cuadrado mas grande, incluyendo lineas de en medio
+    if (tablero[0][3].color !=-1) {
+        if (tablero[0][0].color !=-1 && tablero[0][6].color!=-1 && tablero[1][3].color !=-1) {
+            if (tablero[0][3].color == 1) {
+                cout << "la ficha del azul en la posicion 1, 2 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 1, 2 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[3][0].color != -1) {
+        if (tablero[0][0].color != -1 && tablero[6][0].color != -1 && tablero[3][1].color != -1) {
+            if (tablero[3][0].color == 1) {
+                cout << "la ficha del azul en la posicion 3, 1 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 3, 1  ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[6][3].color != -1) {
+        if (tablero[6][0].color != -1 && tablero[6][6].color != -1 && tablero[1][3].color != -1) {
+            if (tablero[6][3].color == 1) {
+                cout << "la ficha del azul en la posicion 6, 3 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 6, 3 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[3][6].color != -1) {
+        if (tablero[0][6].color != -1 && tablero[6][6].color != -1 && tablero[3][5].color != -1) {
+            if (tablero[3][6].color == 1) {
+                cout << "la ficha del azul en la posicion 3, 6 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 3, 6 ta atascada pe" << endl;
+            }
+        }
+    }
+    //esquinas del cuadrado grande
+    if (tablero[0][0].color != -1) {
+        if (tablero[0][3].color != -1 && tablero[3][0].color != -1) {
+            if (tablero[0][0].color == 1) {
+                cout << "la ficha del azul en la posicion 1, 1 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 1, 1 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[6][0].color != -1) {
+        if (tablero[6][3].color != -1 && tablero[3][0].color != -1) {
+            if (tablero[6][0].color == 1) {
+                cout << "la ficha del azul en la posicion 7, 1 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 7, 1 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[6][6].color != -1) {
+        if (tablero[6][3].color != -1 && tablero[3][6].color != -1) {
+            if (tablero[6][6].color == 1) {
+                cout << "la ficha del azul en la posicion 7, 3 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 7, 3 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[0][6].color != -1) {
+        if (tablero[0][3].color != -1 && tablero[3][6].color != -1) {
+            if (tablero[0][6].color == 1) {
+                cout << "la ficha del azul en la posicion 1, 3 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 1, 3 ta atascada pe" << endl;
+            }
+        }
+    }
+ 
+    //cuadrado de en medio pe
+ 
+    if (tablero[1][3].color != -1) {
+        if (tablero[1][1].color != -1 && tablero[1][5].color != -1 && tablero[2][3].color != -1 && tablero[0][3].color != -1) {
+            if (tablero[1][3].color == 1) {
+                cout << "la ficha del azul en la posicion 2, 3 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 2, 3 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[3][1].color != -1) {
+        if (tablero[1][1].color != -1 && tablero[5][1].color != -1 && tablero[3][0].color != -1 && tablero[3][2].color != -1) {
+            if (tablero[3][1].color == 1) {
+                cout << "la ficha del azul en la posicion 4, 2 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 4, 2  ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[5][3].color != -1) {
+        if (tablero[5][1].color != -1 && tablero[5][5].color != -1 && tablero[4][3].color != -1 && tablero[6][3].color != -1) {
+            if (tablero[5][3].color == 1) {
+                cout << "la ficha del azul en la posicion 6, 2 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 6, 2  ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[3][5].color != -1) {
+        if (tablero[1][5].color != -1 && tablero[5][5].color != -1 && tablero[3][4].color != -1 && tablero[3][6].color != -1) {
+            if (tablero[3][5].color == 1) {
+                cout << "la ficha del azul en la posicion 4, 5 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 4, 5  ta atascada pe" << endl;
+            }
+        }
+    }
+    //esquinas del cuadrado mediano pe
+    if (tablero[1][1].color != -1) {
+        if (tablero[1][3].color != -1 && tablero[3][1].color != -1) {
+            if (tablero[1][1].color == 1) {
+                cout << "la ficha del azul en la posicion 2, 1 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 2, 1 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[5][1].color != -1) {
+        if (tablero[3][1].color != -1 && tablero[5][3].color != -1) {
+            if (tablero[5][1].color == 1) {
+                cout << "la ficha del azul en la posicion 6, 1 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 6, 1 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[5][5].color != -1) {
+        if (tablero[3][5].color != -1 && tablero[5][3].color != -1) {
+            if (tablero[5][5].color == 1) {
+                cout << "la ficha del azul en la posicion 6, 3 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 6, 3 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[1][5].color != -1) {
+        if (tablero[3][5].color != -1 && tablero[1][3].color != -1) {
+            if (tablero[1][5].color == 1) {
+                cout << "la ficha del azul en la posicion 2, 3 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 2, 3 ta atascada pe" << endl;
+            }
+        }
+    }
+    //cuadrado pequeño 
+    if (tablero[2][3].color != -1) {
+        if (tablero[2][2].color != -1 && tablero[2][4].color != -1 && tablero[1][3].color != -1) {
+            if (tablero[2][3].color == 1) {
+                cout << "la ficha del azul en la posicion 3, 2 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 3, 2 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[3][2].color != -1) {
+        if (tablero[3][1].color != -1 && tablero[2][2].color != -1 && tablero[4][2].color != -1) {
+            if (tablero[3][2].color == 1) {
+                cout << "la ficha del azul en la posicion 4, 3 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 4, 3 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[4][3].color != -1) {
+        if (tablero[4][4].color != -1 && tablero[5][3].color != -1 && tablero[4][2].color != -1) {
+            if (tablero[4][3].color == 1) {
+                cout << "la ficha del azul en la posicion 5, 2 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 5, 2 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[3][4].color != -1) {
+        if (tablero[4][4].color != -1 && tablero[2][4].color != -1 && tablero[3][5].color != -1) {
+            if (tablero[4][3].color == 1) {
+                cout << "la ficha del azul en la posicion 4, 4 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 4, 4 ta atascada pe" << endl;
+            }
+        }
+    }
+    //esquinas
+    if (tablero[2][2].color != -1) {
+        if (tablero[3][2].color != -1 && tablero[2][3].color != -1) {
+            if (tablero[2][2].color == 1) {
+                cout << "la ficha del azul en la posicion 3, 1 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 3, 1 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[2][4].color != -1) {
+        if (tablero[3][4].color != -1 && tablero[2][3].color != -1) {
+            if (tablero[2][4].color == 1) {
+                cout << "la ficha del azul en la posicion 3, 3 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 3, 3 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[4][2].color != -1) {
+        if (tablero[3][2].color != -1 && tablero[4][3].color != -1) {
+            if (tablero[4][2].color == 1) {
+                cout << "la ficha del azul en la posicion 5, 1 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 5, 1 ta atascada pe" << endl;
+            }
+        }
+    }
+    if (tablero[4][4].color != -1) {
+        if (tablero[3][4].color != -1 && tablero[4][3].color != -1) {
+            if (tablero[4][4].color == 1) {
+                cout << "la ficha del azul en la posicion 5, 3 ta atascada pe" << endl;
+            }
+            else {
+                cout << "la ficha del rojo en la posicion 5, 3 ta atascada pe" << endl;
+            }
+        }
+    }
+    return 0;
+}

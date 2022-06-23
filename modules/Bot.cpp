@@ -5,11 +5,11 @@ struct Bot : public Jugador {
     bool first = true;
     int fichas = 9, size = 0;
     int color;
-    string nombre = "BOTcito";
     Ficha *posFichas = new Ficha[9];
     Bot() = default;
     Bot(int color){
         this->color = color == 1 ? 0 : 1;
+        this->nombre = "BOTcito"
     }
     ~Bot(){
         delete[] posFichas;
