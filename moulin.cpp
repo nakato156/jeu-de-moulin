@@ -7,6 +7,26 @@
 1 para Azules
 */
 using namespace std;
+string generarCodigoStr()
+{
+    string codigo;
+    for (int i = 0; i < 6; i++) {
+
+        int digitoUni = rand() % 2;
+
+        if (digitoUni == 0) {
+
+            char digitoC = 'A' + rand() % 28;
+            codigo.push_back(digitoC);
+        }
+        else {
+
+            int digito = rand() % 10;
+            codigo.push_back(digito + '0');
+        }
+    }
+    return codigo;
+}
 
 bool eliminarFicha(Tablero &tablero, int row, int col, Jugador player){
     col = userXYToTableroXY(row, col);
