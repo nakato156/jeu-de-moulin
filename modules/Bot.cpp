@@ -5,8 +5,9 @@ struct Bot : public Jugador {
     bool first = true;
     int fichas = 9, size = 0;
     int color;
+    string nombre = "BOTcito";
     Ficha *posFichas = new Ficha[9];
-    
+    Bot() = default;
     Bot(int color){
         this->color = color == 1 ? 0 : 1;
     }
@@ -14,7 +15,7 @@ struct Bot : public Jugador {
         delete[] posFichas;
     }
 
-    void PlayGame(Tablero &tablero, bool active_move) {
+    void PlayGame(Tablero &tablero, bool active_move, Bot exc) {
         if( first ){
             int row_random = rand() % 7;
             int col_random;
