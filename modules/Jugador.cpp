@@ -31,10 +31,10 @@ int convertirColor(char color_jug)
     if (color_jug == 'R') {
         nuevo_color = 0;
     }
-    if (color_jug == 'A') {
+    else if (color_jug == 'A') {
         nuevo_color = 1;
     }
-    if (color_jug == 'V') {
+    else if (color_jug == 'V') {
         nuevo_color = 2;
     }
     return nuevo_color;
@@ -88,19 +88,18 @@ struct Jugador {
     }
 };
 
-Jugador RegistrarJugador(int enable_color = 1, int ant_color = 0){
-    int fichas, movimientos, color;
+Jugador RegistrarJugador(int ant_color = -2){
+    int color;
     string nombre;
-    char _color;
 
-    cout << "Ingrese su nombre: ";
+    cout << "ingrese su nombre: ";
     cin >> nombre;
-    if(enable_color){
-        cout << "color de ficha (R/A): ";
-        cin >> _color;
-        _color = toupper(_color);
-        color = _color=='A';
-    }else color = !ant_color;
+
+    do {
+        menu();
+        char opc = leerOpcion();
+        color = convertirColor(opc);
+    } while( ant_color != color );
 
     return Jugador( color, nombre );
 }

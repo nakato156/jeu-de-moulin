@@ -10,7 +10,7 @@ using namespace std;
 
 void PlayOff2Players() {
     Jugador player1 = RegistrarJugador();
-    Jugador player2 = RegistrarJugador(0, player1.color);
+    Jugador player2 = RegistrarJugador(player1.color);
     Game(player1, player2);
 }
 
