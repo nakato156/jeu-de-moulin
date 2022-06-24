@@ -99,7 +99,7 @@ Jugador RegistrarJugador(int ant_color = -2){
         menu();
         char opc = leerOpcion();
         color = convertirColor(opc);
-    } while( ant_color != color );
+    } while( ant_color == color );
 
     return Jugador( color, nombre );
 }
