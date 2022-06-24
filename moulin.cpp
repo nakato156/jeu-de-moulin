@@ -2,7 +2,6 @@
 #include "modules/Funciones.cpp"
 #include "modules/Jugador.cpp"
 #include "modules/Menu.cpp"
-#include "modules/Bot.cpp"
 /*
 0 para Rojos
 1 para Azules

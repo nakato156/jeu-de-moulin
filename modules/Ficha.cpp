@@ -6,6 +6,7 @@ using namespace std;
 struct Ficha {
     public:
     int color, x, y;
+    bool block;
     string repr;
     Ficha() = default;
     Ficha(int color, string repr) {
@@ -20,6 +21,7 @@ struct Ficha {
             return;
         }
         int color_letra =  !color ? FOREGROUND_RED : FOREGROUND_BLUE;
+        if(color == 2) color_letra = FOREGROUND_GREEN;
         SetConsoleTextAttribute(hConsole, color_letra);
         cout << repr;
         SetConsoleTextAttribute(hConsole, 7);

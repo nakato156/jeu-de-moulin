@@ -14,7 +14,7 @@ struct Jugador {
     int fichas = 9;
     int movimientos = 0;
     int ultimaFicha[2];
-    void PlayGame(Tablero &tablero, bool active_move, Jugador exc){
+    void PlayGame(Tablero &tablero, bool active_move){
         int row = 0, col = 0;
         while(1){
             if(active_move){

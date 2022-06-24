@@ -21,14 +21,14 @@ void mostrarReglas()
 
 int mostrarMenu()
 {
-    cout << "\tBienvenido al Juego del Molino" << endl;
-    cout << "\t============================================================================================================" << endl;
-    cout << "\t1) Reglas del juego. " << endl;
-    cout << "\t2) Jugar. " << endl;
-    cout << "\t3) Fin." << endl;
+    cout << "Bienvenido al Juego del Molino" << endl;
+    cout << "============================================================================================================" << endl;
+    cout << "1) Reglas del juego. " << endl;
+    cout << "2) Jugar. " << endl;
+    cout << "3) Fin." << endl;
     int opcion;
     do {
-        cout << "\tIngrese su opcion (1-3): " << endl;
+        cout << "Ingrese su opcion (1-3): " << endl;
         cin >> opcion;
     } while (opcion < 1 || opcion > 3);
     if(opcion == 3) exit(EXIT_SUCCESS);
@@ -45,17 +45,16 @@ string leerCodigoOnline()
             cout << "Ingrese un codigo correcto." << endl;
         }
     } while (codigoOnline.size() != 6);
-    // cout << "aca va la parte online post codigo" << endl;
     return codigoOnline;
 }
 
 int MenuOnline()
 {
     int opcionOnline;
-    cout << "\t1)Unirse a un juego en curso: " << endl;
-    cout << "\t2)Crear un nuevo juego: " << endl;
+    cout << "1)Unirse a un juego en curso: " << endl;
+    cout << "2)Crear un nuevo juego: " << endl;
     do {
-        cout << "\tIngrese su eleccion (1-2): " << endl;
+        cout << "Ingrese su eleccion (1-2): " << endl;
         cin >> opcionOnline;
     } while (opcionOnline < 1 || opcionOnline > 2);
     return opcionOnline;
@@ -63,12 +62,12 @@ int MenuOnline()
 
 void MenuOffline(void (*PlayWithBot)(), void (*PlayWithFriend)())
 {
-    cout << "\tElige como quieres jugar: " << endl;
-    cout << "\t1) Jugador contra bot." << endl;
-    cout << "\t2) Dos jugadores. " << endl;
+    cout << "Elige como quieres jugar: " << endl;
+    cout << "1) Jugador contra bot." << endl;
+    cout << "2) Dos jugadores. " << endl;
     int opcionOffline;
     do {
-        cout << "\tIngrese su eleccion (1-2): " << endl;
+        cout << "Ingrese su eleccion (1-2): " << endl;
         cin >> opcionOffline;
     } while (opcionOffline < 1 || opcionOffline > 2);
     if(opcionOffline == 1){
@@ -82,11 +81,11 @@ int MenuModo()
 {
     int opcion;
     do {
-        cout << "\tElija su modo de juego: " << endl;
-        cout << "\t1) Juego online." << endl;
-        cout << "\t2) Juego offline. " << endl;
-        cout << "\t3) Salir. " << endl;
-        cout << "\tIngrese su opcion (1-3): " << endl;
+        cout << "Elija su modo de juego: " << endl;
+        cout << "1) Juego online." << endl;
+        cout << "2) Juego offline. " << endl;
+        cout << "3) Salir. " << endl;
+        cout << "Ingrese su opcion (1-3): " << endl;
         cin >> opcion;
     } while (opcion < 1 || opcion > 3);
     if(opcion == 3) exit(EXIT_SUCCESS);

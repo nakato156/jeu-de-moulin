@@ -7,12 +7,13 @@ void printEsp(int cant, int code){
 }
 
 int userXYToTableroXY(int row, int col){
-    if (row < 0 && row > 7) return -1;
-    if (row == 1 || row == 7) col = (col-1)*3;
+    if ( (row < 1 || row > 7) || ( col < 1 || col > 7) ) return -1;
+    else if (row == 1 || row == 7) col = (col-1)*3;
     else if (row == 2 || row == 6) col = (col*2)-1;
     else if (row == 3 || row == 5) col++;
     else if (row == 4) col = col<4 ? col-1 : col;
     else return -1;
+    col = col < 7 ? col : -1; 
     return col;
 }
 
@@ -68,7 +69,7 @@ struct Tablero {
         tablero[row][col].color = color;
     }
     bool Iam(int row, int col, int color){
-        return tablero[row][col].color == color;
+        return tablero[row][col].getColor() == color;
     }
     bool isEmptyCell (int x, int y){
         return tablero[x][y].color == -1;
@@ -99,7 +100,37 @@ struct Tablero {
         // cout << "la casilla esta ocupada. Intente con otra posicion";
         return false;
     }
-
+    Ficha* getRow(int row){
+        if(row < 0 || row > 6) return nullptr;
+        Ficha *fila = new Ficha[3];
+        if(row == 0 || row == 6) {
+            fila[0] = tablero[row][0]; fila[1] = tablero[row][3]; fila[2] = tablero[row][6];
+        }else if(row == 1 || row == 5){
+            fila[0] = tablero[row][1]; fila[1] = tablero[row][3]; fila[2] = tablero[row][5];
+        }else if(row == 2 || row == 4){
+            fila[0] = tablero[row][2]; fila[1] = tablero[row][3]; fila[2] = tablero[row][4];
+        }else {
+            delete[] fila;
+            fila = new Ficha[7];
+            fila = tablero[row];
+        }
+        return fila;
+    }
+    Ficha* getCol(int col){
+        Ficha *columna = new Ficha[3];
+        if ( col == 0 || col == 6 ){
+            columna[0] = tablero[0][col]; columna[1] = tablero[3][col]; columna[2] = tablero[6][col];
+        }else if ( col == 1 || col == 5 ){
+            columna[0] = tablero[1][col]; columna[1] = tablero[3][col]; columna[2] = tablero[5][col];
+        }else if ( col == 2 || col == 4 ){
+            columna[0] = tablero[2][col]; columna[1] = tablero[3][col]; columna[2] = tablero[4][col];
+        }else{
+            delete[] columna;
+            columna = new Ficha[7];
+            for(int i = 0; i < 7; i++) columna[i] = tablero[i][3];
+        }
+        return columna;
+    }
     Ficha *operator [] (unsigned int index){ return tablero[index]; }
 };
 

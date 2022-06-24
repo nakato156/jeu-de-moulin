@@ -1,32 +1,36 @@
+#ifndef CODIGO_BOT
+#define CODIGO_BOT
+#include <time.h>
 #include "Jugador.cpp"
 
-struct Bot : public Jugador {
+struct Bot {
     public:
     bool first = true;
     int fichas = 9, size = 0;
     int color;
+    string nombre = "BOTcito";
     Ficha *posFichas = new Ficha[9];
     Bot() = default;
     Bot(int color){
         this->color = color == 1 ? 0 : 1;
-        this->nombre = "BOTcito"
     }
     ~Bot(){
         delete[] posFichas;
     }
 
-    void PlayGame(Tablero &tablero, bool active_move, Bot exc) {
+    void PlayGame(Tablero &tablero, bool active_move) {
         if( first ){
-            int row_random = rand() % 7;
-            int col_random;
+            srand(time(NULL));
+            int col_random, row_random;
             while(1){
-                col_random = userXYToTableroXY(row_random, 1 + rand() % 9);
+                row_random = 1 + rand() % 7;
+                col_random = userXYToTableroXY(row_random, 1 + rand() % 7);
                 if(col_random != -1) break;
             }
-            Ficha pos_ficha = tablero[row_random][col_random];
-            pos_ficha.color = this->color;
-            pos_ficha.setCoordenate(row_random, col_random);
-            posFichas[size];
+            row_random--;
+            tablero[row_random][col_random].color = this->color;
+            // pos_ficha.setCoordenate(row_random, col_random);
+            // posFichas[size];
             size++;
             first = false;
             return;
@@ -37,27 +41,33 @@ struct Bot : public Jugador {
     }
 
     void pensar(Tablero &tablero){
-        int stop = 0;
-        for(int row = 0; row<7; row++){
+        for(int row = 1; row<8; row++){
             bool maybeWin = false;
             int contFichas = 0;
-            for(int col = 0; col<7; col++){
-                int colorFicha = tablero[row][col].color;
+            for(int col = 1; col<8; col++){
+                int _col = userXYToTableroXY(row, col);
+                if( _col == -1 ) continue;
+                int _row = row-1;
+                int colorFicha = tablero[_row][_col].getColor();
                 if(colorFicha != this->color) contFichas++;
-                else if(maybeWin && colorFicha == -1 ) {
-                    tablero[row][col].color = this->color;
-                    stop = 1;
-                    break;
-                }else contFichas = 0;
                 maybeWin = contFichas == 2;
+                if(maybeWin && colorFicha == -1 ) {
+                    tablero[_row][_col].color = this->color;
+                    cout << _row << "," << _col << endl;
+                    return;
+                }
             }
-            if(stop) break;
         }
+        cout << "no se me ocurrio nada :(" << endl;
     }
 
-    void Dijkstra(Tablero const tablero){
+    void Molino(Tablero const &tablero){
+
+    }
+
+    void Dijkstra(Tablero const &tablero){
 
     }
 
 };
-
+#endif
