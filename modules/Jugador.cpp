@@ -50,7 +50,7 @@ struct Jugador {
     int fichas = 9;
     int movimientos = 0;
     int ultimaFicha[2];
-    void PlayGame(Tablero &tablero, bool active_move = false){
+    void PlayGame(Tablero &tablero, bool active_move, Jugador exc){
         int row = 0, col = 0;
         while(1){
             if(active_move){
@@ -58,13 +58,13 @@ struct Jugador {
                 int act_col = userXYToTableroXY(row, col); 
                 int act_row = row-1;
                 if( tablero[row][col].getColor() != color ) {
-                    cout << "La ficha no le corresponde";
+                    cout << "La ficha no le corresponde" << endl;
                     continue;
                 }
                 char dir;
                 cout << "a donde lo quiere mover? (w/a/s/d): ";
                 cin >> dir;
-                tablero.moveFicha(act_row, act_col, row, col, tolower(dir), color);
+                tablero.moveFicha(act_row, act_col, row, col, tolower(dir), color); return;
             }else{
                 leerFicha(row, col, "ingrese la fila donde ira la ficha: ", "ingrese la columna donde ira la ficha: ");
                 col = userXYToTableroXY(row, col); row--;
