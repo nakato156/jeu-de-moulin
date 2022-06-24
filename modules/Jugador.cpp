@@ -4,6 +4,42 @@
 #include "Tablero.cpp"
 
 using namespace std;
+
+void menu()
+{
+    cout << "Bienvenido a la eleccion del color de sus fichas: " << endl;
+    cout << "Estos son sus opciones: " << endl;
+    cout << "R) Rojo " << endl;
+    cout << "A) Azul " << endl;
+    cout << "V) Verde " << endl;
+}
+
+char leerOpcion()
+{
+    char color_jug;
+    do {
+        cout << "Elija su color por favor: " << endl;
+        cin >> color_jug;
+        color_jug = toupper(color_jug);
+    } while (color_jug != 'R' && color_jug != 'A' && color_jug != 'V');
+    return color_jug;
+}
+
+int convertirColor(char color_jug)
+{
+    int nuevo_color = 0;
+    if (color_jug == 'R') {
+        nuevo_color = 0;
+    }
+    if (color_jug == 'A') {
+        nuevo_color = 1;
+    }
+    if (color_jug == 'V') {
+        nuevo_color = 2;
+    }
+    return nuevo_color;
+}
+
 struct Jugador {
     Jugador() = default;
     Jugador(int color, string nombre, int fichas = 9, int movimientos = 0): 
