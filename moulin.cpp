@@ -2,10 +2,7 @@
 #include "modules/Funciones.cpp"
 #include "modules/Jugador.cpp"
 #include "modules/Menu.cpp"
-/*
-0 para Rojos
-1 para Azules
-*/
+
 using namespace std;
 
 void PlayOff2Players() {
@@ -34,7 +31,7 @@ int main(){
     switch (modo_juego)
     {
     case 1:
-        /* code Online game*/
+        cout << "coming soon" << endl;
         break;
     case 2:
         MenuOffline(PlayWithBot, PlayOff2Players);

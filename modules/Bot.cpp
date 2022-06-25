@@ -9,10 +9,11 @@ struct Bot {
     int fichas = 9, size = 0;
     int color;
     string nombre = "BOTcito";
-    Ficha *posFichas = new Ficha[9];
+    Ficha *posFichas;
     Bot() = default;
     Bot(int color){
         this->color = color == 1 ? 0 : 1;
+        posFichas = new Ficha[1];
     }
     ~Bot(){
         delete[] posFichas;
@@ -29,9 +30,7 @@ struct Bot {
             }
             row_random--;
             tablero[row_random][col_random].color = this->color;
-            // pos_ficha.setCoordenate(row_random, col_random);
-            // posFichas[size];
-            size++;
+            addFicha(row_random, col_random);
             first = false;
             return;
         }else if( active_move ){
@@ -39,7 +38,21 @@ struct Bot {
         }
         pensar(tablero);
     }
-
+    void addFicha(int row, int col){
+        Ficha ficha;
+        ficha.setCoordenate(row, col);
+        if(size == 0) posFichas[size] = ficha;
+        else{
+            Ficha *new_arr = new Ficha[size];
+            for(int i = 0; i < size; i++){
+                new_arr[i] = posFichas[i];
+            }
+            delete[] posFichas;
+            posFichas = new_arr;
+            posFichas[size] = ficha;
+        }
+        size++;
+    }
     void pensar(Tablero &tablero){
         for(int row = 1; row<8; row++){
             bool maybeWin = false;

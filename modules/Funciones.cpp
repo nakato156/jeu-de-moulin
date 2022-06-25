@@ -167,6 +167,8 @@ void Game(Jugador player1, Jugador player2){
                     puntos = n_puntos;
                     cout << "molino para " << player.nombre << endl;
                     WhenMolino(tablero, oponente);
+                    int *n_puntos = puntoenhori(tablero);
+                    puntos[0] = n_puntos[0]; puntos[1] = n_puntos[1];
                 }
             }else puntos = puntoenhori(tablero);
             piernitasCalientes(tablero);

@@ -91,3 +91,41 @@ int MenuModo()
     if(opcion == 3) exit(EXIT_SUCCESS);
     return opcion;
 }
+
+// Pantalla de fin
+int generarNumWin() {
+    int variableini;
+    variableini = rand() % 2;
+    return variableini;
+}
+int generarNumloss() {
+    int loss;
+    loss = rand() % 2;
+    return loss;
+}
+
+void piernini(Jugador winner, Jugador losser) {
+    int variableini = generarNumWin();
+    int loss = generarNumloss();
+    cout<<"===============FELICIDADES GANASTE=============== " << endl;
+    if (variableini==0)
+    {
+        cout << winner.nombre << " bien jugado" << endl;
+    }
+    else {
+        cout << winner.nombre << " enhorabuena" << endl;
+    }
+    cout << "Estadisticas Ganador---------------"<<endl;
+    cout << "numero de fichas: "<< winner.fichas<<endl;
+    cout << "numeor de movimientos: "<<winner.movimientos<<endl;
+    cout << "=============== PERDEDOR =============== " << endl;
+    if (variableini == 0) {
+        cout << losser.nombre << "mas suerte para la proxima :c" << endl;
+    }
+    else {
+        cout << losser.nombre << "buen intento, pero no fue suficiente :(" << endl;
+    }
+    cout << "Estadisticas Perdedor---------------"<<endl;
+    cout << "numero de fichas: " << losser.fichas<<endl;
+    cout << "numeor de movimientos: " << losser.movimientos<<endl;
+}
