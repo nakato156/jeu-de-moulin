@@ -5,6 +5,7 @@
 /*
 0 para Rojos
 1 para Azules
+2 para verdes
 */
 using namespace std;
 
