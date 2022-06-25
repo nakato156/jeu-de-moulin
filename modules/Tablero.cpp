@@ -23,7 +23,7 @@ struct Tablero {
         tablero = new Ficha*[7];
         for(int i = 0; i<7; i++) {
             tablero[i] = new Ficha[7];
-            for(int c=0; c<7; c++){ cout << "creando " << i << " ->"; Ficha ficha; tablero[i][c] = ficha; }
+            for(int c=0; c<7; c++){ Ficha ficha; tablero[i][c] = ficha; }
         }
     }
     ~Tablero(){
@@ -73,10 +73,10 @@ struct Tablero {
         return tablero[row][col].getColor() == color;
     }
     bool isEmptyCell (int x, int y){
-        return tablero[x][y].color == -1;
+        return tablero[x][y].getColor() == -1;
     }
     int moveFicha(int act_row, int act_col, int row, int col, char dir, int color){
-        if (tablero[act_row][act_col].color != color) return 0;
+        if (tablero[act_row][act_col].getColor() != color) return 0;
 
         if (dir == 'a') col--;
         else if (dir == 'd') col++;
@@ -94,11 +94,11 @@ struct Tablero {
         if (col < 0 || row < 0) return -1;
 
         if ( isEmptyCell(row, col) ){
-            tablero[act_row][act_col].color = -1;
-            tablero[row][col].color = color;
+            tablero[act_row][act_col].reset();
+            tablero[row][col].setColor(color);
             return true;
         }
-        // cout << "la casilla esta ocupada. Intente con otra posicion";
+        cout << "la casilla esta ocupada. Intente con otra posicion" << endl;
         return false;
     }
     Ficha* getRow(int row){

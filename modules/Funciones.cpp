@@ -50,12 +50,12 @@ bool InMolino(Tablero &tablero, int row, int col){
     delete[] arr;
     arr = tablero.getCol(col);
     molino = arr[0].getColor() == color;
+    max = col == 4 ? 7 : 3;
 
     if( !molino ) return false;
-    for(int i = 1; i < 7; i++){
-        if(i == 3) continue;
+    for(int i = 1; i < max; i++){
         int act_color = arr[i].getColor();
-        if( act_color < -1 || act_color > 1 ) continue;
+        if( act_color == -1 ) break;
         else if(act_color != color) return false;
     }
     return true;
@@ -66,7 +66,7 @@ bool eliminarFicha(Tablero &tablero, int row, int col, T oponente){
     col = userXYToTableroXY(row, col);
     if (col == -1) return false;
     row--;
-    if ( !(tablero.Iam(row, col, oponente.color)) ){
+    if ( tablero[row][col].getColor() != oponente.color) {
         cout << "La ficha le pertenece " << oponente.color << " " << row << " " << col<< endl;
         return false;
     }
@@ -75,7 +75,7 @@ bool eliminarFicha(Tablero &tablero, int row, int col, T oponente){
         return false;
     }
     oponente.fichas--;
-    tablero.SetFicha(row, col, -1);
+    tablero[row][col].reset();
     return true;
 }
 

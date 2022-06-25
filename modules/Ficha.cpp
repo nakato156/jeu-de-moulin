@@ -9,6 +9,11 @@ struct Ficha {
     string repr = "O";
     int getColor(){ return color; }
     void setColor(int _color) { color = _color; }
+    void reset(){
+        color = -1;
+        block = false;
+        x = 0; y = 0;
+    }
     void imprimir(){
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         if(color == -1){
@@ -21,8 +26,8 @@ struct Ficha {
         cout << repr;
         SetConsoleTextAttribute(hConsole, 7);
     }
-    void setCoordenate(int x, int y) {
-        this->x = x;
-        this->y = y;
+    void setCoordenate(int _x, int _y) {
+        x = _x;
+        y = _y;
     }  
 };

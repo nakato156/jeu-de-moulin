@@ -1,30 +1,22 @@
 // #include "../modules/Jugador.cpp"
 // #include "../modules/Bot.cpp"
-#include "../modules/Cache.cpp"
+// #include "../modules/Cache.cpp"
 #include "../modules/Menu.cpp"
 #include "../modules/Funciones.cpp"
 
 using namespace std;
 
-void animationTablero(){
+void testGets(){
     Tablero tablero;
-    CacheGame game;
 
-    tablero.Show();
+    tablero.SetFicha(0, 0, 1);
+    tablero.SetFicha(0, 3, 0);
+    tablero.SetFicha(1, 1, 1);
+    tablero.SetFicha(2, 2, 0);
+    tablero.Show(1);
 
-    for(int i = 0; i<5; i++){
-        tablero[i][1].color = 1;
-        game.add(tablero);
-    }
-    
-    for(int i=0; i<5; i++){
-        game.cache[i].Show();
-        cout << endl << endl;
-    }
-}
-
-void testMenu() {
-    mostrarReglas();
+    tablero.moveFicha(1, 2, 2, 1, 'd', 1);
+    tablero.Show(0);
 }
 
 void testMoveFicha(){
@@ -55,6 +47,6 @@ void testPlayWithBot(){
 }
 
 int main(){
-    testPlayWithBot();
+    testGets();
     return 0;
 }
