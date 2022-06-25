@@ -196,7 +196,7 @@ int* puntoenhori(Tablero &tablero) {
             if (tablero[1][1].color == 1) {
                 cont_az++;
             }
-            else if (tablero[1][1].color == 1) {
+            else if (tablero[1][1].color == 0) {
                 cont_rj++;
             }
             else {color_verde++;}
@@ -208,7 +208,7 @@ int* puntoenhori(Tablero &tablero) {
             if (tablero[5][1].color == 1) {
                 cont_az++;
             }
-            else if (tablero[5][1].color == 1) {
+            else if (tablero[5][1].color == 0) {
                 cont_rj++;
             }
             else {color_verde++;}
@@ -246,7 +246,7 @@ int* puntoenhori(Tablero &tablero) {
             if (tablero[2][2].color == 1) {
                 cont_az++;
             }
-            else if (tablero[2][2].color == 1) {
+            else if (tablero[2][2].color == 0) {
                 cont_rj++;
             }
             else {color_verde++;}
@@ -305,10 +305,10 @@ int* puntoenhori(Tablero &tablero) {
     }
     if (tablero[3][4].color !=-1 ) {//un o es azul y el otro O es rojo
         if (tablero[3][4].color == tablero[3][5].color && tablero[3][4].color==tablero[3][6].color) {
-            if (tablero[4][2].color == 1) {
+            if (tablero[3][4].color == 1) {
                 cont_az++;
             }
-            else if (tablero[4][2].color == 0) {
+            else if (tablero[3][4].color == 0) {
                 cont_rj++;
             }
             else {color_verde++;}
@@ -332,15 +332,15 @@ int* puntoenhori(Tablero &tablero) {
             if (tablero[4][3].color == 1) {
                 cont_az++;
             }
-            else if (tablero[4][3].color == 1) {
+            else if (tablero[4][3].color == 0) {
                 cont_rj++;
             }
             else {color_verde++;}
         }
     }
  
-    int *xaviersini = new int[2];
-    xaviersini[0] = cont_az; xaviersini[1] = cont_rj;
+    int *xaviersini = new int[3];
+    xaviersini[0] = cont_az; xaviersini[1] = cont_rj; xaviersini[2]=color_verde;
     return xaviersini;
 }
 #endif
