@@ -4,15 +4,9 @@
 using namespace std;
 
 struct Ficha {
-    int color, x, y;
+    int color = -1, x, y;
     bool block;
-    string repr;
-    Ficha() = default;
-    Ficha(int _color, string _repr) {
-        cout << "nueva ficha creada " << endl;
-        color = _color;
-        repr = _repr;
-    }
+    string repr = "O";
     int getColor(){ return color; }
     void setColor(int _color) { color = _color; }
     void imprimir(){

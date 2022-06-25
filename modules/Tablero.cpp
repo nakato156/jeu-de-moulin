@@ -23,7 +23,7 @@ struct Tablero {
         tablero = new Ficha*[7];
         for(int i = 0; i<7; i++) {
             tablero[i] = new Ficha[7];
-            for(int c=0; c<7; c++){ cout << "creando " << i << " ->"; tablero[i][c] = Ficha(-1, "O"); }
+            for(int c=0; c<7; c++){ cout << "creando " << i << " ->"; Ficha ficha; tablero[i][c] = ficha; }
         }
     }
     ~Tablero(){
@@ -31,6 +31,8 @@ struct Tablero {
         delete[] tablero;
         tablero = nullptr;
     }
+    Tablero(const Tablero &) = delete;
+    Tablero &operator =(const Tablero &) = delete;
     void Show(int clear=0){
         if (clear) system("cls");
         cout << char(201); printEsp(23, 205); cout << char(187) << endl;
