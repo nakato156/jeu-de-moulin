@@ -2,6 +2,7 @@
 #include <string>
 #include <time.h>
 #include "Bot.cpp"
+#include "Menu.cpp"
 
 using namespace std;
 
@@ -152,6 +153,7 @@ void Game(Jugador player1, Jugador player2){
             player = player2;
             oponente = player1;
         }
+        if( player.fichas == 2 || oponente.fichas == 2) break;
         
         if(i == 17) {
             cout << "movida de fichas" << endl;
@@ -175,6 +177,9 @@ void Game(Jugador player1, Jugador player2){
         }
         tablero.Show(1);
     }
+    if ( player.fichas == 2 ) piernini(oponente, player);
+    else piernini(player, oponente);
+
 }
 
 int piernitasCalientes(Tablero& tablero) {

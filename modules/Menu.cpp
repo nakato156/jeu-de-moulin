@@ -1,9 +1,10 @@
+#ifndef CODIGO_MENU
+#define CODIGO_MENU
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <conio.h>
 #include <string.h>
-
 using namespace std;
 
 void mostrarReglas()
@@ -129,3 +130,4 @@ void piernini(Jugador winner, Jugador losser) {
     cout << "numero de fichas: " << losser.fichas<<endl;
     cout << "numeor de movimientos: " << losser.movimientos<<endl;
 }
+#endif

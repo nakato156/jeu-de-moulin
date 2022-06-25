@@ -1,7 +1,6 @@
 #include <iostream>
 #include "modules/Funciones.cpp"
 #include "modules/Jugador.cpp"
-#include "modules/Menu.cpp"
 
 using namespace std;
 
