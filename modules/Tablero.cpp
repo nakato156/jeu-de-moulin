@@ -254,7 +254,7 @@ int* puntoenhori(Tablero &tablero) {
 
     }
     if (tablero[4][2].color !=-1 ) {//un o es azul y el otro O es rojo
-        if (tablero[4][2].color == tablero[4][3].color && tablero[4][4].color) {
+        if (tablero[4][2].color == tablero[4][3].color && tablero[4][2].color== tablero[4][4].color) {
             if (tablero[4][2].color == 1) {
                 cont_az++;
             }
