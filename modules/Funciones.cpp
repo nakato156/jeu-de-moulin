@@ -66,7 +66,7 @@ bool eliminarFicha(Tablero &tablero, int row, int col, T oponente){
     if (col == -1) return false;
     row--;
     if ( !(tablero.Iam(row, col, oponente.color)) ){
-        cout << "La ficha no le pertenece " << oponente.color << " " << row << " " << col<< endl;
+        cout << "La ficha le pertenece " << oponente.color << " " << row << " " << col<< endl;
         return false;
     }
     if ( InMolino(tablero, row+1, col) ){
@@ -165,12 +165,12 @@ void Game(Jugador player1, Jugador player2){
         if(i > 1) {
             if(puntos != nullptr){
                 int *n_puntos = puntoenhori(tablero);
-                if(puntos[0] != n_puntos[0] || puntos[1] != n_puntos[1]){
+                if(puntos[0] != n_puntos[0] || puntos[1] != n_puntos[1] || puntos[2] != n_puntos[2]){
                     puntos = n_puntos;
                     cout << "molino para " << player.nombre << endl;
                     WhenMolino(tablero, oponente);
                     int *n_puntos = puntoenhori(tablero);
-                    puntos[0] = n_puntos[0]; puntos[1] = n_puntos[1];
+                    puntos[0] = n_puntos[0]; puntos[1] = n_puntos[1]; puntos[2] = n_puntos[2];
                 }
             }else puntos = puntoenhori(tablero);
             piernitasCalientes(tablero);
