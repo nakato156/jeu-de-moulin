@@ -6,13 +6,13 @@ using namespace std;
 
 void PlayOff2Players() {
     Jugador player1 = RegistrarJugador();
-    Jugador player2 = RegistrarJugador(player1.color);
+    Jugador player2 = RegistrarJugador(player1.colorj);
     Game(player1, player2);
 }
 
 void PlayWithBot() {
     Jugador player = RegistrarJugador();
-    Bot bot = Bot(player.color);
+    Bot bot = Bot(player.colorj);
     Game(bot, player);
 }
 

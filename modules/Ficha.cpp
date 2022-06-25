@@ -4,16 +4,17 @@
 using namespace std;
 
 struct Ficha {
-    public:
     int color, x, y;
     bool block;
     string repr;
     Ficha() = default;
-    Ficha(int color, string repr) {
-        this->color = color;
-        this->repr = repr;
+    Ficha(int _color, string _repr) {
+        cout << "nueva ficha creada " << endl;
+        color = _color;
+        repr = _repr;
     }
-    int getColor(){ return this->color; }
+    int getColor(){ return color; }
+    void setColor(int _color) { color = _color; }
     void imprimir(){
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         if(color == -1){

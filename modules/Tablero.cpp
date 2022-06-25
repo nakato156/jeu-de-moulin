@@ -19,12 +19,11 @@ int userXYToTableroXY(int row, int col){
 
 struct Tablero {
     Ficha **tablero;
-    public:
     Tablero(){
         tablero = new Ficha*[7];
         for(int i = 0; i<7; i++) {
             tablero[i] = new Ficha[7];
-            for(int c=0; c<7; c++) tablero[i][c]=Ficha(-1, "O");
+            for(int c=0; c<7; c++){ cout << "creando " << i << " ->"; tablero[i][c] = Ficha(-1, "O"); }
         }
     }
     ~Tablero(){
@@ -65,8 +64,8 @@ struct Tablero {
         }
         cout << char(200); printEsp(23, 205); cout << char(188) << endl;
     }
-    void SetFicha(int row, int col, int color){
-        tablero[row][col].color = color;
+    void SetFicha(int row, int col, int _color){
+        tablero[row][col].setColor(_color);
     }
     bool Iam(int row, int col, int color){
         return tablero[row][col].getColor() == color;

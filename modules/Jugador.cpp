@@ -42,14 +42,12 @@ int convertirColor(char color_jug)
 
 struct Jugador {
     Jugador() = default;
-    Jugador(int color, string nombre, int fichas = 9, int movimientos = 0): 
-    color(color), nombre(nombre), fichas(fichas), movimientos(movimientos) {}
+    Jugador(int _color, string _nombre): colorj(_color), nombre(_nombre) {}
     int turno;
-    int color;
+    int colorj;
     string nombre;
     int fichas = 9;
     int movimientos = 0;
-    int ultimaFicha[2];
     void PlayGame(Tablero &tablero, bool active_move){
         int row = 0, col = 0;
         while(1){
@@ -57,21 +55,21 @@ struct Jugador {
                 leerFicha(row, col, "ingrese la fila de la ficha a mover: ", "ingrese la columna de la ficha a mover: ");
                 int act_col = userXYToTableroXY(row, col); 
                 int act_row = row-1;
-                if( tablero[row][col].getColor() != color ) {
+                if( tablero[row][col].getColor() != colorj ) {
                     cout << "La ficha no le corresponde" << endl;
                     continue;
                 }
                 char dir;
                 cout << "a donde lo quiere mover? (w/a/s/d): ";
                 cin >> dir;
-                tablero.moveFicha(act_row, act_col, row, col, tolower(dir), color); return;
+                tablero.moveFicha(act_row, act_col, row, col, tolower(dir), colorj); return;
             }else{
                 leerFicha(row, col, "ingrese la fila donde ira la ficha: ", "ingrese la columna donde ira la ficha: ");
                 col = userXYToTableroXY(row, col); row--;
                 if( tablero.isEmptyCell(row, col) ) break;
             }
         }
-        tablero.SetFicha(row, col, color);
+        tablero.SetFicha(row, col, colorj);
     }
     void leerFicha(int &row, int &col, string promt_row, string prompt_col){
         while(1){
