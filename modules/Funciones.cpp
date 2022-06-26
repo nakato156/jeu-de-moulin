@@ -105,7 +105,7 @@ void Game(Bot player1, Jugador player2){
                         WhenMolino(tablero, player);
                         player1.fichas--;
                     }
-                    else player1.Molino(tablero);
+                    else player1.Molino(tablero, player2);
                     puntos = puntoenhori(tablero);
                 }
             }else puntos = puntoenhori(tablero);
