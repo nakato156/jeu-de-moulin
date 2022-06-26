@@ -81,14 +81,23 @@ struct Tablero {
         
         col = userXYToTableroXY(row, col);
         row --;
-
-        int ws = 3, _row = row;
-        if (dir == 'w' || dir == 's'){
-            if (col>2) _row = 6 - col;
-            _row = abs(ws - col);
-            cout << "pre row: " << _row << endl;
-            row += dir == 'w' ? -1*_row : _row;
-            cout << "row: " << row << endl;
+        int salto, ws = 3, _row = row;
+        if (dir == 'w' || dir == 's') {
+            if (col == 0 || col == 6) {
+                salto = 3;
+            }
+            else if (col == 1 || col == 5) {
+                salto = 2;
+            }
+            else if (col == 2 || col == 3 || col == 4) {
+                salto = 1;
+            }
+            if (dir == 'w') {
+                row -= salto;
+            }
+            else if (dir == 's') {
+                row += salto;
+            }
         }
         
         if (col < 0 || row < 0) return -1;
@@ -156,7 +165,7 @@ int* puntoenhori(Tablero &tablero) {
         }
 
     }
-    if (tablero[6][0].color == 1 ) {//un o es azul y el otro O es rojo
+    if (tablero[6][0].color != -1 ) {//un o es azul y el otro O es rojo
         if (tablero[6][0].color == tablero[6][3].color && tablero[6][0].color == tablero[6][6].color) {
             if (tablero[6][0].color == 1) {
                 cont_az++;
