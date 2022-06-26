@@ -6,7 +6,6 @@
 #include <conio.h>
 #include <string.h>
 #include <Windows.h>
-#include <locale.h>
 using namespace std;
 
 void mostrarReglas()
@@ -94,9 +93,8 @@ int mostrarMenu()
 {
     cout << "BIENVENIDO A NUESTRO JUEGO DEL MOLINO" << endl; cout << endl;
     dibujarLogo();
-    setlocale(LC_ALL, "spanish");
     cout << endl;
-    cout << "EQUIPO LOS CARIÑOSITOS DE C++" << endl;
+    cout << "EQUIPO LOS CARINIOSITOS DE C++" << endl;
     cout << endl;
     cout << "Integrantes del equipo: " << endl; cout << endl;
     cout << "Borasino Velasquez, Christian Aaron \tU202218075" << endl;
