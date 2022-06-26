@@ -153,6 +153,7 @@ void Game(Jugador player1, Jugador player2){
                     puntos[0] = n_puntos[0]; puntos[1] = n_puntos[1]; puntos[2] = n_puntos[2];
                 }
             }else puntos = puntoenhori(tablero);
+            tablero.Show(1);
             piernitasCalientes(tablero);
         }
     }
