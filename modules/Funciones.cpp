@@ -214,8 +214,8 @@ void piernini(Jugador winner, Jugador losser) {
         cout << winner.nombre << " enhorabuena" << endl;
     }
     cout << "Estadisticas Ganador---------------"<<endl;
-    cout << "numero de fichas: "<< winner.fichas<<endl;
-    cout << "numeor de movimientos: "<<winner.movimientos<<endl;
+    cout << "Numero de fichas: "<< winner.fichas<<endl;
+    cout << "Numero de movimientos: "<<winner.movimientos<<endl;
     cout << "=============== PERDEDOR =============== " << endl;
     if (variableini == 0) {
         cout << losser.nombre << "mas suerte para la proxima :c" << endl;
@@ -224,6 +224,6 @@ void piernini(Jugador winner, Jugador losser) {
         cout << losser.nombre << "buen intento, pero no fue suficiente :(" << endl;
     }
     cout << "Estadisticas Perdedor---------------"<<endl;
-    cout << "numero de fichas: " << losser.fichas<<endl;
-    cout << "numeor de movimientos: " << losser.movimientos<<endl;
+    cout << "Numero de fichas: " << losser.fichas<<endl;
+    cout << "Numero de movimientos: " << losser.movimientos<<endl;
 }

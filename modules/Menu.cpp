@@ -5,12 +5,13 @@
 #include <sstream>
 #include <conio.h>
 #include <string.h>
+#include <Windows.h>
 using namespace std;
 
 void mostrarReglas()
 {
     ifstream archivo;
-    archivo.open("reglas.txt");
+    archivo.open("C:/Users/bruno/OneDrive/Escritorio/UPC/1er semestre/programación 1/Trabajo final/reglas.txt");
     string linea;
     if(archivo.is_open()){
         while(getline(archivo, linea)) {
@@ -20,10 +21,89 @@ void mostrarReglas()
     } else exit(EXIT_FAILURE);
 }
 
+void dibujarLogo()
+{
+    int logo[25][45] = {
+{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,2,2,2,0,0,0,0,0,0,0,0,0,2,2,2,0,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,2,3,3,3,2,0,2,2,2,2,2,0,2,3,3,3,2,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,2,3,3,3,2,2,0,0,0,0,0,2,2,3,3,3,2,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,2,3,3,2,0,0,0,0,0,0,0,0,0,2,3,3,2,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,2,3,2,0,0,0,0,0,0,0,0,0,0,0,2,3,2,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,2,0,0,2,2,0,0,0,0,0,2,2,0,0,2,0,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,0,4,0,4,0,0,2,0,0,2,3,2,0,0,0,0,0,2,3,2,0,0,2,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,0,4,0,4,0,0,2,0,0,2,0,2,0,0,0,0,0,2,0,2,0,0,2,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,0,4,4,4,0,0,2,0,4,2,2,2,0,0,2,0,0,2,2,2,4,0,2,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,0,0,4,0,0,0,2,0,4,4,4,4,0,2,0,2,0,4,4,4,4,0,2,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,2,2,0,0,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,0,0,0,0,0},
+{0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,2,2,2,0,0,0,0,0,0,0,2,2,2,0,0,0},
+{0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,2,3,3,3,2,0,2,0,2,0,2,3,3,3,2,0,0},
+{0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,2,3,3,3,2,0,0,2,0,0,2,3,3,3,2,0,0},
+{0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,2,3,3,3,2,0,0,0,0,0,2,3,3,3,2,0,0},
+{0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,0,2,2,2,0,2,2,2,2,2,0,2,2,2,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,5,0,5,0,5,0,5,0,5,0,5,0,5,0,5,0},
+{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,5,0,5,0,5,0,5,0,5,0,5,0,5,0,0},
+{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,5,0,5,0,5,0,5,0,5,0,5,0,5,0,5,0},
+{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+    };
+
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    for (int i = 0; i < 25; i++) {
+        for (int j = 0; j < 45; j++) {
+            if (logo[i][j] == 0) {
+                SetConsoleTextAttribute(hConsole, 15);
+                cout << char(219);
+            }
+            else if (logo[i][j] == 1) {
+                HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+                SetConsoleTextAttribute(hConsole, 1); //azul
+                cout << char(219);
+            }
+            else if (logo[i][j] == 2) {
+                HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+                SetConsoleTextAttribute(hConsole, 0); //negro
+                cout << char(219);
+            }
+            else if (logo[i][j] == 3) {
+                HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+                SetConsoleTextAttribute(hConsole, 0); // negro
+                cout << char(219);
+            }
+            else if (logo[i][j] == 4) {
+                HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+                SetConsoleTextAttribute(hConsole, 12); //rosado
+                cout << char(219);
+            }
+            else if (logo[i][j] == 5) {
+                HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+                SetConsoleTextAttribute(hConsole, 2); //verde
+                cout << char(219);
+            }
+        }
+        cout << endl;
+    }
+}
+
 int mostrarMenu()
 {
-    cout << "Bienvenido al Juego del Molino" << endl;
+    cout << "BIENVENIDO A NUESTRO JUEGO DEL MOLINO" << endl; cout << endl;
+    dibujarLogo();
+    cout << endl;
+    cout << "EQUIPO LOS CARINIOSITOS DE C++" << endl;
+    cout << endl;
+    cout << "Integrantes del equipo: " << endl; cout << endl;
+    cout << "Borasino Velasquez, Christian Aaron \tU202218075" << endl;
+    cout << "Eguia Castillo,     Joaquin Mauricio \tU202213539" << endl;
+    cout << "Medina Agnini,      Bruno Alessandro \tU202216661" << endl;
+    cout << "Arteaga Bonilla,    Erick Germail \tU202217802" << endl;
+    cout << endl;
     cout << "============================================================================================================" << endl;
+    cout << endl;
     cout << "1) Reglas del juego. " << endl;
     cout << "2) Jugar. " << endl;
     cout << "3) Fin." << endl;
