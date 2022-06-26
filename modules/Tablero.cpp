@@ -101,16 +101,16 @@ struct Tablero {
             }
         }
         
-        if (col < 0 || row < 0) return -1;
+        if (col < 0 || row < 0) { 
+            cout << "la ficha no se puede mover en esa direccion " << endl;
+            return false;
+        }
 
         if ( isEmptyCell(row, col) ){
             tablero[act_row][act_col].reset();
             tablero[row][col].setColor(color);
             return true;
         }
-        cout << "la casilla esta ocupada. Intente con otra posicion" << endl;
-        cout << "info: " << endl << "row en tablero: " << row << endl << "col en tablero: " << col << endl;
-        printf("color de la ficha en posicion %i;%i: %i", row, col, tablero[row][col].getColor());
         return false;
     }
     bool checkRow(int row, int _color){
