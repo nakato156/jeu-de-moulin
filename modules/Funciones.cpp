@@ -32,7 +32,6 @@ string generarCodigoStr()
 }
 
 bool InMolino(Tablero &tablero, int row, int col){
-    col = userXYToTableroXY(row, col); row--;
     int color = tablero[row][col].getColor();
 
     if ( tablero.checkRow(row, color) ) return true;
@@ -40,7 +39,7 @@ bool InMolino(Tablero &tablero, int row, int col){
 }
 
 template <typename T>
-bool eliminarFicha(Tablero &tablero, int row, int col, T oponente){
+bool eliminarFicha(Tablero &tablero, int row, int col, T &oponente){
     col = userXYToTableroXY(row, col);
     if (col == -1) return false;
     row--;
@@ -48,17 +47,17 @@ bool eliminarFicha(Tablero &tablero, int row, int col, T oponente){
         cout << "La ficha le pertenece " << oponente.color << " " << row << " " << col<< endl;
         return false;
     }
-    if ( InMolino(tablero, row+1, col) ){
+    if ( InMolino(tablero, row, col) ){
         cout << "La ficha forma un molino, no la puede eliminar" << endl; 
         return false;
     }
-    oponente.fichas--;
+    oponente.fichas -= 1;
     tablero[row][col].reset();
     return true;
 }
 
 template <typename T>
-void WhenMolino (Tablero &tablero, T oponente){
+void WhenMolino (Tablero &tablero, T &oponente){
     while(1){
         int eliminar_fila, eliminar_col;
         cout << "fila de la ficha a eliminar: ";
@@ -66,7 +65,6 @@ void WhenMolino (Tablero &tablero, T oponente){
         cout << "columna de la ficha a eliminar: ";
         cin >> eliminar_col;
         bool eliminado = eliminarFicha(tablero, eliminar_fila, eliminar_col, oponente);
-        // cout << "exito" << endl;
         if(eliminado) return;
         cout << "Vuelva a intentarlo." << endl;
     }
@@ -136,6 +134,8 @@ void Game(Jugador player1, Jugador player2){
         {
             break;
         }
+        cout << "fichas: " << player.fichas << endl;
+        cout << "fichas oponente: " << oponente.fichas << endl;
         
         if(i == 17) {
             cout << "movida de fichas" << endl;

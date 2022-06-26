@@ -122,8 +122,8 @@ struct Tablero {
         }else if(row == 2 || row == 4){
             return ( tablero[row][2].getColor() == _color && tablero[row][3].getColor() == _color && tablero[row][4].getColor() == _color );
         }else {
-            return ( tablero[row][0].getColor() == tablero[row][1].getColor() ==  tablero[row][2].getColor() ) || 
-                   ( tablero[row][4].getColor() == tablero[row][5].getColor() == tablero[row][6].getColor());
+            return ( tablero[row][0].getColor() == _color && tablero[row][1].getColor() == _color && tablero[row][2].getColor() == _color ) || 
+                   ( tablero[row][4].getColor() == _color && tablero[row][5].getColor() == _color && tablero[row][6].getColor() == _color );
         }
     }
     bool checkCol(int col, int _color){
@@ -134,8 +134,8 @@ struct Tablero {
         }else if ( col == 2 || col == 4 ){
             return ( tablero[2][col].getColor() == _color && tablero[3][col].getColor() == _color && tablero[4][col].getColor() == _color );
         }else{
-            return ( tablero[0][3].getColor() == tablero[1][3].getColor() ==  tablero[2][3].getColor() ) || 
-                   ( tablero[4][3].getColor() == tablero[5][3].getColor() == tablero[6][3].getColor());
+            return ( tablero[0][3].getColor() == _color && tablero[1][3].getColor() == _color && tablero[2][3].getColor() == _color ) || 
+                   ( tablero[4][3].getColor() == _color && tablero[5][3].getColor() == _color && tablero[6][3].getColor() == _color );
         }
     }
     Ficha *operator [] (unsigned int index){ return tablero[index]; }
