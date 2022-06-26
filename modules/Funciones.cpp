@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int piernitasCalientes(Tablero& tablero);
+void piernitasCalientes(Tablero& tablero);
 void piernini(Jugador winner, Jugador losser);
 
 string generarCodigoStr()
@@ -131,13 +131,17 @@ void Game(Jugador player1, Jugador player2){
             player = player2;
             oponente = player1;
         }
-        if( player.fichas == 2 || oponente.fichas == 2) break;
+        if (player.fichas == 2 || oponente.fichas == 2)
+        {
+            break;
+        }
         
         if(i == 17) {
             cout << "movida de fichas" << endl;
             active_move = true;
         }
         cout << "Turno de " << player.nombre << endl;
+        piernitasCalientes(tablero);
         player.PlayGame(tablero, active_move);
 
         tablero.Show(1);
@@ -145,16 +149,19 @@ void Game(Jugador player1, Jugador player2){
         if(i > 1) {
             if(puntos != nullptr){
                 int *n_puntos = puntoenhori(tablero);
-                if(puntos[0] != n_puntos[0] || puntos[1] != n_puntos[1] || puntos[2] != n_puntos[2]){
+                if(puntos[0] < n_puntos[0] || puntos[1] < n_puntos[1] || puntos[2] < n_puntos[2]){
                     puntos = n_puntos;
                     cout << "molino para " << player.nombre << endl;
                     WhenMolino(tablero, oponente);
                     int *n_puntos = puntoenhori(tablero);
                     puntos[0] = n_puntos[0]; puntos[1] = n_puntos[1]; puntos[2] = n_puntos[2];
                 }
+                else {
+                    puntos = puntoenhori(tablero);
+                }
             }else puntos = puntoenhori(tablero);
             tablero.Show(1);
-            piernitasCalientes(tablero);
+            
         }
     }
     if ( player.fichas == 2 ) piernini(oponente, player);
@@ -162,7 +169,7 @@ void Game(Jugador player1, Jugador player2){
 
 }
 
-int piernitasCalientes(Tablero& tablero) {
+void piernitasCalientes(Tablero& tablero) {
     bool *results = new bool[24];
     //validaciones del cuadrado mas grande, incluyendo lineas de en medio
     if (tablero[0][3].color != -1) {
@@ -289,11 +296,9 @@ int piernitasCalientes(Tablero& tablero) {
     if (tablero[4][4].color != -1) {
         if (tablero[3][4].color != -1 && tablero[4][3].color != -1) {
             tablero[4][4].block = true;
-        }else tablero[4][2].block = false;
+        }else tablero[4][4].block = false;
     }
-    return 0;
 }
-
 void piernini(Jugador winner, Jugador losser) {
     int variableini = generarNumWin();
     int loss = generarNumloss();

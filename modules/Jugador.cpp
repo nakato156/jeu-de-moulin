@@ -55,7 +55,7 @@ struct Jugador {
                 leerFicha(row, col, "ingrese la fila de la ficha a mover: ", "ingrese la columna de la ficha a mover: ");
                 int act_col = userXYToTableroXY(row, col); 
                 int act_row = row-1;
-                if( tablero[act_row][act_col].block ){
+                if( tablero[act_row][act_col].block){
                     cout << "la ficha no puede ser movida" << endl;
                     continue;
                 }
@@ -87,7 +87,6 @@ struct Jugador {
             cout << promt_row;
             cin >> row;
             if (row>7 || row<0) continue;
-
             cout << prompt_col;
             cin >> col;
             if (row==4 && (col>0 && col<7)) break;
