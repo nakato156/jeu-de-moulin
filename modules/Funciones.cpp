@@ -83,6 +83,8 @@ void Game(Bot player1, Jugador player2){
             active_move = true;
         }
 
+        if ( player1.fichas == 2 || player2.fichas == 2) break;
+
         if(i%2 == 0){
             cout << "Turno de " << player1.nombre << endl;
             player1.PlayGame(tablero, active_move);
@@ -101,13 +103,14 @@ void Game(Bot player1, Jugador player2){
                     if ( i % 2 ) { 
                         Bot *player = &player1;
                         WhenMolino(tablero, player);
+                        player1.fichas--;
                     }
                     else player1.Molino(tablero);
+                    puntos = puntoenhori(tablero);
                 }
             }else puntos = puntoenhori(tablero);
-            piernitasCalientes(tablero);
         }
-        tablero.Show(1);
+        tablero.Show(0);
     }
 }
 
