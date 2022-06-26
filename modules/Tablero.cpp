@@ -85,8 +85,10 @@ struct Tablero {
         int ws = 3, _row = row;
         if (dir == 'w' || dir == 's'){
             if (col>2) _row = 6 - col;
-            _row = ws - col;
-            row += dir == 'w' ? -_row : _row;
+            _row = abs(ws - col);
+            cout << "pre row: " << _row << endl;
+            row += dir == 'w' ? -1*_row : _row;
+            cout << "row: " << row << endl;
         }
         
         if (col < 0 || row < 0) return -1;
@@ -97,7 +99,7 @@ struct Tablero {
             return true;
         }
         cout << "la casilla esta ocupada. Intente con otra posicion" << endl;
-        cout << "info: " << endl << "row en tablero: " << row << endl << "col en tablero: " << col;
+        cout << "info: " << endl << "row en tablero: " << row << endl << "col en tablero: " << col << endl;
         printf("color de la ficha en posicion %i;%i: %i", row, col, tablero[row][col].getColor());
         return false;
     }
