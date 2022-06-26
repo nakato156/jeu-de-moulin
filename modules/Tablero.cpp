@@ -158,9 +158,8 @@ int* puntoenhori(Tablero &tablero) {
             }
             else {color_verde++;}
         }
-
     }
-    if (tablero[6][0].color == 1 ) {//un o es azul y el otro O es rojo
+    if (tablero[6][0].color !=-1 ) {//un o es azul y el otro O es rojo
         if (tablero[6][0].color == tablero[6][3].color && tablero[6][0].color == tablero[6][6].color) {
             if (tablero[6][0].color == 1) {
                 cont_az++;
