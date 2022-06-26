@@ -3,6 +3,7 @@
 #include <time.h>
 #include "Bot.cpp"
 #include "Menu.cpp"
+#include "Tablero.cpp"
 
 using namespace std;
 
@@ -71,7 +72,7 @@ void WhenMolino (Tablero &tablero, T &oponente){
 void Game(Bot player1, Jugador player2){
     Tablero tablero;
 
-    int isMove, row, col, *puntos = nullptr;
+    int isMove, row, col, **puntos = nullptr;
     char direccion;
     bool active_move = false;
 
@@ -93,7 +94,7 @@ void Game(Bot player1, Jugador player2){
 
         if(i > 1) {
             if(puntos != nullptr){
-                int *n_puntos = puntoenhori(tablero);
+                int **n_puntos = puntoenhori(tablero);
                 if(puntos[0] != n_puntos[0] || puntos[1] != n_puntos[1]){
                     puntos = n_puntos;
                     string nombre_player = i % 2 ? player2.nombre : player1.nombre;
@@ -115,7 +116,7 @@ void Game(Jugador player1, Jugador player2){
     Tablero tablero;
     Jugador *player, *oponente;
 
-    int isMove, row, col, *puntos = nullptr;
+    int isMove, row, col, **puntos = nullptr;
     char direccion;
     bool active_move = false;
 
@@ -147,13 +148,44 @@ void Game(Jugador player1, Jugador player2){
 
         if(i > 1) {
             if(puntos != nullptr){
-                int *n_puntos = puntoenhori(tablero);
-                if(puntos[0] < n_puntos[0] || puntos[1] < n_puntos[1] || puntos[2] < n_puntos[2]){
+                int **n_puntos = puntoenhori(tablero);
+                bool haymolino=false;
+                //filas
+                for (int i = 0; i < 8; i++)
+                {
+                    if (puntos[0][i] != n_puntos[0][i]) {
+                        if (n_puntos[0][i] == 1) {
+                            haymolino = true;
+                            break;
+                        }
+                    }
+                }
+                //columnas
+                for (int i = 0; i < 8; i++)
+                {
+                    if (puntos[1][i] != n_puntos[1][i]) {
+                        if (n_puntos[1][i] == 1) {
+                            haymolino = true;
+                            break;
+                        }
+                    }
+                }
+                //diagonales
+                for (int i = 0; i < 4; i++)
+                {
+                    if (puntos[2][i] != n_puntos[2][i]) {
+                        if (n_puntos[2][i] == 1) {
+                            haymolino = true;
+                            break;
+                        }
+                    }
+                }
+                if(haymolino){
                     puntos = n_puntos;
                     cout << "molino para " << (*player).nombre << endl;
                     WhenMolino(tablero, oponente);
                     (*oponente).delFicha();
-                    int *n_puntos = puntoenhori(tablero);
+                    int **n_puntos = puntoenhori(tablero);
                     delete puntos;
                     puntos = n_puntos;
                 }

@@ -142,62 +142,55 @@ struct Tablero {
     }
     Ficha *operator [] (unsigned int index){ return tablero[index]; }
 };
-
-int* puntoenhori(Tablero& tablero) {
-    int cont_az = 0;
-    int cont_rj = 0;
-    int color_verde = 0;
+int* generarCeros( int num) {
+    int* ceros = new int[num];
+    for (int i = 0; i < num; i++)
+    {
+        ceros[i] = 0;
+    }
+    return ceros;
+}
+int** puntoenhori(Tablero& tablero) {
+    int* filas = generarCeros(8);
+    int* columnas = generarCeros(8);
+    int* diagonales = generarCeros(4);
     //cuadrado grande
     //horizontales
     if (tablero[0][0].color !=-1 ) { //un o es azul y el otro O es rojo
         if (tablero[0][0].color == tablero[0][3].color && tablero[0][0].color == tablero[0][6].color) {//0 vacio y 1 ocupado / molinop en esa fila
-            if (tablero[0][0].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[0][0].color == 0) {
-                cont_rj++;
-            }
-            else {
-            color_verde++;
-            }
+            filas[0] = 1;
+        }
+        else
+        {
+            filas[0]=0;
         }
     }
     if (tablero[6][0].color !=-1 ) {//un o es azul y el otro O es rojo
         if (tablero[6][0].color == tablero[6][3].color && tablero[6][0].color == tablero[6][6].color) {
-
-            if (tablero[6][0].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[6][0].color == 0) {
-                cont_rj++;
-            }
-            else {
-                color_verde++;
-            }
+            filas[7] = 1;
         }
-
+        else
+        {
+            filas[7] = 0;
+        }
     }
     //verticales
     if (tablero[0][0].color !=-1 ) {//un O azul y el otro O es rojo
         if (tablero[0][0].color == tablero[3][0].color && tablero[0][0].color == tablero[6][0].color) {
-            if (tablero[0][0].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[0][0].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            columnas[0] = 1;
+        }
+        else
+        {
+            columnas[0] = 0;
         }
     }
     if (tablero[0][6].color !=-1 ) {//un O azul y el otro O es rojo
         if (tablero[0][6].color == tablero[3][6].color && tablero[0][6].color == tablero[6][6].color) {
-            if (tablero[0][6].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[0][6].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            columnas[7] = 1;
+        }
+        else
+        {
+            columnas[7] = 0;
         }
     }
  
@@ -205,51 +198,38 @@ int* puntoenhori(Tablero& tablero) {
     //horizontales
     if (tablero[1][1].color !=-1 ) {//un o es azul y el otro O es rojo
         if (tablero[1][1].color == tablero[1][3].color && tablero[1][1].color == tablero[1][5].color) {
-
-            if (tablero[1][1].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[1][1].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            filas[1] = 1;
+        }
+        else {
+            filas[1] = 0;
         }
 
     }
     if (tablero[5][1].color !=-1 ) {//un o es azul y el otro O es rojo
         if (tablero[5][1].color == tablero[5][3].color && tablero[5][1].color == tablero[5][5].color) {
-
-            if (tablero[5][1].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[5][1].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            filas[6] = 1;
+        }
+        else {
+            filas[6] = 0;
         }
 
     }
     //verticales
     if (tablero[1][1].color !=-1 ) {//un O azul y el otro O es rojo
         if (tablero[1][1].color == tablero[3][1].color && tablero[1][1].color == tablero[5][1].color) {
-            if (tablero[1][1].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[1][1].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            columnas[1] = 1;
+        }
+        else {
+            columnas[1] = 0;
         }
     }
     if (tablero[1][5].color !=-1 ) {//un O azul y el otro O es rojo
         if (tablero[1][5].color == tablero[3][5].color && tablero[1][5].color == tablero[5][5].color) {
-            if (tablero[1][5].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[1][5].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            columnas[6] = 1;
+        }
+        else
+        {
+            columnas[6] = 0;
         }
     }
  
@@ -257,49 +237,37 @@ int* puntoenhori(Tablero& tablero) {
     //horizontales
     if (tablero[2][2].color !=-1 ) {//un o es azul y el otro O es rojo
         if (tablero[2][2].color == tablero[2][3].color && tablero[2][2].color == tablero[2][4].color) {
-
-            if (tablero[2][2].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[2][2].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            filas[2] = 1;
         }
-
+        else
+        {
+            filas[2] = 0;
+        }
     }
     if (tablero[4][2].color !=-1 ) {//un o es azul y el otro O es rojo
         if (tablero[4][2].color == tablero[4][3].color && tablero[4][2].color== tablero[4][4].color) {
-            if (tablero[4][2].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[4][2].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            filas[5] = 1;
+        }
+        else {
+            filas[5] = 0;
         }
     }
     //verticales
     if (tablero[2][2].color !=-1 ) {//un O azul y el otro O es rojo
         if (tablero[2][2].color == tablero[3][2].color && tablero[2][2].color == tablero[4][2].color) {
-            if (tablero[2][2].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[2][2].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            columnas[2] = 1;
         }
+        else {
+            columnas[2] = 0;
+        }
+        
     }
     if (tablero[2][4].color !=-1 ) {//un O azul y el otro O es rojo
         if (tablero[2][4].color == tablero[3][4].color && tablero[2][4].color == tablero[4][4].color) {
-            if (tablero[2][4].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[2][4].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            columnas[5] = 1;
+        }
+        else {
+            columnas[5] = 0;
         }
     }
 
@@ -307,100 +275,86 @@ int* puntoenhori(Tablero& tablero) {
     //horizontales
     if (tablero[3][0].color !=-1 ) {//un o es azul y el otro O es rojo
         if (tablero[3][0].color == tablero[3][1].color && tablero[3][0].color == tablero[3][2].color) {
-            if (tablero[3][0].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[3][0].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            filas[3] = 1;
+        }
+        else
+        {
+            filas[3]=0;
         }
 
     }
     if (tablero[3][4].color !=-1 ) {//un o es azul y el otro O es rojo
         if (tablero[3][4].color == tablero[3][5].color && tablero[3][4].color==tablero[3][6].color) {
-            if (tablero[3][4].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[3][4].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            filas[4] = 1;
         }
-
+        else {
+            filas[4] = 0;
+        }
     }
     //verticales
     if (tablero[0][3].color !=-1 ) {//un O azul y el otro O es rojo
         if (tablero[0][3].color == tablero[1][3].color && tablero[0][3].color == tablero[2][3].color) {
-            if (tablero[0][3].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[0][3].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            columnas[3] = 1;
+        }
+        else {
+            columnas[3] = 0;
         }
     }
     if (tablero[4][3].color !=-1 ) {//un O azul y el otro O es rojo
         if (tablero[4][3].color == tablero[5][3].color && tablero[4][3].color == tablero[6][3].color) {
-            if (tablero[4][3].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[4][3].color == 0) {
-                cont_rj++;
-            }
-            else {color_verde++;}
+            columnas[4] = 1;
+        }
+        else
+        {
+            columnas[4] = 0;
         }
     }
     //diagonales aaribas
     if (tablero[0][0].color != -1) {//un O azul y el otro O es rojo
         if (tablero[1][1].color == tablero[0][0].color && tablero[0][0].color == tablero[2][2].color) {
-            if (tablero[0][0].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[0][0].color == 0) {
-                cont_rj++;
-            }
-            else { color_verde++; }
+            diagonales[0] = 1;
+        }
+        else
+        {
+            diagonales[0] = 0;
         }
     }
     if (tablero[0][6].color != -1) {//un O azul y el otro O es rojo
         if (tablero[1][5].color == tablero[0][6].color && tablero[0][6].color == tablero[2][4].color) {
-            if (tablero[0][6].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[0][6].color == 0) {
-                cont_rj++;
-            }
-            else { color_verde++; }
+            diagonales[1] = 1;
+        }
+        else
+        {
+            diagonales[1] = 0;
         }
     }
     //diagonales abajos
     if (tablero[6][0].color != -1) {//un O azul y el otro O es rojo
         if (tablero[5][1].color == tablero[6][0].color && tablero[6][0].color == tablero[4][2].color) {
-            if (tablero[6][0].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[6][0].color == 0) {
-                cont_rj++;
-            }
-            else { color_verde++; }
+            diagonales[2] = 1;
+        }
+        else
+        {
+            diagonales[2] = 0;
         }
     }
     if (tablero[6][6].color != -1) {//un O azul y el otro O es rojo
         if (tablero[5][5].color == tablero[6][6].color && tablero[6][6].color == tablero[4][4].color) {
-            if (tablero[6][6].color == 1) {
-                cont_az++;
-            }
-            else if (tablero[6][6].color == 0) {
-                cont_rj++;
-            }
-            else { color_verde++; }
+            diagonales[3] = 1;
+        }
+        else
+        {
+            diagonales[3] = 0;
         }
     }
 
-    int *xaviersini = new int[3];
-    xaviersini[0] = cont_az; xaviersini[1] = cont_rj; xaviersini[2] = color_verde;
+    int **xaviersini = new int*[3];
+    xaviersini[0] = new int[7];
+    xaviersini[0] = filas;
+    xaviersini [1]= new int[7];
+    xaviersini[1] = columnas;
+    xaviersini[2] = new int[4];
+    xaviersini[2] = diagonales;
     return xaviersini;
 }
 #endif
