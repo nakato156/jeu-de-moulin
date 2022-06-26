@@ -154,7 +154,8 @@ void Game(Jugador player1, Jugador player2){
                     WhenMolino(tablero, oponente);
                     (*oponente).delFicha();
                     int *n_puntos = puntoenhori(tablero);
-                    puntos[0] = n_puntos[0]; puntos[1] = n_puntos[1]; puntos[2] = n_puntos[2];
+                    delete puntos;
+                    puntos = n_puntos;
                 }
                 else {
                     puntos = puntoenhori(tablero);
