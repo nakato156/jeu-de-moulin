@@ -35,7 +35,8 @@ bool InMolino(Tablero &tablero, int row, int col){
     col = userXYToTableroXY(row, col); row--;
     int color = tablero[row][col].getColor();
 
-    return ( tablero.checkRow(row, color) && tablero.checkCol(col, color) );
+    if ( tablero.checkRow(row, color) ) return true;
+    else return tablero.checkCol(col, color);
 }
 
 template <typename T>
@@ -144,7 +145,7 @@ void Game(Jugador player1, Jugador player2){
         piernitasCalientes(tablero);
         player.PlayGame(tablero, active_move);
 
-        tablero.Show(1);
+        tablero.Show();
 
         if(i > 1) {
             if(puntos != nullptr){
@@ -160,8 +161,8 @@ void Game(Jugador player1, Jugador player2){
                     puntos = puntoenhori(tablero);
                 }
             }else puntos = puntoenhori(tablero);
+
             tablero.Show(1);
-            
         }
     }
     if ( player.fichas == 2 ) piernini(oponente, player);
