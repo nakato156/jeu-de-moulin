@@ -55,10 +55,10 @@ struct Jugador {
                 leerFicha(row, col, "ingrese la fila de la ficha a mover: ", "ingrese la columna de la ficha a mover: ");
                 int act_col = userXYToTableroXY(row, col); 
                 int act_row = row-1;
-                // if( tablero[act_row][act_col].block ){
-                //     cout << "la ficha no puede ser movida" << endl;
-                //     continue;
-                // }
+                if( tablero[act_row][act_col].block ){
+                    cout << "la ficha no puede ser movida" << endl;
+                    continue;
+                }
                 if( tablero[act_row][act_col].getColor() != color ) {
                     cout << "La ficha no le corresponde" << endl;
                     continue;
@@ -66,7 +66,14 @@ struct Jugador {
                 char dir;
                 cout << "a donde lo quiere mover? (w/a/s/d): ";
                 cin >> dir;
-                tablero.moveFicha(act_row, act_col, row, col, tolower(dir), color); return;
+                if( tablero.moveFicha(act_row, act_col, row, col, tolower(dir), color)) {
+                    return;
+                }else {
+                    cout << "ha ocurrido un error al mover la ficha info: " << endl;
+                    cout << "posicion inicial segun el jugador: " << row << ";" << col << endl;
+                    cout << "posicion inicial en el tablero: " << act_row << ";" << act_col << endl;
+                    cout << "direccion: " << dir << endl << "color de la ficha: " << color << endl;
+                }
             }else{
                 leerFicha(row, col, "ingrese la fila donde ira la ficha: ", "ingrese la columna donde ira la ficha: ");
                 col = userXYToTableroXY(row, col); row--;

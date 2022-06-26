@@ -36,29 +36,32 @@ bool InMolino(Tablero &tablero, int row, int col){
     Ficha *arr = tablero.getRow(row);
     int color = tablero[row][col].getColor();
     bool molino = arr[0].getColor() == color;
-    int max;
+    int max, sum = 0;
+
     if( molino ){
         max = row != 4 ? 3 : 7;
         for(int i = 1; i < max; i++){
-            if(i == 3) continue;
-            if(molino && arr[i].getColor() == color) molino = true;
-            else molino = false;
+            int act_color = arr[i].getColor();
+            if( act_color == -1 ) break;
+            sum += act_color;
         }
-        if( molino ) return true;
+        if( sum == color*3 ) return true;
     }
 
     delete[] arr;
     arr = tablero.getCol(col);
     molino = arr[0].getColor() == color;
     max = col == 4 ? 7 : 3;
+    sum = 0;
 
     if( !molino ) return false;
     for(int i = 1; i < max; i++){
         int act_color = arr[i].getColor();
         if( act_color == -1 ) break;
-        else if(act_color != color) return false;
+        sum += act_color;
     }
-    return true;
+    if( sum == color*3 ) return true;
+    return false;
 }
 
 template <typename T>
