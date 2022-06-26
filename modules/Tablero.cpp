@@ -81,8 +81,14 @@ struct Tablero {
         
         col = userXYToTableroXY(row, col);
         row --;
+<<<<<<< HEAD
         int salto, ws = 3, _row = row;
         if (dir == 'w' || dir == 's') {
+=======
+
+        int salto, ws = 3, _row = row;
+        if (dir == 'w' || dir == 's'){
+>>>>>>> faaa7a8bf9b2c800f718abc90311fe4ca3ee4acc
             if (col == 0 || col == 6) {
                 salto = 3;
             }
