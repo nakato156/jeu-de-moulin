@@ -40,7 +40,7 @@ int convertirColor(char color_jug)
     return nuevo_color;
 }
 
-void piernitasCalientes(Tablero& tablero);
+void ahogamiento(Tablero& tablero);
 
 struct Jugador {
     Jugador() = default;
@@ -55,7 +55,7 @@ struct Jugador {
         int row = 0, col = 0;
         while(1){
             if(active_move){
-                piernitasCalientes(tablero);
+                ahogamiento(tablero);
                 leerFicha(row, col, "ingrese la fila de la ficha a mover: ", "ingrese la columna de la ficha a mover: ");
                 int act_col = userXYToTableroXY(row, col); 
                 int act_row = row-1;
@@ -104,7 +104,7 @@ struct Jugador {
     }
 };
 
-void piernitasCalientes(Tablero& tablero) {
+void ahogamiento(Tablero& tablero) {
     //validaciones del cuadrado mas grande, incluyendo lineas de en medio
     if (tablero[0][3].color != -1) {
         if (tablero[0][0].color !=-1 && tablero[0][6].color!=-1 && tablero[1][3].color !=-1) {

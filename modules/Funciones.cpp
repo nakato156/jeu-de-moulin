@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void piernini(Jugador winner, Jugador losser);
+void pantallaFinal(Jugador winner, Jugador losser);
 
 string generarCodigoStr()
 {
@@ -106,7 +106,7 @@ void Game(Bot player1, Jugador player2){
                     else player1.Molino(tablero);
                 }
             }else puntos = puntoenhori(tablero);
-            piernitasCalientes(tablero);
+            ahogamiento(tablero);
         }
         tablero.Show(1);
     }
@@ -197,12 +197,12 @@ void Game(Jugador player1, Jugador player2){
             tablero.Show(1);
         }
     }
-    if ( (*player).fichas == 2 ) piernini((*oponente), (*player));
-    else piernini(*player, *oponente);
+    if ( (*player).fichas == 2 ) pantallaFinal((*oponente), (*player));
+    else pantallaFinal(*player, *oponente);
 
 }
 
-void piernini(Jugador winner, Jugador losser) {
+void pantallaFinal(Jugador winner, Jugador losser) {
     int variableini = generarNumWin();
     int loss = generarNumloss();
     cout<<"===============FELICIDADES GANASTE=============== " << endl;
@@ -217,7 +217,7 @@ void piernini(Jugador winner, Jugador losser) {
     cout << "Numero de fichas: "<< winner.fichas<<endl;
     cout << "Numero de movimientos: "<<winner.movimientos<<endl;
     cout << "=============== PERDEDOR =============== " << endl;
-    if (variableini == 0) {
+    if (loss == 0) {
         cout << losser.nombre << "mas suerte para la proxima :c" << endl;
     }
     else {
