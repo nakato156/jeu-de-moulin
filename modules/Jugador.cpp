@@ -40,6 +40,8 @@ int convertirColor(char color_jug)
     return nuevo_color;
 }
 
+void piernitasCalientes(Tablero& tablero);
+
 struct Jugador {
     Jugador() = default;
     Jugador(int _color, string _nombre): color(_color), nombre(_nombre) {}
@@ -48,10 +50,12 @@ struct Jugador {
     string nombre;
     int fichas = 9;
     int movimientos = 0;
+    void delFicha(){ fichas--; }
     void PlayGame(Tablero &tablero, bool active_move){
         int row = 0, col = 0;
         while(1){
             if(active_move){
+                piernitasCalientes(tablero);
                 leerFicha(row, col, "ingrese la fila de la ficha a mover: ", "ingrese la columna de la ficha a mover: ");
                 int act_col = userXYToTableroXY(row, col); 
                 int act_row = row-1;
@@ -102,6 +106,136 @@ struct Jugador {
         }
     }
 };
+
+void piernitasCalientes(Tablero& tablero) {
+    //validaciones del cuadrado mas grande, incluyendo lineas de en medio
+    if (tablero[0][3].color != -1) {
+        if (tablero[0][0].color !=-1 && tablero[0][6].color!=-1 && tablero[1][3].color !=-1) {
+            tablero[0][3].block = true;
+        }else tablero[0][3].block = false;
+    }
+    if (tablero[3][0].color != -1) {
+        if (tablero[0][0].color != -1 && tablero[6][0].color != -1 && tablero[3][1].color != -1) {
+            tablero[3][0].block = true;
+        } else tablero[3][0].block = false;
+    }
+    if (tablero[6][3].color != -1) {
+        if (tablero[6][0].color != -1 && tablero[6][6].color != -1 && tablero[1][3].color != -1) {
+            tablero[6][3].block = true;
+        }else tablero[6][3].block = false;
+    }
+    if (tablero[3][6].color != -1) {
+        if (tablero[0][6].color != -1 && tablero[6][6].color != -1 && tablero[3][5].color != -1) {
+            tablero[3][6].block = true;
+        } else tablero[3][6].block = false;
+    }
+    //esquinas del cuadrado grande
+    if (tablero[0][0].color != -1) {
+        if (tablero[0][3].color != -1 && tablero[3][0].color != -1) {
+            tablero[0][0].block = true;
+        }else tablero[0][0].block = false;
+    }
+    if (tablero[6][0].color != -1) {
+        if (tablero[6][3].color != -1 && tablero[3][0].color != -1) {
+            tablero[6][0].block = true;
+        }else tablero[6][0].block = false;
+    }
+    if (tablero[6][6].color != -1) {
+        if (tablero[6][3].color != -1 && tablero[3][6].color != -1) {
+            tablero[6][6].block = true;
+        }else tablero[6][6].block = false;
+    }
+    if (tablero[0][6].color != -1) {
+        if (tablero[0][3].color != -1 && tablero[3][6].color != -1) {
+            tablero[0][6].block = true;
+        }else tablero[0][6].block = false;
+    }
+ 
+    //cuadrado de en medio pe
+    if (tablero[1][3].color != -1) {
+        if (tablero[1][1].color != -1 && tablero[1][5].color != -1 && tablero[2][3].color != -1 && tablero[0][3].color != -1) {
+            tablero[1][3].block = true;
+        }else tablero[1][3].block = false;
+    }
+    if (tablero[3][1].color != -1) {
+        if (tablero[1][1].color != -1 && tablero[5][1].color != -1 && tablero[3][0].color != -1 && tablero[3][2].color != -1) {
+            tablero[3][1].block = true;
+        }else tablero[3][1].block = false;
+    }
+    if (tablero[5][3].color != -1) {
+        if (tablero[5][1].color != -1 && tablero[5][5].color != -1 && tablero[4][3].color != -1 && tablero[6][3].color != -1) {
+            tablero[5][3].block = true;
+        }else tablero[5][3].block = false;
+    }
+    if (tablero[3][5].color != -1) {
+        if (tablero[1][5].color != -1 && tablero[5][5].color != -1 && tablero[3][4].color != -1 && tablero[3][6].color != -1) {
+            tablero[3][5].block = true;
+        }else tablero[3][5].block = false;
+    }
+    //esquinas del cuadrado mediano pe
+    if (tablero[1][1].color != -1) {
+        if (tablero[1][3].color != -1 && tablero[3][1].color != -1) {
+            tablero[1][1].block = true;
+        }else tablero[1][1].block = false;
+    }
+    if (tablero[5][1].color != -1) {
+        if (tablero[3][1].color != -1 && tablero[5][3].color != -1) {
+            tablero[5][1].block = true;
+        }else tablero[5][1].block = false;
+    }
+    if (tablero[5][5].color != -1) {
+        if (tablero[3][5].color != -1 && tablero[5][3].color != -1) {
+            tablero[5][5].block = true;
+        }else tablero[5][5].block = false;
+    }
+    if (tablero[1][5].color != -1) {
+        if (tablero[3][5].color != -1 && tablero[1][3].color != -1) {
+            tablero[1][5].block = true;
+        }else tablero[1][5].block = false;
+    }
+    //cuadrado pequeño 
+    if (tablero[2][3].color != -1) {
+        if (tablero[2][2].color != -1 && tablero[2][4].color != -1 && tablero[1][3].color != -1) {
+            tablero[2][3].block = true;
+        }else tablero[2][3].block = false;
+    }
+    if (tablero[3][2].color != -1) {
+        if (tablero[3][1].color != -1 && tablero[2][2].color != -1 && tablero[4][2].color != -1) {
+            tablero[3][2].block = true;
+        }else tablero[3][2].block = false;
+    }
+    if (tablero[4][3].color != -1) {
+        if (tablero[4][4].color != -1 && tablero[5][3].color != -1 && tablero[4][2].color != -1) {
+            tablero[4][3].block = true;
+        }else tablero[4][3].block = false;
+    }
+    if (tablero[3][4].color != -1) {
+        if (tablero[4][4].color != -1 && tablero[2][4].color != -1 && tablero[3][5].color != -1) {
+            tablero[3][4].block = true;
+        }else tablero[3][4].block = false;
+    }
+    //esquinas
+    if (tablero[2][2].color != -1) {
+        if (tablero[3][2].color != -1 && tablero[2][3].color != -1) {
+            tablero[2][2].block = true;
+        }else tablero[2][2].block = false;
+    }
+    if (tablero[2][4].color != -1) {
+        if (tablero[3][4].color != -1 && tablero[2][3].color != -1) {
+            tablero[2][4].block = true;
+        }else tablero[2][4].block = false;
+    }
+    if (tablero[4][2].color != -1) {
+        if (tablero[3][2].color != -1 && tablero[4][3].color != -1) {
+            tablero[4][2].block = true;
+        }else tablero[4][2].block = false;
+    }
+    if (tablero[4][4].color != -1) {
+        if (tablero[3][4].color != -1 && tablero[4][3].color != -1) {
+            tablero[4][4].block = true;
+        }else tablero[4][4].block = false;
+    }
+}
 
 Jugador RegistrarJugador(int ant_color = -2){
     int color;

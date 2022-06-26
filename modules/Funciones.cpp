@@ -6,7 +6,6 @@
 
 using namespace std;
 
-void piernitasCalientes(Tablero& tablero);
 void piernini(Jugador winner, Jugador losser);
 
 string generarCodigoStr()
@@ -43,15 +42,14 @@ bool eliminarFicha(Tablero &tablero, int row, int col, T &oponente){
     col = userXYToTableroXY(row, col);
     if (col == -1) return false;
     row--;
-    if ( tablero[row][col].getColor() != oponente.color) {
-        cout << "La ficha le pertenece " << oponente.color << " " << row << " " << col<< endl;
+    if ( tablero[row][col].getColor() != oponente->color) {
+        cout << "La ficha le pertenece " << endl;
         return false;
     }
     if ( InMolino(tablero, row, col) ){
         cout << "La ficha forma un molino, no la puede eliminar" << endl; 
         return false;
     }
-    oponente.fichas -= 1;
     tablero[row][col].reset();
     return true;
 }
@@ -101,7 +99,8 @@ void Game(Bot player1, Jugador player2){
                     string nombre_player = i % 2 ? player2.nombre : player1.nombre;
                     cout << "molino para " << nombre_player << endl;
                     if ( i % 2 ) { 
-                        WhenMolino(tablero, player1);
+                        Bot *player = &player1;
+                        WhenMolino(tablero, player);
                     }
                     else player1.Molino(tablero);
                 }
@@ -114,7 +113,7 @@ void Game(Bot player1, Jugador player2){
 
 void Game(Jugador player1, Jugador player2){
     Tablero tablero;
-    Jugador player, oponente;
+    Jugador *player, *oponente;
 
     int isMove, row, col, *puntos = nullptr;
     char direccion;
@@ -124,36 +123,36 @@ void Game(Jugador player1, Jugador player2){
 
     for(int i = 0; ; i++){
         if(i%2 == 0){
-            player = player1;
-            oponente = player2;
+            player = &player1;
+            oponente = &player2;
         }else{
-            player = player2;
-            oponente = player1;
+            player = &player2;
+            oponente = &player1;
         }
-        if (player.fichas == 2 || oponente.fichas == 2)
+        if ( (*player).fichas == 2 || (*oponente).fichas == 2)
         {
             break;
         }
-        cout << "fichas: " << player.fichas << endl;
-        cout << "fichas oponente: " << oponente.fichas << endl;
+        cout << "fichas: " << (*player).fichas << endl;
+        cout << "fichas oponente: " << (*oponente).fichas << endl;
         
         if(i == 17) {
             cout << "movida de fichas" << endl;
             active_move = true;
         }
-        cout << "Turno de " << player.nombre << endl;
-        piernitasCalientes(tablero);
-        player.PlayGame(tablero, active_move);
+        cout << "Turno de " << (*player).nombre << endl;
+        (*player).PlayGame(tablero, active_move);
 
-        tablero.Show();
+        tablero.Show(1);
 
         if(i > 1) {
             if(puntos != nullptr){
                 int *n_puntos = puntoenhori(tablero);
                 if(puntos[0] < n_puntos[0] || puntos[1] < n_puntos[1] || puntos[2] < n_puntos[2]){
                     puntos = n_puntos;
-                    cout << "molino para " << player.nombre << endl;
+                    cout << "molino para " << (*player).nombre << endl;
                     WhenMolino(tablero, oponente);
+                    (*oponente).delFicha();
                     int *n_puntos = puntoenhori(tablero);
                     puntos[0] = n_puntos[0]; puntos[1] = n_puntos[1]; puntos[2] = n_puntos[2];
                 }
@@ -165,141 +164,11 @@ void Game(Jugador player1, Jugador player2){
             tablero.Show(1);
         }
     }
-    if ( player.fichas == 2 ) piernini(oponente, player);
-    else piernini(player, oponente);
+    if ( (*player).fichas == 2 ) piernini((*oponente), (*player));
+    else piernini(*player, *oponente);
 
 }
 
-void piernitasCalientes(Tablero& tablero) {
-    bool *results = new bool[24];
-    //validaciones del cuadrado mas grande, incluyendo lineas de en medio
-    if (tablero[0][3].color != -1) {
-        if (tablero[0][0].color !=-1 && tablero[0][6].color!=-1 && tablero[1][3].color !=-1) {
-            tablero[0][3].block = true;
-        }else tablero[0][3].block = false;
-    }
-    if (tablero[3][0].color != -1) {
-        if (tablero[0][0].color != -1 && tablero[6][0].color != -1 && tablero[3][1].color != -1) {
-            tablero[3][0].block = true;
-        } else tablero[3][0].block = false;
-    }
-    if (tablero[6][3].color != -1) {
-        if (tablero[6][0].color != -1 && tablero[6][6].color != -1 && tablero[1][3].color != -1) {
-            tablero[6][3].block = true;
-        }else tablero[6][3].block = false;
-    }
-    if (tablero[3][6].color != -1) {
-        if (tablero[0][6].color != -1 && tablero[6][6].color != -1 && tablero[3][5].color != -1) {
-            tablero[3][6].block = true;
-        } else tablero[3][6].block = false;
-    }
-    //esquinas del cuadrado grande
-    if (tablero[0][0].color != -1) {
-        if (tablero[0][3].color != -1 && tablero[3][0].color != -1) {
-            tablero[0][0].block = true;
-        }else tablero[0][0].block = false;
-    }
-    if (tablero[6][0].color != -1) {
-        if (tablero[6][3].color != -1 && tablero[3][0].color != -1) {
-            tablero[6][0].block = true;
-        }else tablero[6][0].block = false;
-    }
-    if (tablero[6][6].color != -1) {
-        if (tablero[6][3].color != -1 && tablero[3][6].color != -1) {
-            tablero[6][6].block = true;
-        }else tablero[6][6].block = false;
-    }
-    if (tablero[0][6].color != -1) {
-        if (tablero[0][3].color != -1 && tablero[3][6].color != -1) {
-            tablero[0][6].block = true;
-        }else tablero[0][6].block = false;
-    }
- 
-    //cuadrado de en medio pe
-    if (tablero[1][3].color != -1) {
-        if (tablero[1][1].color != -1 && tablero[1][5].color != -1 && tablero[2][3].color != -1 && tablero[0][3].color != -1) {
-            tablero[1][3].block = true;
-        }else tablero[1][3].block = false;
-    }
-    if (tablero[3][1].color != -1) {
-        if (tablero[1][1].color != -1 && tablero[5][1].color != -1 && tablero[3][0].color != -1 && tablero[3][2].color != -1) {
-            tablero[3][1].block = true;
-        }else tablero[3][1].block = false;
-    }
-    if (tablero[5][3].color != -1) {
-        if (tablero[5][1].color != -1 && tablero[5][5].color != -1 && tablero[4][3].color != -1 && tablero[6][3].color != -1) {
-            tablero[5][3].block = true;
-        }else tablero[5][3].block = false;
-    }
-    if (tablero[3][5].color != -1) {
-        if (tablero[1][5].color != -1 && tablero[5][5].color != -1 && tablero[3][4].color != -1 && tablero[3][6].color != -1) {
-            tablero[3][5].block = true;
-        }else tablero[3][5].block = false;
-    }
-    //esquinas del cuadrado mediano pe
-    if (tablero[1][1].color != -1) {
-        if (tablero[1][3].color != -1 && tablero[3][1].color != -1) {
-            tablero[1][1].block = true;
-        }else tablero[1][1].block = false;
-    }
-    if (tablero[5][1].color != -1) {
-        if (tablero[3][1].color != -1 && tablero[5][3].color != -1) {
-            tablero[5][1].block = true;
-        }else tablero[5][1].block = false;
-    }
-    if (tablero[5][5].color != -1) {
-        if (tablero[3][5].color != -1 && tablero[5][3].color != -1) {
-            tablero[5][5].block = true;
-        }else tablero[5][5].block = false;
-    }
-    if (tablero[1][5].color != -1) {
-        if (tablero[3][5].color != -1 && tablero[1][3].color != -1) {
-            tablero[1][5].block = true;
-        }else tablero[1][5].block = false;
-    }
-    //cuadrado pequeño 
-    if (tablero[2][3].color != -1) {
-        if (tablero[2][2].color != -1 && tablero[2][4].color != -1 && tablero[1][3].color != -1) {
-            tablero[2][3].block = true;
-        }else tablero[2][3].block = false;
-    }
-    if (tablero[3][2].color != -1) {
-        if (tablero[3][1].color != -1 && tablero[2][2].color != -1 && tablero[4][2].color != -1) {
-            tablero[3][2].block = true;
-        }else tablero[3][2].block = false;
-    }
-    if (tablero[4][3].color != -1) {
-        if (tablero[4][4].color != -1 && tablero[5][3].color != -1 && tablero[4][2].color != -1) {
-            tablero[4][3].block = true;
-        }else tablero[4][3].block = false;
-    }
-    if (tablero[3][4].color != -1) {
-        if (tablero[4][4].color != -1 && tablero[2][4].color != -1 && tablero[3][5].color != -1) {
-            tablero[3][4].block = true;
-        }else tablero[3][4].block = false;
-    }
-    //esquinas
-    if (tablero[2][2].color != -1) {
-        if (tablero[3][2].color != -1 && tablero[2][3].color != -1) {
-            tablero[2][2].block = true;
-        }else tablero[2][2].block = false;
-    }
-    if (tablero[2][4].color != -1) {
-        if (tablero[3][4].color != -1 && tablero[2][3].color != -1) {
-            tablero[2][4].block = true;
-        }else tablero[2][4].block = false;
-    }
-    if (tablero[4][2].color != -1) {
-        if (tablero[3][2].color != -1 && tablero[4][3].color != -1) {
-            tablero[4][2].block = true;
-        }else tablero[4][2].block = false;
-    }
-    if (tablero[4][4].color != -1) {
-        if (tablero[3][4].color != -1 && tablero[4][3].color != -1) {
-            tablero[4][4].block = true;
-        }else tablero[4][4].block = false;
-    }
-}
 void piernini(Jugador winner, Jugador losser) {
     int variableini = generarNumWin();
     int loss = generarNumloss();
