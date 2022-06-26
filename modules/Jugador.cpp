@@ -63,6 +63,13 @@ struct Jugador {
                     cout << "La ficha no le corresponde" << endl;
                     continue;
                 }
+                if ( fichas == 3 ) {
+                    leerFicha(row, col, "ingrese la fila de destino: ", "ingrese la columna de destino: ");
+                    col = userXYToTableroXY( row, col );
+                    if ( col == -1 ) continue;
+                    tablero.SetFicha( row-1, col, color);
+                    return;
+                }
                 char dir;
                 cout << "a donde lo quiere mover? (w/a/s/d): ";
                 cin >> dir;

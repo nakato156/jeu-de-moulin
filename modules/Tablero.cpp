@@ -118,7 +118,7 @@ struct Tablero {
         if(row == 0 || row == 6) {
             return ( tablero[row][0].getColor() == _color && tablero[row][3].getColor() == _color && tablero[row][6].getColor() == _color );
         }else if(row == 1 || row == 5){
-            return ( tablero[row][1].getColor() == _color && tablero[row][3].getColor() == _color && tablero[row][5].getColor() == _color);
+            return ( tablero[row][1].getColor() == _color && tablero[row][3].getColor() == _color && tablero[row][5].getColor() == _color );
         }else if(row == 2 || row == 4){
             return ( tablero[row][2].getColor() == _color && tablero[row][3].getColor() == _color && tablero[row][4].getColor() == _color );
         }else {
