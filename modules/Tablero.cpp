@@ -101,19 +101,19 @@ struct Tablero {
             }
         }
         
-        if (col < 0 || row < 0) return -1;
+        if (col < 0 || row < 0) { 
+            cout << "la ficha no se puede mover en esa direccion " << endl;
+            return false;
+        }
 
         if ( isEmptyCell(row, col) ){
             tablero[act_row][act_col].reset();
             tablero[row][col].setColor(color);
             return true;
         }
-        cout << "la casilla esta ocupada. Intente con otra posicion" << endl;
-        cout << "info: " << endl << "row en tablero: " << row << endl << "col en tablero: " << col << endl;
-        printf("color de la ficha en posicion %i;%i: %i", row, col, tablero[row][col].getColor());
         return false;
     }
-    bool checkRow(int row, int _color){
+    bool checkRow(int row, int col, int _color){
         if(row < 0 || row > 6) return false;
         if(row == 0 || row == 6) {
             return ( tablero[row][0].getColor() == _color && tablero[row][3].getColor() == _color && tablero[row][6].getColor() == _color );
@@ -121,20 +121,22 @@ struct Tablero {
             return ( tablero[row][1].getColor() == _color && tablero[row][3].getColor() == _color && tablero[row][5].getColor() == _color );
         }else if(row == 2 || row == 4){
             return ( tablero[row][2].getColor() == _color && tablero[row][3].getColor() == _color && tablero[row][4].getColor() == _color );
-        }else {
-            if ( tablero[row][0].getColor() == _color && tablero[row][1].getColor() == _color && tablero[row][2].getColor() == _color ) return true; 
+        }else if( col < 3 ){
+            return ( tablero[row][0].getColor() == _color && tablero[row][1].getColor() == _color && tablero[row][2].getColor() == _color );
+        } else if( col >= 4 ) {
             return ( tablero[row][4].getColor() == _color && tablero[row][5].getColor() == _color && tablero[row][6].getColor() == _color );
         }
     }
-    bool checkCol(int col, int _color){
-        if ( col == 0 || col == 6 ){
+    bool checkCol(int row, int col, int _color){
+        if ( col == 0 || col == 6 ) {
             return ( tablero[0][col].getColor() == _color && tablero[3][col].getColor() == _color && tablero[6][col].getColor() == _color );
-        }else if ( col == 1 || col == 5 ){
+        }else if ( col == 1 || col == 5 ) {
             return ( tablero[1][col].getColor() == _color && tablero[3][col].getColor() == _color && tablero[5][col].getColor() == _color );
-        }else if ( col == 2 || col == 4 ){
+        }else if ( col == 2 || col == 4 ) {
             return ( tablero[2][col].getColor() == _color && tablero[3][col].getColor() == _color && tablero[4][col].getColor() == _color );
-        }else{
-            if ( tablero[0][3].getColor() == _color && tablero[1][3].getColor() == _color && tablero[2][3].getColor() == _color ) return true; 
+        }else if ( row < 3 ) {
+            return ( tablero[0][3].getColor() == _color && tablero[1][3].getColor() == _color && tablero[2][3].getColor() == _color ); 
+        }else if ( row >= 4 ) {
             return ( tablero[4][3].getColor() == _color && tablero[5][3].getColor() == _color && tablero[6][3].getColor() == _color );
         }
     }

@@ -33,8 +33,8 @@ string generarCodigoStr()
 bool InMolino(Tablero &tablero, int row, int col){
     int color = tablero[row][col].getColor();
 
-    if ( tablero.checkRow(row, color) ) return true;
-    else return tablero.checkCol(col, color);
+    if ( tablero.checkRow(row, col, color) ) return true;
+    else return tablero.checkCol(row, col, color);
 }
 
 template <typename T>

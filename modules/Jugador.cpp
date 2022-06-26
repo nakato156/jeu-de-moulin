@@ -71,6 +71,7 @@ struct Jugador {
                     leerFicha(row, col, "ingrese la fila de destino: ", "ingrese la columna de destino: ");
                     col = userXYToTableroXY( row, col );
                     if ( col == -1 ) continue;
+                    tablero[act_row][act_col].reset();
                     tablero.SetFicha( row-1, col, color);
                     return;
                 }
@@ -78,12 +79,8 @@ struct Jugador {
                 cout << "a donde lo quiere mover? (w/a/s/d): ";
                 cin >> dir;
                 if( tablero.moveFicha(act_row, act_col, row, col, tolower(dir), color)) {
+                    movimientos++;
                     return;
-                }else {
-                    cout << "ha ocurrido un error al mover la ficha info: " << endl;
-                    cout << "posicion inicial segun el jugador: " << row << ";" << col << endl;
-                    cout << "posicion inicial en el tablero: " << act_row << ";" << act_col << endl;
-                    cout << "direccion: " << dir << endl << "color de la ficha: " << color << endl;
                 }
             }else{
                 leerFicha(row, col, "ingrese la fila donde ira la ficha: ", "ingrese la columna donde ira la ficha: ");
