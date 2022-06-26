@@ -113,36 +113,30 @@ struct Tablero {
         printf("color de la ficha en posicion %i;%i: %i", row, col, tablero[row][col].getColor());
         return false;
     }
-    Ficha* getRow(int row){
-        if(row < 0 || row > 6) return nullptr;
-        Ficha *fila = new Ficha[3];
+    bool checkRow(int row, int _color){
+        if(row < 0 || row > 6) return false;
         if(row == 0 || row == 6) {
-            fila[0] = tablero[row][0]; fila[1] = tablero[row][3]; fila[2] = tablero[row][6];
+            return ( tablero[row][0].getColor() == _color && tablero[row][3].getColor() == _color && tablero[row][6].getColor() == _color );
         }else if(row == 1 || row == 5){
-            fila[0] = tablero[row][1]; fila[1] = tablero[row][3]; fila[2] = tablero[row][5];
+            return ( tablero[row][1].getColor() == _color && tablero[row][3].getColor() == _color && tablero[row][5].getColor() == _color);
         }else if(row == 2 || row == 4){
-            fila[0] = tablero[row][2]; fila[1] = tablero[row][3]; fila[2] = tablero[row][4];
+            return ( tablero[row][2].getColor() == _color && tablero[row][3].getColor() == _color && tablero[row][4].getColor() == _color );
         }else {
-            delete[] fila;
-            fila = new Ficha[7];
-            fila = tablero[row];
+            return ( tablero[row][0].getColor() == tablero[row][1].getColor() ==  tablero[row][2].getColor() ) || 
+                   ( tablero[row][4].getColor() == tablero[row][5].getColor() == tablero[row][6].getColor());
         }
-        return fila;
     }
-    Ficha* getCol(int col){
-        Ficha *columna = new Ficha[3];
+    bool checkCol(int col, int _color){
         if ( col == 0 || col == 6 ){
-            columna[0] = tablero[0][col]; columna[1] = tablero[3][col]; columna[2] = tablero[6][col];
+            return ( tablero[0][col].getColor() == _color && tablero[3][col].getColor() == _color && tablero[6][col].getColor() == _color );
         }else if ( col == 1 || col == 5 ){
-            columna[0] = tablero[1][col]; columna[1] = tablero[3][col]; columna[2] = tablero[5][col];
+            return ( tablero[1][col].getColor() == _color && tablero[3][col].getColor() == _color && tablero[5][col].getColor() == _color );
         }else if ( col == 2 || col == 4 ){
-            columna[0] = tablero[2][col]; columna[1] = tablero[3][col]; columna[2] = tablero[4][col];
+            return ( tablero[2][col].getColor() == _color && tablero[3][col].getColor() == _color && tablero[4][col].getColor() == _color );
         }else{
-            delete[] columna;
-            columna = new Ficha[7];
-            for(int i = 0; i < 7; i++) columna[i] = tablero[i][3];
+            return ( tablero[0][3].getColor() == tablero[1][3].getColor() ==  tablero[2][3].getColor() ) || 
+                   ( tablero[4][3].getColor() == tablero[5][3].getColor() == tablero[6][3].getColor());
         }
-        return columna;
     }
     Ficha *operator [] (unsigned int index){ return tablero[index]; }
 };
