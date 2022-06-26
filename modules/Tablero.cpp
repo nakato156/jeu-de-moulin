@@ -76,8 +76,6 @@ struct Tablero {
         return tablero[x][y].getColor() == -1;
     }
     int moveFicha(int act_row, int act_col, int row, int col, char dir, int color){
-        if (tablero[act_row][act_col].getColor() != color) return 0;
-
         if (dir == 'a') col--;
         else if (dir == 'd') col++;
         
@@ -99,6 +97,8 @@ struct Tablero {
             return true;
         }
         cout << "la casilla esta ocupada. Intente con otra posicion" << endl;
+        cout << "info: " << endl << "row en tablero: " << row << endl << "col en tablero: " << col;
+        printf("color de la ficha en posicion %i;%i: %i", row, col, tablero[row][col].getColor());
         return false;
     }
     Ficha* getRow(int row){
