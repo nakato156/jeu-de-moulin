@@ -110,7 +110,7 @@ void Game(Bot player1, Jugador player2){
             }else puntos = puntoenhori(tablero);
             piernitasCalientes(tablero);
         }
-        tablero.Show(0);
+        tablero.Show(1);
     }
 }
 
