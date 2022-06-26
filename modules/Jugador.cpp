@@ -71,6 +71,7 @@ struct Jugador {
                     leerFicha(row, col, "ingrese la fila de destino: ", "ingrese la columna de destino: ");
                     col = userXYToTableroXY( row, col );
                     if ( col == -1 ) continue;
+                    tablero[act_row][act_col].reset();
                     tablero.SetFicha( row-1, col, color);
                     return;
                 }
