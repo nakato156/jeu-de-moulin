@@ -238,7 +238,7 @@ Jugador RegistrarJugador(int ant_color = -2){
     int color;
     string nombre;
 
-    cout << "ingrese su nombre: ";
+    cout << "Ingrese su nombre: ";
     cin >> nombre;
 
     do {
