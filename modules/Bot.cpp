@@ -87,8 +87,23 @@ struct Bot {
         }
     }
 
-    void Dijkstra(Tablero const &tablero){
-
+    void MyDijkstra(Tablero &tablero){
+        for(int i = 1; i< 8; i++){
+            for ( int j = 1; j<8; j++){
+                int col = userXYToTableroXY(i, j);
+                if( col == -1 ) continue;
+                else if ( tablero[i-1][col].getColor() == color && !(tablero[i-1][col].block) ){
+                    int dir = 0;
+                    while(1){
+                        char dirs[4] = {'w', 'a', 's', 'd'};
+                        int ult_coordenada[2] = {-1, -1};
+                        if( tablero.moveFicha(i-1, col, i, j,  dirs[dir], color, ult_coordenada) ) break;
+                        if( i != 3) i++;
+                        else break;
+                    }
+                }
+            }
+        }
     }
 
 };
