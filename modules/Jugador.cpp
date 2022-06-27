@@ -68,7 +68,7 @@ struct Jugador {
                     cout << "La ficha no le corresponde" << endl;
                     continue;
                 }
-                if ( ult_coordenada[0] == row && ult_coordenada[1] == col ){
+                if ( ult_coordenada[0] == row && ult_coordenada[1] == col){
                     cout << "No puede repetir la jugada" << endl; continue;
                 }
                 ult_coordenada[0] = row; ult_coordenada[1] = col;
@@ -123,7 +123,7 @@ void ahogamiento(Tablero& tablero) {
         } else tablero[3][0].block = false;
     }
     if (tablero[6][3].color != -1) {
-        if (tablero[6][0].color != -1 && tablero[6][6].color != -1 && tablero[1][3].color != -1) {
+        if (tablero[6][0].color != -1 && tablero[6][6].color != -1 && tablero[5][3].color != -1) {
             tablero[6][3].block = true;
         }else tablero[6][3].block = false;
     }
