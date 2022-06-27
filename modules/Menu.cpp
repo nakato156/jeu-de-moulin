@@ -92,11 +92,8 @@ int mostrarMenu()
     cout << "EQUIPO LOS CARINIOSITOS DE C++" << endl;
     cout << endl;
     cout << "Integrantes del equipo: " << endl; cout << endl;
-    cout << "Borasino Velasquez, Christian Aaron \tU202218075" << endl;
-    cout << "Eguia Castilla,     Joaquin Mauricio \tU202213539" << endl;
-
     cout << "Borasino Velasquez, Christian Aaron \tU202218075"  << endl;
-    cout << "Eguia Castillo,     Joaquin Mauricio \tU202213539" << endl;
+    cout << "Eguia Castilla,     Joaquin Mauricio \tU202213539" << endl;
     cout << "Medina Agnini,      Bruno Alessandro \tU202216661" << endl;
     cout << "Arteaga Bonilla,    Erick Germail \tU202217802"    << endl;
     cout << endl;
