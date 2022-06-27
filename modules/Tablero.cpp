@@ -75,7 +75,7 @@ struct Tablero {
     bool isEmptyCell (int x, int y){
         return tablero[x][y].getColor() == -1;
     }
-    int moveFicha(int act_row, int act_col, int row, int col, char dir, int color){
+    int moveFicha(int act_row, int act_col, int row, int col, char dir, int color, int ult_coordenadas[2]){
         if (dir == 'a') col--;
         else if (dir == 'd') col++;
         
@@ -100,8 +100,10 @@ struct Tablero {
                 row += salto;
             }
         }
-        
-        if (col < 0 || row < 0 || col>7 || row>7) {
+        if ( ult_coordenadas[0] == row && ult_coordenadas[1] == col ){
+            cout << "no puede repetir la jugada" << endl; return false;
+        }
+        else if (col < 0 || row < 0 || col>7 || row>7) {
             cout << "la ficha no se puede mover en esa direccion " << endl;
             return false;
         }

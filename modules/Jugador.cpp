@@ -68,10 +68,6 @@ struct Jugador {
                     cout << "La ficha no le corresponde" << endl;
                     continue;
                 }
-                if ( ult_coordenada[0] == row && ult_coordenada[1] == col){
-                    cout << "No puede repetir la jugada" << endl; continue;
-                }
-                ult_coordenada[0] = row; ult_coordenada[1] = col;
                 if ( fichas == 3 ) {
                     leerFicha(row, col, "ingrese la fila de destino: ", "ingrese la columna de destino: ");
                     col = userXYToTableroXY( row, col );
@@ -84,7 +80,8 @@ struct Jugador {
                 char dir;
                 cout << "a donde lo quiere mover? (w/a/s/d): ";
                 cin >> dir;
-                if( tablero.moveFicha(act_row, act_col, row, col, tolower(dir), color)) {
+                if( tablero.moveFicha(act_row, act_col, row, col, tolower(dir), color, ult_coordenada)) {
+                    ult_coordenada[0] = row; ult_coordenada[1] = col;
                     movimientos++;
                     return;
                 }
