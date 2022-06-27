@@ -38,6 +38,17 @@ bool InMolino(Tablero &tablero, int row, int col){
     else return tablero.checkCol(row, col, color);
 }
 
+bool CheckAllMolinos(Tablero& tablero) {
+    for (int i = 0; i < 7; i++) {
+        for (int j = 0; j < 7; j++) {
+            int _j = userXYToTableroXY(i - 1, j);
+            if (_j == -1) continue;
+            if (!(InMolino(tablero, i - 1, _j))) return false;
+        }
+    }
+    return true;
+}
+
 template <typename T>
 bool eliminarFicha(Tablero &tablero, int row, int col, T &oponente){
     col = userXYToTableroXY(row, col);
@@ -47,14 +58,17 @@ bool eliminarFicha(Tablero &tablero, int row, int col, T &oponente){
         cout << "La ficha le pertenece " << endl;
         return false;
     }
-    if ( InMolino(tablero, row, col) ){
+    if (CheckAllMolinos(tablero)) {
+        tablero[row][col].reset();
+        return true;
+    }
+    else if ( InMolino(tablero, row, col) ){
         cout << "La ficha forma un molino, no la puede eliminar" << endl; 
         return false;
     }
     tablero[row][col].reset();
     return true;
 }
-
 template <typename T>
 void WhenMolino (Tablero &tablero, T &oponente){
     while(1){

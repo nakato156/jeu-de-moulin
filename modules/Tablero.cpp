@@ -101,7 +101,7 @@ struct Tablero {
             }
         }
         
-        if (col < 0 || row < 0) { 
+        if (col < 0 || row < 0 || col>7 || row>7) {
             cout << "la ficha no se puede mover en esa direccion " << endl;
             return false;
         }
