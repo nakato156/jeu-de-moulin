@@ -39,8 +39,8 @@ bool InMolino(Tablero &tablero, int row, int col){
 }
 
 bool CheckAllMolinos(Tablero& tablero) {
-    for (int i = 0; i < 7; i++) {
-        for (int j = 0; j < 7; j++) {
+    for (int i = 1; i < 8; i++) {
+        for (int j = 1; j < 8; j++) {
             int _j = userXYToTableroXY(i - 1, j);
             if (_j == -1) continue;
             if (!(InMolino(tablero, i - 1, _j))) return false;
