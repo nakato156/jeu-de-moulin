@@ -140,6 +140,19 @@ struct Tablero {
             return ( tablero[4][3].getColor() == _color && tablero[5][3].getColor() == _color && tablero[6][3].getColor() == _color );
         }
     }
+    bool checkDiag ( int row, int col, int _color ) {
+        if( col < 3 ) {
+            if ( row < 3 ){
+                return ( tablero[0][0].getColor() == _color && tablero[1][1].getColor() == _color && tablero  && tablero[2][2].getColor() == _color );
+            }
+            return ( tablero[6][0].getColor() == _color && tablero[5][1].getColor() == _color && tablero  && tablero[4][2].getColor() == _color );
+        }else {
+            if ( row < 3 ){
+                return ( tablero[0][6].getColor() == _color && tablero[1][5].getColor() == _color && tablero  && tablero[2][4].getColor() == _color );
+            }
+            return ( tablero[6][6].getColor() == _color && tablero[5][5].getColor() == _color && tablero  && tablero[4][4].getColor() == _color );
+        }
+    }
     Ficha *operator [] (unsigned int index){ return tablero[index]; }
 };
 int* generarCeros( int num) {
