@@ -40,7 +40,7 @@ int convertirColor(char color_jug)
     return nuevo_color;
 }
 
-void piernitasCalientes(Tablero& tablero);
+void ahogamiento(Tablero& tablero);
 
 struct Jugador {
     Jugador() = default;
@@ -50,12 +50,13 @@ struct Jugador {
     string nombre;
     int fichas = 9;
     int movimientos = 0;
+    int ult_coordenada[2] = {-1, -1};
     void delFicha(){ fichas--; }
     void PlayGame(Tablero &tablero, bool active_move){
         int row = 0, col = 0;
-        while(1){
+        while(1) {
             if(active_move){
-                piernitasCalientes(tablero);
+                ahogamiento(tablero);
                 leerFicha(row, col, "ingrese la fila de la ficha a mover: ", "ingrese la columna de la ficha a mover: ");
                 int act_col = userXYToTableroXY(row, col); 
                 int act_row = row-1;
@@ -67,12 +68,17 @@ struct Jugador {
                     cout << "La ficha no le corresponde" << endl;
                     continue;
                 }
+                if ( ult_coordenada[0] == row && ult_coordenada[1] == col ){
+                    cout << "No puede repetir la jugada" << endl; continue;
+                }
+                ult_coordenada[0] = row; ult_coordenada[1] = col;
                 if ( fichas == 3 ) {
                     leerFicha(row, col, "ingrese la fila de destino: ", "ingrese la columna de destino: ");
                     col = userXYToTableroXY( row, col );
                     if ( col == -1 ) continue;
                     tablero[act_row][act_col].reset();
                     tablero.SetFicha( row-1, col, color);
+                    movimientos++;
                     return;
                 }
                 char dir;
@@ -104,7 +110,7 @@ struct Jugador {
     }
 };
 
-void piernitasCalientes(Tablero& tablero) {
+void ahogamiento(Tablero& tablero) {
     //validaciones del cuadrado mas grande, incluyendo lineas de en medio
     if (tablero[0][3].color != -1) {
         if (tablero[0][0].color !=-1 && tablero[0][6].color!=-1 && tablero[1][3].color !=-1) {

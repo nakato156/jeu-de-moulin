@@ -3,10 +3,11 @@
 #include <time.h>
 #include "Bot.cpp"
 #include "Menu.cpp"
+#include "Tablero.cpp"
 
 using namespace std;
 
-void piernini(Jugador winner, Jugador losser);
+void pantallaFinal(Jugador winner, Jugador losser);
 
 string generarCodigoStr()
 {
@@ -71,7 +72,7 @@ void WhenMolino (Tablero &tablero, T &oponente){
 void Game(Bot player1, Jugador player2){
     Tablero tablero;
 
-    int isMove, row, col, *puntos = nullptr;
+    int isMove, row, col, **puntos = nullptr;
     char direccion;
     bool active_move = false;
 
@@ -84,6 +85,8 @@ void Game(Bot player1, Jugador player2){
             active_move = true;
         }
 
+        if ( player1.fichas == 2 || player2.fichas == 2) break;
+
         if(i%2 == 0){
             cout << "Turno de " << player1.nombre << endl;
             player1.PlayGame(tablero, active_move);
@@ -94,7 +97,7 @@ void Game(Bot player1, Jugador player2){
 
         if(i > 1) {
             if(puntos != nullptr){
-                int *n_puntos = puntoenhori(tablero);
+                int **n_puntos = puntoenhori(tablero);
                 if(puntos[0] != n_puntos[0] || puntos[1] != n_puntos[1]){
                     puntos = n_puntos;
                     string nombre_player = i % 2 ? player2.nombre : player1.nombre;
@@ -102,13 +105,15 @@ void Game(Bot player1, Jugador player2){
                     if ( i % 2 ) { 
                         Bot *player = &player1;
                         WhenMolino(tablero, player);
+                        player1.fichas--;
                     }
-                    else player1.Molino(tablero);
+                    else player1.Molino(tablero, player2);
+                    puntos = puntoenhori(tablero);
                 }
             }else puntos = puntoenhori(tablero);
-            piernitasCalientes(tablero);
+            ahogamiento(tablero);
         }
-        tablero.Show(1);
+        tablero.Show(0);
     }
 }
 
@@ -116,7 +121,7 @@ void Game(Jugador player1, Jugador player2){
     Tablero tablero;
     Jugador *player, *oponente;
 
-    int isMove, row, col, *puntos = nullptr;
+    int isMove, row, col, **puntos = nullptr;
     char direccion;
     bool active_move = false;
 
@@ -148,13 +153,44 @@ void Game(Jugador player1, Jugador player2){
 
         if(i > 1) {
             if(puntos != nullptr){
-                int *n_puntos = puntoenhori(tablero);
-                if(puntos[0] < n_puntos[0] || puntos[1] < n_puntos[1] || puntos[2] < n_puntos[2]){
+                int **n_puntos = puntoenhori(tablero);
+                bool haymolino=false;
+                //filas
+                for (int i = 0; i < 8; i++)
+                {
+                    if (puntos[0][i] != n_puntos[0][i]) {
+                        if (n_puntos[0][i] == 1) {
+                            haymolino = true;
+                            break;
+                        }
+                    }
+                }
+                //columnas
+                for (int i = 0; i < 8; i++)
+                {
+                    if (puntos[1][i] != n_puntos[1][i]) {
+                        if (n_puntos[1][i] == 1) {
+                            haymolino = true;
+                            break;
+                        }
+                    }
+                }
+                //diagonales
+                for (int i = 0; i < 4; i++)
+                {
+                    if (puntos[2][i] != n_puntos[2][i]) {
+                        if (n_puntos[2][i] == 1) {
+                            haymolino = true;
+                            break;
+                        }
+                    }
+                }
+                if(haymolino){
                     puntos = n_puntos;
                     cout << "molino para " << (*player).nombre << endl;
                     WhenMolino(tablero, oponente);
                     (*oponente).delFicha();
-                    int *n_puntos = puntoenhori(tablero);
+                    int **n_puntos = puntoenhori(tablero);
                     delete puntos;
                     puntos = n_puntos;
                 }
@@ -166,12 +202,12 @@ void Game(Jugador player1, Jugador player2){
             tablero.Show(1);
         }
     }
-    if ( (*player).fichas == 2 ) piernini((*oponente), (*player));
-    else piernini(*player, *oponente);
+    if ( (*player).fichas == 2 ) pantallaFinal((*oponente), (*player));
+    else pantallaFinal(*player, *oponente);
 
 }
 
-void piernini(Jugador winner, Jugador losser) {
+void pantallaFinal(Jugador winner, Jugador losser) {
     int variableini = generarNumWin();
     int loss = generarNumloss();
     cout<<"===============FELICIDADES GANASTE=============== " << endl;
@@ -186,7 +222,7 @@ void piernini(Jugador winner, Jugador losser) {
     cout << "Numero de fichas: "<< winner.fichas<<endl;
     cout << "Numero de movimientos: "<<winner.movimientos<<endl;
     cout << "=============== PERDEDOR =============== " << endl;
-    if (variableini == 0) {
+    if (loss == 0) {
         cout << losser.nombre << "mas suerte para la proxima :c" << endl;
     }
     else {

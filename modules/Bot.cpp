@@ -8,11 +8,11 @@ struct Bot {
     bool first = true;
     int fichas = 9, size = 0;
     int color;
-    string nombre = "BOTcito";
+    string nombre = "El cariñoso";
     Ficha *posFichas;
     Bot() = default;
-    Bot(int color){
-        this->color = color == 1 ? 0 : 1;
+    Bot(int _color){
+        color = _color == 1 ? 0 : 1;
         posFichas = new Ficha[1];
     }
     ~Bot(){
@@ -59,14 +59,13 @@ struct Bot {
             int contFichas = 0;
             for(int col = 1; col<8; col++){
                 int _col = userXYToTableroXY(row, col);
-                if( _col == -1 ) continue;
+                if ( _col == -1 && !(tablero.isEmptyCell(row-1, _col)) ) continue;
                 int _row = row-1;
                 int colorFicha = tablero[_row][_col].getColor();
-                if(colorFicha != this->color) contFichas++;
+                if (colorFicha != this->color) contFichas++;
                 maybeWin = contFichas == 2;
-                if(maybeWin && colorFicha == -1 ) {
+                if (maybeWin && colorFicha == -1 ) {
                     tablero[_row][_col].color = this->color;
-                    cout << _row << "," << _col << endl;
                     return;
                 }
             }
@@ -74,8 +73,18 @@ struct Bot {
         cout << "no se me ocurrio nada :(" << endl;
     }
 
-    void Molino(Tablero const &tablero){
+    void Molino(Tablero &tablero, Jugador &oponente){
+        while(1) {
+            int row = rand() % 7;
+            int col = rand() % 7;
 
+            col = userXYToTableroXY(row, col); row--;
+            if ( col != -1 && tablero[row][col].getColor() != -1 && tablero[row][col].getColor() != color){
+                tablero[row][col].reset();
+                oponente.fichas--;
+                break;
+            }
+        }
     }
 
     void Dijkstra(Tablero const &tablero){

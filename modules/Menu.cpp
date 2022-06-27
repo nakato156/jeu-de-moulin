@@ -11,7 +11,7 @@ using namespace std;
 void mostrarReglas()
 {
     ifstream archivo;
-    archivo.open("C:/Users/bruno/OneDrive/Escritorio/UPC/1er semestre/programación 1/Trabajo final/reglas.txt");
+    archivo.open("reglas.txt");
     string linea;
     if(archivo.is_open()){
         while(getline(archivo, linea)) {
@@ -64,14 +64,9 @@ void dibujarLogo()
                 SetConsoleTextAttribute(hConsole, 1); //azul
                 cout << char(219);
             }
-            else if (logo[i][j] == 2) {
+            else if (logo[i][j] == 2 || logo[i][j] == 3 ) {
                 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
                 SetConsoleTextAttribute(hConsole, 0); //negro
-                cout << char(219);
-            }
-            else if (logo[i][j] == 3) {
-                HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-                SetConsoleTextAttribute(hConsole, 0); // negro
                 cout << char(219);
             }
             else if (logo[i][j] == 4) {
@@ -97,10 +92,15 @@ int mostrarMenu()
     cout << "EQUIPO LOS CARINIOSITOS DE C++" << endl;
     cout << endl;
     cout << "Integrantes del equipo: " << endl; cout << endl;
+<<<<<<< HEAD
     cout << "Borasino Velasquez, Christian Aaron \tU202218075" << endl;
     cout << "Eguia Castilla,     Joaquin Mauricio \tU202213539" << endl;
+=======
+    cout << "Borasino Velasquez, Christian Aaron \tU202218075"  << endl;
+    cout << "Eguia Castillo,     Joaquin Mauricio \tU202213539" << endl;
+>>>>>>> c3194f3d1a201eb2f6874eb8ea9e81bff278eb5c
     cout << "Medina Agnini,      Bruno Alessandro \tU202216661" << endl;
-    cout << "Arteaga Bonilla,    Erick Germail \tU202217802" << endl;
+    cout << "Arteaga Bonilla,    Erick Germail \tU202217802"    << endl;
     cout << endl;
     cout << "============================================================================================================" << endl;
     cout << endl;
