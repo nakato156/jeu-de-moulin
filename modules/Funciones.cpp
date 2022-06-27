@@ -189,7 +189,7 @@ void Game(Jugador player1, Jugador player2){
         cout << "fichas: " << (*player).fichas << endl;
         cout << "fichas oponente: " << (*oponente).fichas << endl;
         
-        if(i == 17) {
+        if(i == 18) {
             cout << "movida de fichas" << endl;
             active_move = true;
         }
