@@ -3,7 +3,7 @@
 #include <time.h>
 #include "Jugador.cpp"
 
-struct Bot {
+struct Bot : public Jugador {
     public:
     bool first = true;
     int fichas = 9, size = 0;
@@ -33,10 +33,9 @@ struct Bot {
             addFicha(row_random, col_random);
             first = false;
             return;
-        }else if( active_move ){
-
-        }
-        pensar(tablero);
+        } else if ( active_move ){
+            MyDijkstra(tablero);
+        } else pensar(tablero);
     }
     void addFicha(int row, int col){
         Ficha ficha;

@@ -94,7 +94,7 @@ void Game(Bot player1, Jugador player2){
     tablero.Show(1);
 
     for(int i = 0; ; i++){
-        if(i == 17) {
+        if(i == 18) {
             cout << "movida de fichas" << endl;
             active_move = true;
         }
@@ -103,6 +103,7 @@ void Game(Bot player1, Jugador player2){
 
         if(i%2 == 0){
             cout << "Turno de " << player1.nombre << endl;
+            ahogamiento(tablero);
             player1.PlayGame(tablero, active_move);
         }else{
             cout << "Turno de " << player2.nombre << endl;
@@ -112,7 +113,38 @@ void Game(Bot player1, Jugador player2){
         if(i > 1) {
             if(puntos != nullptr){
                 int **n_puntos = puntoenhori(tablero);
-                if(puntos[0] != n_puntos[0] || puntos[1] != n_puntos[1]){
+                bool haymolino=false;
+                //filas
+                for (int i = 0; i < 8; i++)
+                {
+                    if (puntos[0][i] != n_puntos[0][i]) {
+                        if (n_puntos[0][i] == 1) {
+                            haymolino = true;
+                            break;
+                        }
+                    }
+                }
+                //columnas
+                for (int i = 0; i < 8; i++)
+                {
+                    if (puntos[1][i] != n_puntos[1][i]) {
+                        if (n_puntos[1][i] == 1) {
+                            haymolino = true;
+                            break;
+                        }
+                    }
+                }
+                //diagonales
+                for (int i = 0; i < 4; i++)
+                {
+                    if (puntos[2][i] != n_puntos[2][i]) {
+                        if (n_puntos[2][i] == 1) {
+                            haymolino = true;
+                            break;
+                        }
+                    }
+                }
+                if(haymolino){
                     puntos = n_puntos;
                     string nombre_player = i % 2 ? player2.nombre : player1.nombre;
                     cout << "molino para " << nombre_player << endl;
@@ -125,10 +157,11 @@ void Game(Bot player1, Jugador player2){
                     puntos = puntoenhori(tablero);
                 }
             }else puntos = puntoenhori(tablero);
-            ahogamiento(tablero);
         }
-        tablero.Show(0);
+        tablero.Show(1);
     }
+    if ( player1.fichas == 2 ) pantallaFinal(player2, player1);
+    else pantallaFinal(player1, player2);
 }
 
 void Game(Jugador player1, Jugador player2){
@@ -212,7 +245,6 @@ void Game(Jugador player1, Jugador player2){
                     puntos = puntoenhori(tablero);
                 }
             }else puntos = puntoenhori(tablero);
-
             tablero.Show(1);
         }
     }

@@ -32,7 +32,7 @@ struct Tablero {
         tablero = nullptr;
     }
     Tablero(const Tablero &) = delete;
-    Tablero &operator =(const Tablero &) = delete;
+    // Tablero &operator =(const Tablero &) = delete;
     void Show(int clear=0){
         if (clear) system("cls");
         cout << char(201); printEsp(23, 205); cout << char(187) << endl;
