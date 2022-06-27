@@ -80,9 +80,12 @@ void Game(Bot player1, Jugador player2){
 
     for(int i = 0; ; i++){
         if(i == 17) {
-            cout << "movida de fichas" << endl;
+            cout << endl;
+            cout << "MOVIDA DE FICHAS" << endl;
             active_move = true;
         }
+
+        if ( player1.fichas == 2 || player2.fichas == 2) break;
 
         if(i%2 == 0){
             cout << "Turno de " << player1.nombre << endl;
@@ -102,13 +105,15 @@ void Game(Bot player1, Jugador player2){
                     if ( i % 2 ) { 
                         Bot *player = &player1;
                         WhenMolino(tablero, player);
+                        player1.fichas--;
                     }
-                    else player1.Molino(tablero);
+                    else player1.Molino(tablero, player2);
+                    puntos = puntoenhori(tablero);
                 }
             }else puntos = puntoenhori(tablero);
             ahogamiento(tablero);
         }
-        tablero.Show(1);
+        tablero.Show(0);
     }
 }
 

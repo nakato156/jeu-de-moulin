@@ -8,10 +8,10 @@ void printEsp(int cant, int code){
 
 int userXYToTableroXY(int row, int col){
     if ( (row < 1 || row > 7) || ( col < 1 || col > 7) ) return -1;
-    else if (row == 1 || row == 7) col = (col-1)*3;
-    else if (row == 2 || row == 6) col = (col*2)-1;
-    else if (row == 3 || row == 5) col++;
-    else if (row == 4) col = col<4 ? col-1 : col;
+    else if ( (row == 1 || row == 7) && col < 4) col = (col-1)*3;
+    else if ( (row == 2 || row == 6) && col < 4) col = (col*2)-1;
+    else if ( (row == 3 || row == 5) && col < 4) col++;
+    else if ( row == 4 ) col = col<4 ? col-1 : col;
     else return -1;
     col = col < 7 ? col : -1; 
     return col;
