@@ -79,7 +79,8 @@ void Game(Bot player1, Jugador player2){
 
     for(int i = 0; ; i++){
         if(i == 17) {
-            cout << "movida de fichas" << endl;
+            cout << endl;
+            cout << "MOVIDA DE FICHAS" << endl;
             active_move = true;
         }
 
