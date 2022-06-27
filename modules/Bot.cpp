@@ -11,8 +11,8 @@ struct Bot {
     string nombre = "El cariñoso";
     Ficha *posFichas;
     Bot() = default;
-    Bot(int color){
-        this->color = color == 1 ? 0 : 1;
+    Bot(int _color){
+        color = _color == 1 ? 0 : 1;
         posFichas = new Ficha[1];
     }
     ~Bot(){
@@ -66,8 +66,6 @@ struct Bot {
                 maybeWin = contFichas == 2;
                 if (maybeWin && colorFicha == -1 ) {
                     tablero[_row][_col].color = this->color;
-                    cout << row << "," << col << endl;
-                    cout << _row << "," << _col << endl;
                     return;
                 }
             }
