@@ -94,7 +94,7 @@ void Game(Bot player1, Jugador player2){
     tablero.Show(1);
 
     for(int i = 0; ; i++){
-        if(i == 17) {
+        if(i == 18) {
             cout << "movida de fichas" << endl;
             active_move = true;
         }
