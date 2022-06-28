@@ -364,9 +364,9 @@ int** puntoenhori(Tablero& tablero) {
     }
 
     int **xaviersini = new int*[3];
-    xaviersini[0] = new int[7];
+    xaviersini[0] = new int[8];
     xaviersini[0] = filas;
-    xaviersini [1]= new int[7];
+    xaviersini [1]= new int[8];
     xaviersini[1] = columnas;
     xaviersini[2] = new int[4];
     xaviersini[2] = diagonales;

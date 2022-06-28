@@ -200,7 +200,6 @@ void Game(Jugador player1, Jugador player2){
                     }
                 }
                 if(haymolino){
-                    puntos = n_puntos;
                     cout << "molino para " << (*player).nombre << endl;
                     WhenMolino(tablero, oponente);
                     (*oponente).delFicha();
@@ -227,20 +226,20 @@ void pantallaFinal(Jugador winner, Jugador losser) {
     cout<<"===============FELICIDADES GANASTE=============== " << endl;
     if (variableini==0)
     {
-        cout << winner.nombre << " bien jugado" << endl;
+        cout << winner.nombre <<" " << "bien jugado" << endl;
     }
     else {
-        cout << winner.nombre << " enhorabuena" << endl;
+        cout << winner.nombre <<" "<< "enhorabuena" << endl;
     }
     cout << "Estadisticas Ganador---------------"<<endl;
     cout << "Numero de fichas: "<< winner.fichas<<endl;
     cout << "Numero de movimientos: "<<winner.movimientos<<endl;
     cout << "=============== PERDEDOR =============== " << endl;
     if (loss == 0) {
-        cout << losser.nombre << "mas suerte para la proxima :c" << endl;
+        cout << losser.nombre << " " << "mas suerte para la proxima :c" << endl;
     }
     else {
-        cout << losser.nombre << "buen intento, pero no fue suficiente :(" << endl;
+        cout << losser.nombre << " " << "buen intento, pero no fue suficiente :(" << endl;
     }
     cout << "Estadisticas Perdedor---------------"<<endl;
     cout << "Numero de fichas: " << losser.fichas<<endl;
