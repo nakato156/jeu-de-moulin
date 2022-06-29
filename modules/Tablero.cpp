@@ -2,45 +2,49 @@
 #define CODIGO_TABLERO
 #include "Ficha.cpp"
 
-void printEsp(int cant, int code){
-    for(int i=0; i<cant; i++) cout << char(code);
+void printEsp(int cant, int code){//imprimir especial, cant= cantidad de veces que se imprime, code representacion de un caracter en numeros 
+    for(int i=0; i<cant; i++) cout << char(code);//transforma un numero a un caracter
 }
 
-int userXYToTableroXY(int row, int col){
-    if ( (row < 1 || row > 7) || ( col < 1 || col > 7) ) return -1;
-    else if ( (row == 1 || row == 7) && col < 4) col = (col-1)*3;
+int userXYToTableroXY(int row, int col){ 
+    if ( (row < 1 || row > 7) || ( col < 1 || col > 7) ) return -1;//comprueba que los valores esten dentro del rango
+    else if ( (row == 1 || row == 7) && col < 4) col = (col-1)*3; //verifica si la fila es igual a uno o igual a 7 y que las columnas sean < 4 
+    //entonces se realiza la operacion
     else if ( (row == 2 || row == 6) && col < 4) col = (col*2)-1;
     else if ( (row == 3 || row == 5) && col < 4) col++;
-    else if ( row == 4 ) col = col<4 ? col-1 : col;
-    else return -1;
-    col = col < 7 ? col : -1; 
+    else if ( row == 4 ) col = col<4 ? col-1 : col;//sintaxis operador terneario: condicion ? valor_verdadero : valor_falso 
+    else return -1;//seguramente hubo un error
+    col = col < 7 ? col : -1; //si col <7 su valor no cambia de lo contrario es -1, si es mayor a ocurrido error
     return col;
 }
 
 struct Tablero {
-    Ficha **tablero;
-    Tablero(){
-        tablero = new Ficha*[7];
-        for(int i = 0; i<7; i++) {
-            tablero[i] = new Ficha[7];
-            for(int c=0; c<7; c++){ Ficha ficha; tablero[i][c] = ficha; }
+    Ficha **tablero;//arreglo bidimensional de fichas
+    Tablero(){//constructor
+        tablero = new Ficha*[7];//reservamos espacio para un arreglo de 7 fichas
+        for(int i = 0; i<7; i++) {//se recorre el tablero
+            tablero[i] = new Ficha[7];//reservamos memoria para 7 fichas
+            for(int c=0; c<7; c++){ 
+                Ficha ficha; //se crea una nueva ficha
+                tablero[i][c] = ficha;//asignamos la ficha a una posicion en el tablero
+            }
         }
     }
-    ~Tablero(){
-        for(int i = 0; i<7; i++) delete[] tablero[i];
-        delete[] tablero;
-        tablero = nullptr;
+    ~Tablero(){//destructor: se ejecuta cuando se termina de llamar a la funcion
+        for(int i = 0; i<7; i++) delete[] tablero[i];//se recorre el tablero y liberamos la memoria de filas
+        delete[] tablero;//se libera memoria de la matriz tablero
+        tablero = nullptr;//es recomendado asignar el valor nullptr a la memoria que ya no se utiliza
     }
-    Tablero(const Tablero &) = delete;
-    // Tablero &operator =(const Tablero &) = delete;
-    void Show(int clear=0){
+    Tablero(const Tablero &) = delete;//sobrecarga de operadores & (le decimos al compilador para que elimine esta funcion)
+    //se ejecuta al momento la estructura  a una variable
+    void Show(int clear=0){//imprime el tablero
         if (clear) system("cls");
         cout << char(201); printEsp(23, 205); cout << char(187) << endl;
         for(int i = 0; i<7; i++){
-            printf("%c  ", 186);
-            if (i==0 || i==6){
+            printf("%c  ", 186);//printf funcion de C, si le pasas "%c" es para imprimir un caracter
+            if (i==0 || i==6){                                      
                 tablero[i][0].imprimir();
-                printEsp(8, 205); tablero[i][3].imprimir();
+                printEsp(8, 205); tablero[i][3].imprimir();//tablero[i][3].imprimir-imprime manualmente cada ficha
                 printEsp(8, 205); tablero[i][6].imprimir();
             }else if (i==1 || i==5){
                 printf("%c  ", 186); 
@@ -66,13 +70,13 @@ struct Tablero {
         }
         cout << char(200); printEsp(23, 205); cout << char(188) << endl;
     }
-    void SetFicha(int row, int col, int _color){
+    void SetFicha(int row, int col, int _color){//accede a esa posicion y a esa ficha que esta en esa posicion se le establece el color
         tablero[row][col].setColor(_color);
     }
-    bool Iam(int row, int col, int color){
+    bool Iam(int row, int col, int color){//comprueba que la ficha es de un color determinado
         return tablero[row][col].getColor() == color;
     }
-    bool isEmptyCell (int x, int y){
+    bool isEmptyCell (int x, int y){//comprueba si la casilla esta vacia
         return tablero[x][y].getColor() == -1;
     }
     int moveFicha(int act_row, int act_col, int row, int col, char dir, int color, int ult_coordenadas[2]){
@@ -100,15 +104,15 @@ struct Tablero {
                 row += salto;
             }
         }
-        if ( ult_coordenadas[0] == row && ult_coordenadas[1] == col ){
+        if ( ult_coordenadas[0] == row && ult_coordenadas[1] == col ){//compara si la posicion es igual a la ultima posicion movida
             cout << "no puede repetir la jugada" << endl; return false;
         }
-        else if (col < 0 || row < 0 || col>7 || row>7) {
+        else if (col < 0 || row < 0 || col>7 || row>7) {//si sale del tablero no se puede mover
             cout << "la ficha no se puede mover en esa direccion " << endl;
             return false;
         }
 
-        if ( isEmptyCell(row, col) ){
+        if ( isEmptyCell(row, col) ){//si la casilla esta vacia se mueve la ficha
             tablero[act_row][act_col].reset();
             tablero[row][col].setColor(color);
             return true;

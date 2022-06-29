@@ -9,29 +9,29 @@ using namespace std;
 
 void pantallaFinal(Jugador winner, Jugador losser);
 
-string generarCodigoStr()
+string generarCodigoStr()//codigo de 6 digitos para el codigo online
 {
     srand(time(NULL));
     string codigo;
     for (int i = 0; i < 6; i++) {
 
-        int digitoUni = rand() % 2;
+        int digitoUni = rand() % 2;//random de 0 a 1
 
         if (digitoUni == 0) {
 
             char digitoC = 'A' + rand() % 28;
-            codigo.push_back(digitoC);
+            codigo.push_back(digitoC);//char a un string
         }
         else {
 
-            int digito = rand() % 10;
-            codigo.push_back(digito + '0');
+            int digito = rand() % 10;//random de 0 a 1
+            codigo.push_back(digito + '0');//para transformarlo a un string
         }
     }
     return codigo;
 }
 
-bool InMolino(Tablero &tablero, int row, int col){
+bool InMolino(Tablero &tablero, int row, int col){//devuelve verdader si la posicion de la ficha a verificar forma un molino
     int color = tablero[row][col].getColor();
 
     if ( tablero.checkDiag(row, col, color) ) return true;
@@ -39,47 +39,48 @@ bool InMolino(Tablero &tablero, int row, int col){
     else return tablero.checkCol(row, col, color);
 }
 
-bool CheckAllMolinos(Tablero& tablero) {
-    for (int i = 1; i < 8; i++) {
-        for (int j = 1; j < 8; j++) {
-            int _j = userXYToTableroXY(i - 1, j);
+bool CheckAllMolinos(Tablero& tablero) {//verifica todos los molinos
+    for (int i = 1; i < 8; i++) {//recorre todo el tablero
+        for (int j = 1; j < 8; j++) {//recorre el tablero
+            int _j = userXYToTableroXY(i - 1, j);//para convertir a las posiciones reales del tablero
             if (_j == -1) continue;
-            if (!(InMolino(tablero, i - 1, _j))) return false;
+            if (!(InMolino(tablero, i - 1, _j))) return false;//si la ficha no forma un molino retorna falso
         }
     }
     return true;
 }
 
-template <typename T>
-bool eliminarFicha(Tablero &tablero, int row, int col, T &oponente){
-    col = userXYToTableroXY(row, col);
-    if (col == -1) return false;
-    row--;
-    if ( tablero[row][col].getColor() != oponente->color) {
-        cout << "La ficha le pertenece " << endl;
+template <typename T>//plantillas: como tener un nuevo tipo de dato, ese t es un nuevo tipo de dato
+bool eliminarFicha(Tablero &tablero, int row, int col, T &oponente){//oponente puede ser cualquier tipo de dato, esta funcion se usa para el jugador y para el bot
+    //y para no esta copiando pues se le pone la plantilla
+    col = userXYToTableroXY(row, col);//posiciones del tablero
+    if (col == -1) return false;//error
+    row--;//posiciones en tablero de fila
+    if ( tablero[row][col].getColor() != oponente->color) {//color de la ficha diferente al del oponente
+        cout << "La ficha le pertenece " << endl;//no se puede eliminar una ficha de nosotros
         return false;
     }
-    if (CheckAllMolinos(tablero)) {
-        tablero[row][col].reset();
+    if (CheckAllMolinos(tablero)) {//verifica si todos son molinos
+        tablero[row][col].reset();//entonces reseteamos los valores de la ficha
         return true;
     }
-    else if ( InMolino(tablero, row, col) ){
+    else if ( InMolino(tablero, row, col) ){//si l aficha forma algun molino
         cout << "La ficha forma un molino, no la puede eliminar" << endl; 
         return false;
     }
-    tablero[row][col].reset();
+    tablero[row][col].reset();//sino se cumple ninguno se resetea la ficha 
     return true;
 }
 template <typename T>
-void WhenMolino (Tablero &tablero, T &oponente){
+void WhenMolino (Tablero &tablero, T &oponente){//pedimos la ficha a eliminar
     while(1){
         int eliminar_fila, eliminar_col;
         cout << "fila de la ficha a eliminar: ";
         cin >> eliminar_fila;
         cout << "columna de la ficha a eliminar: ";
         cin >> eliminar_col;
-        bool eliminado = eliminarFicha(tablero, eliminar_fila, eliminar_col, oponente);
-        if(eliminado) return;
+        bool eliminado = eliminarFicha(tablero, eliminar_fila, eliminar_col, oponente);//si devuelve true se acaba
+        if(eliminado) return;//y si es false se dice que lo vuelva a intentar
         cout << "Vuelva a intentarlo." << endl;
     }
 }
@@ -88,29 +89,30 @@ void Game(Bot player1, Jugador player2){
     Tablero tablero;
 
     int isMove, row, col, **puntos = nullptr;
-    char direccion;
-    bool active_move = false;
+    char direccion;//direccion en la que se movera
+    bool active_move = false;//para ver si nos toca una ficha
 
     tablero.Show(1);
 
-    for(int i = 0; ; i++){
+    for(int i = 0; ; i++){//no tiene tope ya que no sabemos cuando terminara el juego
         if(i == 18) {
             cout << "movida de fichas" << endl;
             active_move = true;
         }
+        //player1 es el bot y el 2 es el jugador
+        if ( player1.fichas == 2 || player2.fichas == 2) break;//cantidad de fichas que tiene cada uno
 
-        if ( player1.fichas == 2 || player2.fichas == 2) break;
+        ahogamiento(tablero);
 
-        if(i%2 == 0){
-            cout << "Turno de " << player1.nombre << endl;
-            ahogamiento(tablero);
+        if(i%2 == 0){//saber a quien le toca
+            cout << "Turno de " << player1.nombre << endl;//turno de bot
             player1.PlayGame(tablero, active_move);
-        }else{
+        }else{//turno del jugador
             cout << "Turno de " << player2.nombre << endl;
             player2.PlayGame(tablero, active_move);
         }
 
-        if(i > 1) {
+        if(i > 1) {//cuando sea la tercera vez que se repita el for significa que ya puede haber molinos
             if(puntos != nullptr){
                 int **n_puntos = puntoenhori(tablero);
                 bool haymolino=false;
@@ -160,7 +162,7 @@ void Game(Bot player1, Jugador player2){
         }
         tablero.Show(1);
     }
-    if ( player1.fichas == 2 ) pantallaFinal(player2, player1);
+    if ( player1.fichas == 2 ) pantallaFinal(player2, player1);//se hace llamado a la pantalla final porque el for se rompera
     else pantallaFinal(player1, player2);
 }
 
@@ -175,21 +177,21 @@ void Game(Jugador player1, Jugador player2){
     tablero.Show(1);
 
     for(int i = 0; ; i++){
-        if(i%2 == 0){
+        if(i%2 == 0){//si es 0 el player sera el player1 y el oponente sera el player 2
             player = &player1;
             oponente = &player2;
         }else{
             player = &player2;
             oponente = &player1;
         }
-        if ( (*player).fichas == 2 || (*oponente).fichas == 2)
+        if ( (*player).fichas == 2 || (*oponente).fichas == 2)//se accede al espacio de memoria, se pone parentesis porque queremos especificar quien es el puntero
         {
-            break;
+            break;//se rompe porque se termina el juego
         }
-        cout << "fichas: " << (*player).fichas << endl;
-        cout << "fichas oponente: " << (*oponente).fichas << endl;
+        cout << "fichas: " << (*player).fichas << endl;//escribimos las fichas
+        cout << "fichas oponente: " << (*oponente).fichas << endl;//fichas del oponente
         
-        if(i == 18) {
+        if(i == 18) {//cuando haya 18 fichas en el tablero 
             cout << "movida de fichas" << endl;
             active_move = true;
         }
@@ -198,8 +200,8 @@ void Game(Jugador player1, Jugador player2){
 
         tablero.Show(1);
 
-        if(i > 1) {
-            if(puntos != nullptr){
+        if(i > 1) {//para que en los 3 primeros turnos no haga la verificacion del molino
+            if(puntos != nullptr){//nullptr =nullpointer, manera recomendada de iniciar un puntero
                 int **n_puntos = puntoenhori(tablero);
                 bool haymolino=false;
                 //filas

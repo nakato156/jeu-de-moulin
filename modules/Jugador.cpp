@@ -44,63 +44,66 @@ void ahogamiento(Tablero& tablero);
 
 struct Jugador {
     Jugador() = default;
-    Jugador(int _color, string _nombre): color(_color), nombre(_nombre) {}
+    Jugador(int _color, string _nombre): color(_color), nombre(_nombre) {}//funciones miembro, utilizadas para asignar el valor de un parametro a un atributo
+    //syntax:name_struct( args... ) : name_atr1( arg1 ), name_atr2( arg2 ) ... {}
     int turno;
     int color;
     string nombre;
-    int fichas = 9;
+    int fichas = 9;//numero de fichas al inicio
     int movimientos = 0;
     int ult_coordenada[2] = {-1, -1};
-    void delFicha(){ fichas--; }
-    void PlayGame(Tablero &tablero, bool active_move){
-        int row = 0, col = 0;
-        while(1) {
-            if(active_move){
-                ahogamiento(tablero);
-                leerFicha(row, col, "ingrese la fila de la ficha a mover: ", "ingrese la columna de la ficha a mover: ");
-                int act_col = userXYToTableroXY(row, col); 
-                int act_row = row-1;
-                if( tablero[act_row][act_col].block){
+    void delFicha(){ fichas--; }//funcion para restarle 1 a 9
+    //funciones dentro de una estructura es un metodo
+    void PlayGame(Tablero &tablero, bool active_move){ //tablero se pasa por referencia para evitar que se cree otro tablero, active move es para definir si se puede mover o no
+        int row = 0, col = 0; // fila y columna
+        while(1) {//=while true
+            if(active_move){//si active_move es verdad se ejecuta lo siguiente:
+                ahogamiento(tablero);//true si la ficha esta ahogada y false si no lo esta 
+                leerFicha(row, col, "ingrese la fila de la ficha a mover: ", "ingrese la columna de la ficha a mover: ");//esta abajo
+                int act_col = userXYToTableroXY(row, col); //convierte lo que ingrese el usuario a una posicion en la matriz
+                int act_row = row-1;//operacion general de la fila
+                if( tablero[act_row][act_col].block){//si la ficha esta bloqueada
                     cout << "la ficha no puede ser movida" << endl;
-                    continue;
+                    continue;//vuelve al inicio
                 }
-                if( tablero[act_row][act_col].getColor() != color ) {
-                    cout << "La ficha no le corresponde" << endl;
-                    continue;
+                if( tablero[act_row][act_col].getColor() != color ) {//si el color de la ficha es distinto de nuestro color entonces:
+                    cout << "La ficha no le corresponde" << endl;//se imprime esto 
+                    continue;//vuelve al inicio
                 }
-                if ( fichas == 3 ) {
-                    leerFicha(row, col, "ingrese la fila de destino: ", "ingrese la columna de destino: ");
-                    col = userXYToTableroXY( row, col );
-                    if ( col == -1 ) continue;
-                    tablero[act_row][act_col].reset();
+                if ( fichas == 3 ) {//al contador de fichas, que tiene el jugador
+                    leerFicha(row, col, "ingrese la fila de destino: ", "ingrese la columna de destino: ");//punto a otro punto, como queramos
+                    col = userXYToTableroXY( row, col );//convierte las coordenadas para el codigo
+                    if ( col == -1 ) continue;//cuando da error vuelve al inicio
+                    tablero[act_row][act_col].reset();//resetea los valores de la ficha, cuando se deja la coordenada resetea a los valores por defecto
                     tablero.SetFicha( row-1, col, color);
-                    movimientos++;
+                    movimientos++;//sumando la cantidad de movimientos
                     return;
                 }
-                char dir;
+                char dir;//direccion en wasd
                 cout << "a donde lo quiere mover? (w/a/s/d): ";
                 cin >> dir;
-                if( tablero.moveFicha(act_row, act_col, row, col, tolower(dir), color, ult_coordenada)) {
-                    ult_coordenada[0] = row; ult_coordenada[1] = col;
+                if( tablero.moveFicha(act_row, act_col, row, col, tolower(dir), color, ult_coordenada)) {//tolower convierte el caracter a minusculas
+                    ult_coordenada[0] = row; ult_coordenada[1] = col;//se actualiza a las ultimas coordenadas
                     movimientos++;
                     return;
                 }
             }else{
-                leerFicha(row, col, "ingrese la fila donde ira la ficha: ", "ingrese la columna donde ira la ficha: ");
+                leerFicha(row, col, "ingrese la fila donde ira la ficha: ", "ingrese la columna donde ira la ficha: ");//si las fichas no se mueven, solo le pedimos la posicion donde colocara la ficha
                 col = userXYToTableroXY(row, col); row--;
                 if( tablero.isEmptyCell(row, col) ) break;
             }
         }
-        tablero.SetFicha(row, col, color);
+        tablero.SetFicha(row, col, color);//establece la ficha 
     }
-    void leerFicha(int &row, int &col, string promt_row, string prompt_col){
-        while(1){
-            cout << promt_row;
-            cin >> row;
-            if (row>7 || row<0) continue;
-            cout << prompt_col;
-            cin >> col;
-            if (row==4 && (col>0 && col<7)) break;
+    void leerFicha(int &row, int &col, string promt_row, string prompt_col){//fila columnas por referencia para modificar directamente
+        //promt_row mensaje que se muestra al pedir la fila, promt col lo mismo pero para la columna
+        while(1){//while true XD
+            cout << promt_row;//mensaje de la fila
+            cin >> row;//leemos los datos de fila
+            if (row>7 || row<0) continue;//continue: rompe el ciclo y vuelve al principio
+            cout << prompt_col;//mostrar mensaje para pedir la columna
+            cin >> col;//se lee columna
+            if (row==4 && (col>0 && col<7)) break;//verifica si la fila es 4 y si es los valores de la columna deben de ser mayor que 0y<7
             else if (col>0 && col<4) break;
             cout << "valores incorrectos" << endl;
         }
@@ -235,7 +238,7 @@ void ahogamiento(Tablero& tablero) {
             tablero[4][4].block = true;
         }else tablero[4][4].block = false;
     }
-}
+}//verifica si la ficha se puede mover o esta atascada
 
 Jugador RegistrarJugador(int ant_color = -2){
     int color;
@@ -244,12 +247,12 @@ Jugador RegistrarJugador(int ant_color = -2){
     cout << "Ingrese su nombre: ";
     cin >> nombre;
 
-    do {
+    do {//para que el color de los jugadores no se repitan
         menu();
         char opc = leerOpcion();
         color = convertirColor(opc);
-    } while( ant_color == color );
+    } while( ant_color == color);
 
-    return Jugador( color, nombre );
+    return Jugador( color, nombre );//retorna una estructura
 }
 #endif

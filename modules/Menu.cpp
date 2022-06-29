@@ -53,11 +53,11 @@ void dibujarLogo()
 
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    for (int i = 0; i < 25; i++) {
-        for (int j = 0; j < 45; j++) {
-            if (logo[i][j] == 0) {
-                SetConsoleTextAttribute(hConsole, 15);
-                cout << char(219);
+    for (int i = 0; i < 25; i++) {//columnas
+        for (int j = 0; j < 45; j++) {//filas
+            if (logo[i][j] == 0) {//si logo es ==0 lo pintamos a blanco
+                SetConsoleTextAttribute(hConsole, 15);//blanco
+                cout << char(219);//valor asci de un bloque 
             }
             else if (logo[i][j] == 1) {
                 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -136,7 +136,8 @@ int MenuOnline()
     return opcionOnline;
 }
 
-void MenuOffline(void (*PlayWithBot)(), void (*PlayWithFriend)())
+void MenuOffline(void (*PlayWithBot)(), void (*PlayWithFriend)())//punteros a funciones
+//tipo de retorno de la funcion(*puntero)(argumentos que reciben la funcion) pero como no reciben nada pues se quedan ()
 {
     cout << "Elige como quieres jugar: " << endl;
     cout << "1) Jugador contra bot." << endl;

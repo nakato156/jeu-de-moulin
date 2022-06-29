@@ -12,7 +12,7 @@ void PlayOff2Players() {
 
 void PlayWithBot() {
     Jugador player = RegistrarJugador();
-    Bot bot = Bot(player.color);
+    Bot bot = Bot(player.color);//para que el bot eliga un color diferente al del jugador
     cout << "El Bot esta en etapa de desarrollo" << endl;
     system("pause");
     Game(bot, player);
