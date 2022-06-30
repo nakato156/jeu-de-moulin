@@ -72,15 +72,15 @@ struct Bot : public Jugador {//herencia de jugador, para que el parametro de nue
         cout << "no se me ocurrio nada :(" << endl;//si no se cumple ninguna condicion el bot escribe esto
     }
 
-    void Molino(Tablero &tablero, Jugador &oponente){
+    void Molino(Tablero &tablero, Jugador &oponente){//borra una ficha aleatoria
         while(1) {
             int row = rand() % 7;
             int col = rand() % 7;
 
             col = userXYToTableroXY(row, col); row--;
-            if ( col != -1 && tablero[row][col].getColor() != -1 && tablero[row][col].getColor() != color){
-                tablero[row][col].reset();
-                oponente.fichas--;
+            if ( col != -1 && tablero[row][col].getColor() != -1 && tablero[row][col].getColor() != color){//valida si la ficha se puede borrar
+                tablero[row][col].reset();//poner la ficha en blanco
+                oponente.fichas--;//restar uno al contador de fichas
                 break;
             }
         }
